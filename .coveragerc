@@ -1,0 +1,6 @@
+[run]
+branch = True
+omit =
+    # Exclude ABCs
+    mythx_models/request/base.py
+    mythx_models/response/base.py
