@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from mythx_models.exceptions import RequestValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.request import AuthLoginRequest
 
 from . import common as testdata
@@ -23,7 +23,7 @@ def test_login_from_valid_json():
 
 
 def test_login_from_invalid_json():
-    with pytest.raises(RequestValidationError):
+    with pytest.raises(ValidationError):
         AuthLoginRequest.from_json("{}")
 
 
@@ -33,7 +33,7 @@ def test_login_from_valid_dict():
 
 
 def test_login_from_invalid_dict():
-    with pytest.raises(RequestValidationError):
+    with pytest.raises(ValidationError):
         AuthLoginRequest.from_dict({})
 
 

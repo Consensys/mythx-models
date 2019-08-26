@@ -2,7 +2,7 @@ import pytest
 
 from mythx_models import request as reqmodels
 from mythx_models import response as respmodels
-from mythx_models.exceptions import RequestValidationError, ResponseValidationError
+from mythx_models.exceptions import ValidationError, ValidationError
 
 from . import common as testdata
 
@@ -14,85 +14,85 @@ from . import common as testdata
             testdata.ANALYSIS_LIST_REQUEST_DICT,
             reqmodels.AnalysisListRequest,
             False,
-            RequestValidationError,
+            ValidationError,
         ),
         (
             testdata.DETECTED_ISSUES_REQUEST_DICT,
             reqmodels.DetectedIssuesRequest,
             False,
-            RequestValidationError,
+            ValidationError,
         ),
         (
             testdata.ANALYSIS_STATUS_REQUEST_DICT,
             reqmodels.AnalysisStatusRequest,
             False,
-            RequestValidationError,
+            ValidationError,
         ),
         (
             testdata.ANALYSIS_SUBMISSION_REQUEST_DICT,
             reqmodels.AnalysisSubmissionRequest,
             True,
-            RequestValidationError,
+            ValidationError,
         ),
         (
             testdata.LOGIN_REQUEST_DICT,
             reqmodels.AuthLoginRequest,
             True,
-            RequestValidationError,
+            ValidationError,
         ),
         (
             testdata.LOGOUT_REQUEST_DICT,
             reqmodels.AuthLogoutRequest,
             True,
-            RequestValidationError,
+            ValidationError,
         ),
         (
             testdata.REFRESH_REQUEST_DICT,
             reqmodels.AuthRefreshRequest,
             True,
-            RequestValidationError,
+            ValidationError,
         ),
         (
             testdata.ANALYSIS_LIST_RESPONSE_DICT,
             respmodels.AnalysisListResponse,
             True,
-            ResponseValidationError,
+            ValidationError,
         ),
         (
             testdata.DETECTED_ISSUES_RESPONSE_DICT,
             respmodels.DetectedIssuesResponse,
             True,
-            ResponseValidationError,
+            ValidationError,
         ),
         (
             testdata.ANALYSIS_STATUS_RESPONSE_DICT,
             respmodels.AnalysisStatusResponse,
             True,
-            ResponseValidationError,
+            ValidationError,
         ),
         (
             testdata.ANALYSIS_SUBMISSION_RESPONSE_DICT,
             respmodels.AnalysisSubmissionResponse,
             True,
-            ResponseValidationError,
+            ValidationError,
         ),
         (
             testdata.LOGIN_RESPONSE_DICT,
             respmodels.AuthLoginResponse,
             True,
-            ResponseValidationError,
+            ValidationError,
         ),
         (
             testdata.LOGOUT_RESPONSE_DICT,
             respmodels.AuthLogoutResponse,
             False,
-            ResponseValidationError,
+            ValidationError,
         ),
         (
             testdata.REFRESH_RESPONSE_DICT,
             respmodels.AuthRefreshResponse,
             True,
-            ResponseValidationError,
+            ValidationError,
         ),
     ],
 )

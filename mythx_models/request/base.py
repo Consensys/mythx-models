@@ -6,12 +6,50 @@ import logging
 
 import jsonschema
 
-from mythx_models.exceptions import RequestValidationError
+from mythx_models.exceptions import ValidationError
 
 LOGGER = logging.getLogger(__name__)
 
+class JSONSerializable(abc.ABC):
+    """An abstract base class defining an interface for a JSON serializable class."""
 
-class BaseRequest(abc.ABC):
+    @classmethod
+    def from_json(cls, json_str: str):
+        """Deserialize a given JSON string to the given domain model.
+        Internally, this method uses the :code:`from_dict` method.
+        :param json_str: The JSON string to deserialize
+        :return: The concrete deserialized domain model instance
+        """
+        try:
+            parsed = json.loads(json_str)
+        except json.JSONDecodeError as exc:
+            raise ValidationError(exc)
+        return cls.from_dict(parsed)
+
+    def to_json(self):
+        """Serialize the current domain model instance to a JSON string.
+        Internally, this method uses the :code:`to_dict` method.
+        :return: The serialized domain model JSON string
+        """
+        return json.dumps(self.to_dict())
+
+    @classmethod
+    @abc.abstractmethod
+    def from_dict(cls, d: dict):
+        """An abstract method to construct the given domain model from a Python dict instance.
+        :param d: The dict instance to deserialize
+        """
+        pass  # pragma: no cover
+
+    @abc.abstractmethod
+    def to_dict(self):
+        """An abstract method to serialize the current domain model instance to a Python dict.
+        :return: A Python dict instance holding the serialized domain model data
+        """
+        pass  # pragma: no cover
+
+
+class BaseRequest(JSONSerializable, abc.ABC):
     """An abstract object describing requests to the MythX API."""
 
     schema = None
@@ -24,7 +62,7 @@ class BaseRequest(abc.ABC):
         assumed that the request does not contain any meaningful data (e.g. a simple GET request
         without any parameters) and no validation is done.
 
-        If the schema validation fails, a :code:`RequestValidationError` is raised.
+        If the schema validation fails, a :code:`ValidationError` is raised.
 
         If this method is called on a concrete object that does not contain a schema,
         :code:`validate` will return right away and log a warning as this behaviour might not have
@@ -39,45 +77,7 @@ class BaseRequest(abc.ABC):
         try:
             jsonschema.validate(candidate, cls.schema)
         except jsonschema.ValidationError as e:
-            raise RequestValidationError(e)
-
-    @classmethod
-    def from_json(cls, json_str: str):
-        """Deserialize a given JSON string to the given domain model.
-
-        Internally, this method uses the :code:`from_dict` method.
-
-        :param json_str: The JSON string to deserialize
-        :return: The concrete deserialized domain model instance
-        """
-        parsed = json.loads(json_str)
-        return cls.from_dict(parsed)
-
-    @classmethod
-    @abc.abstractmethod
-    def from_dict(cls, d: dict):
-        """An abstract method to construct the given domain model from a Python dict instance.
-
-        :param d: The dict instance to deserialize
-        """
-        pass
-
-    def to_json(self):
-        """Serialize the current domain model instance to a JSON string.
-
-        Internally, this method uses the :code:`to_dict` method.
-
-        :return: The serialized domain model JSON string
-        """
-        return json.dumps(self.to_dict())
-
-    @abc.abstractmethod
-    def to_dict(self):
-        """An abstract method to serialize the current domain model instance to a Python dict.
-
-        :return: A Python dict instance holding the serialized domain model data
-        """
-        pass
+            raise ValidationError(e)
 
     @property
     @abc.abstractmethod

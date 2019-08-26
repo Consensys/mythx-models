@@ -1,6 +1,6 @@
 """This module contains the AnalysisStatusRequest domain model."""
 
-from mythx_models.exceptions import RequestValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
 
 
@@ -54,7 +54,7 @@ class AnalysisStatusRequest(BaseRequest):
     def from_dict(cls, d):
         """Create the request domain model from a dict.
 
-        This also validates the dict's schema and raises a :code:`RequestValidationError`
+        This also validates the dict's schema and raises a :code:`ValidationError`
         if any required keys are missing or the data is malformed.
 
         :param d: The dict to deserialize from
@@ -62,7 +62,7 @@ class AnalysisStatusRequest(BaseRequest):
         """
         uuid = d.get("uuid")
         if uuid is None:
-            raise RequestValidationError("Missing uuid field in data {}".format(d))
+            raise ValidationError("Missing uuid field in data {}".format(d))
         return cls(uuid=uuid)
 
     def to_dict(self):

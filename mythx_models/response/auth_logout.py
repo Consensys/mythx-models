@@ -1,6 +1,6 @@
 from typing import Dict
 
-from mythx_models.exceptions import ResponseValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.response.base import BaseResponse
 
 
@@ -11,14 +11,14 @@ class AuthLogoutResponse(BaseResponse):
     def from_dict(cls, d: Dict):
         """Create the response domain model from a dict.
 
-        This also validates the dict's schema and raises a :code:`ResponseValidationError`
+        This also validates the dict's schema and raises a :code:`ValidationError`
         if any required keys are missing or the data is malformed.
 
         :param d: The dict to deserialize from
         :return: The domain model with the data from :code:`d` filled in
         """
         if not d == {}:
-            raise ResponseValidationError(
+            raise ValidationError(
                 "The logout response should be empty but got data: {}".format(d)
             )
         return cls()

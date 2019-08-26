@@ -7,26 +7,8 @@ class MythXBaseException(Exception):
     pass
 
 
-class ResponseValidationError(MythXBaseException):
-    """A validation exception for API responses.
-
-    This is usually raised when the validation of a response fails. Validation is
-    executed during deserialization of responses. Often these are raised, because
-    required keys are not present, or the API response could not be validated using
-    the given JSON schema spec.
-    """
-
-    pass
-
-
-class RequestValidationError(MythXBaseException):
-    """A validation exception for API requests.
-
-    This is usually raised when the validation of a request fails. Validation is
-    executed during serialization of requests. Often these are raised, because
-    required keys are not present, or the API request could not be validated using
-    the given JSON schema spec.
-    """
+class ValidationError(ValueError):
+    """An exception denoting an error in SerDe of request or response data."""
 
     pass
 

@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from mythx_models.exceptions import ResponseValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.response import Analysis, AnalysisSubmissionResponse
 from mythx_models.util import serialize_api_timestamp
 
@@ -30,7 +30,7 @@ def test_analysis_submission_from_valid_json():
 
 
 def test_analysis_submission_from_empty_json():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         AnalysisSubmissionResponse.from_json("{}")
 
 
@@ -42,7 +42,7 @@ def test_analysis_submission_from_valid_dict():
 
 
 def test_analysis_submission_from_empty_dict():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         AnalysisSubmissionResponse.from_dict({})
 
 

@@ -1,7 +1,7 @@
 import json
 from typing import List
 
-from mythx_models.exceptions import ResponseValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.response.analysis import Analysis
 from mythx_models.response.base import BaseResponse
 from mythx_models.util import resolve_schema
@@ -27,7 +27,7 @@ class AnalysisListResponse(BaseResponse):
         """
         super().validate(candidate)
         if not type(candidate) == dict:
-            raise ResponseValidationError(
+            raise ValidationError(
                 "Expected type dict but got {}".format(type(candidate))
             )
 
@@ -35,7 +35,7 @@ class AnalysisListResponse(BaseResponse):
     def from_dict(cls, d: dict):
         """Create the response domain model from a dict.
 
-        This also validates the dict's schema and raises a :code:`ResponseValidationError`
+        This also validates the dict's schema and raises a :code:`ValidationError`
         if any required keys are missing or the data is malformed.
 
         :param d: The dict to deserialize from

@@ -3,7 +3,7 @@ from copy import deepcopy
 
 import pytest
 
-from mythx_models.exceptions import ResponseValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.response import (
     DetectedIssuesResponse,
     IssueReport,
@@ -42,7 +42,7 @@ def test_detected_issues_from_valid_json():
 
 
 def test_detected_issues_from_invalid_json():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         DetectedIssuesResponse.from_json("[]")
 
 
@@ -57,17 +57,17 @@ def test_detected_issues_from_list():
 
 
 def test_detected_issues_from_invalid_type():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         DetectedIssuesResponse.from_dict("foo")
 
 
 def test_detected_issues_from_invalid_list():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         DetectedIssuesResponse.from_dict([])
 
 
 def test_detected_issues_from_invalid_dict():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         DetectedIssuesResponse.from_dict({})
 
 

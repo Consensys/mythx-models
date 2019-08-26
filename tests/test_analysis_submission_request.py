@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from mythx_models.exceptions import RequestValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.request import AnalysisSubmissionRequest
 
 from . import common as testdata
@@ -32,7 +32,7 @@ def test_analysis_submission_request_from_valid_json():
 
 
 def test_analysis_submission_request_from_invalid_json():
-    with pytest.raises(RequestValidationError):
+    with pytest.raises(ValidationError):
         AnalysisSubmissionRequest.from_json("{}")
 
 
@@ -42,7 +42,7 @@ def test_analysis_submission_request_from_valid_dict():
 
 
 def test_analysis_submission_request_from_invalid_dict():
-    with pytest.raises(RequestValidationError):
+    with pytest.raises(ValidationError):
         AnalysisSubmissionRequest.from_dict({})
 
 
@@ -84,11 +84,11 @@ def test_analysis_submission_request_source_only():
 
 def test_analysis_submission_request_invalid_mode():
     req = AnalysisSubmissionRequest(bytecode=testdata.BYTECODE, analysis_mode="invalid")
-    with pytest.raises(RequestValidationError):
+    with pytest.raises(ValidationError):
         req.to_dict()
 
 
 def test_analysis_submission_request_missing_field():
     req = AnalysisSubmissionRequest()
-    with pytest.raises(RequestValidationError):
+    with pytest.raises(ValidationError):
         req.to_dict()

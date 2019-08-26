@@ -5,7 +5,7 @@ from typing import Any, Dict
 
 import dateutil.parser
 
-from mythx_models.exceptions import RequestValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
 
 ANALYSIS_LIST_KEYS = ("offset", "dateFrom", "dateTo")
@@ -63,14 +63,14 @@ class AnalysisListRequest(BaseRequest):
     def from_dict(cls, d: Dict[str, Any]):
         """Create the request domain model from a dict.
 
-        This also validates the dict's schema and raises a :code:`RequestValidationError`
+        This also validates the dict's schema and raises a :code:`ValidationError`
         if any required keys are missing or the data is malformed.
 
         :param d: The dict to deserialize from
         :return: The domain model with the data from :code:`d` filled in
         """
         if not all(k in d for k in ANALYSIS_LIST_KEYS):
-            raise RequestValidationError(
+            raise ValidationError(
                 "Not all required keys {} found in data {}".format(
                     ANALYSIS_LIST_KEYS, d
                 )

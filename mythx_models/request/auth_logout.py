@@ -60,7 +60,7 @@ class AuthLogoutRequest(BaseRequest):
     def from_dict(cls, d: Dict):
         """Create the request domain model from a dict.
 
-        This also validates the dict's schema and raises a :code:`RequestValidationError`
+        This also validates the dict's schema and raises a :code:`ValidationError`
         if any required keys are missing or the data is malformed.
 
         :param d: The dict to deserialize from

@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from mythx_models.exceptions import ResponseValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.response import AuthRefreshResponse
 
 from . import common as testdata
@@ -26,7 +26,7 @@ def test_auth_refresh_response_from_valid_json():
 
 
 def test_auth_refresh_response_from_invalid_json():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         AuthRefreshResponse.from_json("{}")
 
 
@@ -36,7 +36,7 @@ def test_auth_refresh_response_from_valid_dict():
 
 
 def test_auth_refresh_response_from_invalid_dict():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         AuthRefreshResponse.from_dict({})
 
 

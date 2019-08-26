@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from mythx_models.exceptions import ResponseValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.response import VersionResponse
 
 from . import common as testdata
@@ -27,12 +27,12 @@ def test_auth_logout_request_from_valid_dict():
 
 
 def test_auth_logout_request_from_invalid_dict():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         VersionResponse.from_dict({})
 
 
 def test_auth_logout_request_from_invalid_json():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         VersionResponse.from_json("{}")
 
 

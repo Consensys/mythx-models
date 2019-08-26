@@ -18,7 +18,7 @@ class AnalysisSubmissionResponse(BaseResponse):
     def from_dict(cls, d):
         """Create the response domain model from a dict.
 
-        This also validates the dict's schema and raises a :code:`ResponseValidationError`
+        This also validates the dict's schema and raises a :code:`ValidationError`
         if any required keys are missing or the data is malformed.
 
         :param d: The dict to deserialize from

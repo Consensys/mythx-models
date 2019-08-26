@@ -6,7 +6,7 @@ import logging
 
 import jsonschema
 
-from mythx_models.exceptions import ResponseValidationError
+from mythx_models.exceptions import ValidationError
 
 LOGGER = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class BaseResponse(abc.ABC):
         assumed that the request does not contain any meaningful data (e.g. an empty logout
         response) and no validation is done.
 
-        If the schema validation fails, a :code:`RequestValidationError` is raised.
+        If the schema validation fails, a :code:`ValidationError` is raised.
 
         If this method is called on a concrete object that does not contain a schema,
         :code:`validate` will return right away and log a warning as this behaviour might not have
@@ -39,7 +39,7 @@ class BaseResponse(abc.ABC):
         try:
             jsonschema.validate(candidate, cls.schema)
         except jsonschema.ValidationError as e:
-            raise ResponseValidationError(e)
+            raise ValidationError(e)
 
     @classmethod
     def from_json(cls, json_str: str):

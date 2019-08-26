@@ -3,7 +3,7 @@ from copy import deepcopy
 
 import pytest
 
-from mythx_models.exceptions import ResponseValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.response import AnalysisListResponse
 from mythx_models.response.analysis import Analysis
 from mythx_models.util import serialize_api_timestamp
@@ -36,12 +36,12 @@ def test_analysis_list_from_valid_json():
 
 
 def test_analysis_list_from_invalid_json():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         AnalysisListResponse.from_json("[]")
 
 
 def test_analysis_list_from_empty_json():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         AnalysisListResponse.from_json("{}")
 
 
@@ -55,12 +55,12 @@ def test_analysis_list_from_valid_dict():
 
 
 def test_analysis_list_from_invalid_dict():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         AnalysisListResponse.from_dict("[]")
 
 
 def test_analysis_list_from_empty_dict():
-    with pytest.raises(ResponseValidationError):
+    with pytest.raises(ValidationError):
         AnalysisListResponse.from_dict({})
 
 

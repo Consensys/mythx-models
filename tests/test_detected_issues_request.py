@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from mythx_models.exceptions import RequestValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.request import DetectedIssuesRequest
 
 from . import common as testdata
@@ -20,7 +20,7 @@ def test_analysis_issues_request_from_valid_json():
 
 
 def test_analysis_issues_request_from_invalid_json():
-    with pytest.raises(RequestValidationError):
+    with pytest.raises(ValidationError):
         DetectedIssuesRequest.from_json("{}")
 
 
@@ -30,7 +30,7 @@ def test_analysis_issues_request_from_valid_dict():
 
 
 def test_analysis_issues_request_from_invalid_dict():
-    with pytest.raises(RequestValidationError):
+    with pytest.raises(ValidationError):
         DetectedIssuesRequest.from_dict({})
 
 

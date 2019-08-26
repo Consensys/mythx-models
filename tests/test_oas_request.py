@@ -1,6 +1,6 @@
 import pytest
 
-from mythx_models.exceptions import RequestValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.request import OASRequest
 
 from . import common as testdata
@@ -28,7 +28,7 @@ def test_oas_request_from_valid_dict():
 
 
 def test_invalid_format():
-    with pytest.raises(RequestValidationError):
+    with pytest.raises(ValidationError):
         OASRequest(mode="invalid")
 
 

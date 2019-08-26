@@ -2,7 +2,7 @@
 import json
 from typing import Any, Dict, List
 
-from mythx_models.exceptions import ResponseValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.response.base import BaseResponse
 from mythx_models.response.issue import Issue, SourceFormat, SourceType
 from mythx_models.util import resolve_schema
@@ -87,7 +87,7 @@ class DetectedIssuesResponse(BaseResponse):
     def from_dict(cls, d: Dict):
         """Create the response domain model from a dict.
 
-        This also validates the dict's schema and raises a :code:`ResponseValidationError`
+        This also validates the dict's schema and raises a :code:`ValidationError`
         if any required keys are missing or the data is malformed.
 
         :param d: The List to deserialize from
@@ -99,7 +99,7 @@ class DetectedIssuesResponse(BaseResponse):
             d = {"issueReports": d}
         elif type(d) == dict:
             if d.get("issueReports") is None:
-                raise ResponseValidationError(
+                raise ValidationError(
                     "Cannot create DetectedIssuesResponse object from invalid dictionary d: {}".format(
                         d
                     )
@@ -107,7 +107,7 @@ class DetectedIssuesResponse(BaseResponse):
 
             cls.validate(d["issueReports"])
         else:
-            raise ResponseValidationError(
+            raise ValidationError(
                 "Expected list or dict but got {} of type {}".format(d, type(d))
             )
 

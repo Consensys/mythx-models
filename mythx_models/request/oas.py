@@ -1,6 +1,6 @@
 """This module contains the OASRequest domain model."""
 
-from mythx_models.exceptions import RequestValidationError
+from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
 
 
@@ -9,7 +9,7 @@ class OASRequest(BaseRequest):
 
     def __init__(self, mode="yaml"):
         if mode not in ("yaml", "html"):
-            raise RequestValidationError("'mode' must be one of {html,yaml}")
+            raise ValidationError("'mode' must be one of {html,yaml}")
         self.mode = mode
 
     @property
@@ -56,7 +56,7 @@ class OASRequest(BaseRequest):
     def from_dict(cls, d):
         """Create the request domain model from a dict.
 
-        This also validates the dict's schema and raises a :code:`RequestValidationError`
+        This also validates the dict's schema and raises a :code:`ValidationError`
         if any required keys are missing or the data is malformed.
 
         :param d: The dict to deserialize from
