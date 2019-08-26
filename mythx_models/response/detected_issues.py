@@ -2,13 +2,14 @@
 import json
 from typing import Any, Dict, List
 
+from mythx_models.base import JSONSerializable
 from mythx_models.exceptions import ValidationError
 from mythx_models.response.base import BaseResponse
 from mythx_models.response.issue import Issue, SourceFormat, SourceType
 from mythx_models.util import resolve_schema
 
 
-class IssueReport:
+class IssueReport(JSONSerializable):
     """The API response domain model for an issues report object."""
 
     def __init__(
@@ -114,7 +115,7 @@ class DetectedIssuesResponse(BaseResponse):
         return cls(issue_reports=[IssueReport.from_dict(i) for i in d["issueReports"]])
 
     def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """

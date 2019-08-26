@@ -1,8 +1,9 @@
 """This module contains domain models regrading found issues."""
 
-import json
 from enum import Enum
 from typing import Any, Dict, List
+
+from mythx_models.base import JSONSerializable
 
 
 class Severity(str, Enum):
@@ -34,7 +35,7 @@ class SourceFormat(str, Enum):
     EWASM_RAW = "ewasm-raw"
 
 
-class SourceLocation:
+class SourceLocation(JSONSerializable):
     """The domain model for a source location in a detected issue."""
 
     def __init__(
@@ -76,7 +77,7 @@ class SourceLocation:
         }
 
 
-class Issue:
+class Issue(JSONSerializable):
     """The API response domain model for a single issue object."""
 
     def __init__(
@@ -96,16 +97,6 @@ class Issue:
         self.severity = severity
         self.locations = locations
         self.extra_data = extra
-
-    @classmethod
-    def from_json(cls, json_data: str):
-        """
-
-        :param json_data:
-        :return:
-        """
-        parsed = json.loads(json_data)
-        return cls.from_dict(parsed)
 
     @classmethod
     def from_dict(cls, d):
@@ -133,17 +124,8 @@ class Issue:
             extra=d["extra"],
         )
 
-    def to_json(self):
-        """Serialize the model to JSON format.
-
-        Internally, this method is using the :code:`to_dict` method.
-
-        :return: A JSON string holding the model's data
-        """
-        return json.dumps(self.to_dict())
-
     def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """

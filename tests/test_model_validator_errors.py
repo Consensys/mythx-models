@@ -2,7 +2,7 @@ import pytest
 
 from mythx_models import request as reqmodels
 from mythx_models import response as respmodels
-from mythx_models.exceptions import ValidationError, ValidationError
+from mythx_models.exceptions import ValidationError
 
 from . import common as testdata
 
