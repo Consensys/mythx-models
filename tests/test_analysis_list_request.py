@@ -1,6 +1,5 @@
 import json
 
-import dateutil.parser
 import pytest
 
 from mythx_models.exceptions import RequestValidationError

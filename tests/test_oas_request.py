@@ -1,5 +1,3 @@
-import json
-
 import pytest
 
 from mythx_models.exceptions import RequestValidationError

@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import dateutil.parser
 
 from mythx_models.request import (

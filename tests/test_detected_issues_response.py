@@ -6,11 +6,9 @@ import pytest
 from mythx_models.exceptions import ResponseValidationError
 from mythx_models.response import (
     DetectedIssuesResponse,
-    Issue,
     IssueReport,
     Severity,
     SourceFormat,
-    SourceLocation,
     SourceType,
 )
 

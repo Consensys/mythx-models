@@ -1,7 +1,5 @@
 import json
 
-import pytest
-
 from mythx_models.response import (
     Issue,
     Severity,

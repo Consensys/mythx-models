@@ -1,7 +1,3 @@
-import json
-
-import pytest
-
 from mythx_models.request import VersionRequest
 
 from . import common as testdata
