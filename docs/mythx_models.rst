@@ -10,6 +10,7 @@ Subpackages
     mythx_models.response
     mythx_models.exceptions
     mythx_models.util
+    mythx_models.base
 
 Module contents
 ---------------

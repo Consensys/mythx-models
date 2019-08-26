@@ -20,9 +20,11 @@
 import os
 import sys
 
-import mythx_models
 
 sys.path.insert(0, os.path.abspath(".."))
+
+
+import mythx_models
 
 
 # -- General configuration ---------------------------------------------
