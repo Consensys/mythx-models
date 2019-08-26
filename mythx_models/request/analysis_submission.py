@@ -125,3 +125,21 @@ class AnalysisSubmissionRequest(BaseRequest):
         )
         self.validate(base_dict)
         return base_dict
+
+    def __eq__(self, candidate):
+        """Perform an equality check on two Request domain models."""
+
+        return all(
+            [
+                self.contract_name == candidate.contract_name,
+                self.bytecode == candidate.bytecode,
+                self.source_map == candidate.source_map,
+                self.deployed_bytecode == candidate.deployed_bytecode,
+                self.deployed_source_map == candidate.deployed_source_map,
+                self.main_source == candidate.main_source,
+                self.sources == candidate.sources,
+                self.source_list == candidate.source_list,
+                self.solc_version == candidate.solc_version,
+                self.analysis_mode == candidate.analysis_mode,
+            ]
+        )
