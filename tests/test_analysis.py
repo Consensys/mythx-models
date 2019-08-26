@@ -39,7 +39,7 @@ def test_analysis_propagate_error_field():
     # add optional error field
     analysis.error = testdata.ERROR
     analysis_dict = analysis.to_dict()
-    analysis_dict["error"] == testdata.ERROR
+    assert analysis_dict["error"] == testdata.ERROR
 
 
 def test_analysis_from_valid_dict():
@@ -50,4 +50,4 @@ def test_analysis_from_valid_dict():
 def test_repr():
     analysis_repr = repr(testdata.ANALYSIS_OBJECT)
     assert testdata.ANALYSIS_OBJECT.uuid in analysis_repr
-    testdata.ANALYSIS_OBJECT.status in analysis_repr
+    assert testdata.ANALYSIS_OBJECT.status in analysis_repr
