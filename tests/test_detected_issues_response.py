@@ -41,9 +41,9 @@ def test_detected_issues_from_valid_json():
     assert_detected_issues(resp)
 
 
-def test_detected_issues_from_invalid_json():
-    with pytest.raises(ValidationError):
-        DetectedIssuesResponse.from_json("[]")
+def test_detected_issues_from_empty_json():
+    resp = DetectedIssuesResponse.from_json("[]")
+    assert resp.issue_reports == []
 
 
 def test_detected_issues_from_dict():
@@ -61,9 +61,9 @@ def test_detected_issues_from_invalid_type():
         DetectedIssuesResponse.from_dict("foo")
 
 
-def test_detected_issues_from_invalid_list():
-    with pytest.raises(ValidationError):
-        DetectedIssuesResponse.from_dict([])
+def test_detected_issues_from_empty_list():
+    resp = DetectedIssuesResponse.from_dict([])
+    assert resp.issue_reports == []
 
 
 def test_detected_issues_from_invalid_dict():
