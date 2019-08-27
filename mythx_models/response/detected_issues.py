@@ -114,14 +114,14 @@ class DetectedIssuesResponse(BaseResponse):
 
         return cls(issue_reports=[IssueReport.from_dict(i) for i in d["issueReports"]])
 
-    def to_dict(self):
+    def to_dict(self, as_list=False):
         """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """
         d = {"issueReports": [report.to_dict() for report in self.issue_reports]}
         self.validate(d["issueReports"])
-        return d
+        return d["issueReports"] if as_list else d
 
     def to_json(self):
         """Serialize the model to JSON format.
