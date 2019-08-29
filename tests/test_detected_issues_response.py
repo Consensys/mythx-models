@@ -27,7 +27,7 @@ def assert_detected_issues(resp):
     assert issue.severity == Severity(testdata.SEVERITY)
     assert len(issue.locations) == 1
     location = issue.locations[0]
-    assert location.source_map == testdata.SOURCE_MAP
+    assert location.source_map.to_sourcemap() == testdata.SOURCE_MAP
     assert location.source_format == SourceFormat.EVM_BYZANTIUM_BYTECODE
     assert location.source_type == SourceType.RAW_BYTECODE
     assert location.source_list == testdata.SOURCE_LIST

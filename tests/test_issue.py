@@ -19,7 +19,7 @@ def assert_issue(issue: Issue):
     assert issue.severity == Severity(testdata.SEVERITY)
     assert len(issue.locations) == 1
     location = issue.locations[0]
-    assert location.source_map == testdata.SOURCE_MAP
+    assert location.source_map.to_sourcemap() == testdata.SOURCE_MAP
     assert location.source_format == SourceFormat.EVM_BYZANTIUM_BYTECODE
     assert location.source_type == SourceType.RAW_BYTECODE
     assert location.source_list == testdata.SOURCE_LIST
@@ -47,5 +47,5 @@ def test_source_location_from_dict():
     sl = SourceLocation.from_dict(testdata.SOURCE_LOCATION)
     assert sl.source_format == testdata.SOURCE_FORMAT
     assert sl.source_list == testdata.SOURCE_LIST
-    assert sl.source_map == testdata.SOURCE_MAP
+    assert sl.source_map.to_sourcemap() == testdata.SOURCE_MAP
     assert sl.source_type == testdata.SOURCE_TYPE
