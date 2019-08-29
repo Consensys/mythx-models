@@ -2,6 +2,12 @@
 History
 =======
 
+1.2.0
+-----
+
+- Added models for source map representation (including source map decompression)
+
+
 1.1.0
 -----
 
