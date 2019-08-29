@@ -47,24 +47,42 @@
                             }
                         },
                         "severity": {
-                            "type": ["string", "null"]
+                            "type": [
+                                "string",
+                                "null"
+                            ]
                         },
                         "locations": {
-                            "type": ["array", "null"],
+                            "type": [
+                                "array",
+                                "null"
+                            ],
                             "items": {
                                 "type": "object",
                                 "properties": {
                                     "sourceMap": {
-                                        "type": ["string", "null"]
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
                                     },
                                     "sourceType": {
-                                        "type": ["string", "null"]
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
                                     },
                                     "sourceFormat": {
-                                        "type": ["string", "null"]
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
                                     },
                                     "sourceList": {
-                                        "type": ["array", "null"],
+                                        "type": [
+                                            "array",
+                                            "null"
+                                        ],
                                         "items": {
                                             "type": "string"
                                         }
@@ -79,19 +97,121 @@
                 }
             },
             "sourceType": {
-                "type": ["string", "null"]
+                "type": [
+                    "string",
+                    "null"
+                ]
             },
             "sourceFormat": {
-                "type": ["string", "null"]
+                "type": [
+                    "string",
+                    "null"
+                ]
             },
             "sourceList": {
-                "type": ["array", "null"],
+                "type": [
+                    "array",
+                    "null"
+                ],
                 "items": {
                     "type": "string"
                 }
             },
             "meta": {
                 "type": "object"
+            }
+        }
+    },
+    "definitions": {
+        "issue": {
+            "type": "object",
+            "required": [
+                "swcID",
+                "swcTitle",
+                "description",
+                "severity",
+                "locations",
+                "extra"
+            ],
+            "properties": {
+                "swcID": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "default": ""
+                },
+                "swcTitle": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "null",
+                        "object"
+                    ],
+                    "required": [
+                        "head",
+                        "tail"
+                    ],
+                    "properties": {
+                        "head": {
+                            "type": "string"
+                        },
+                        "tail": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "severity": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "locations": {
+                    "type": [
+                        "array",
+                        "null"
+                    ],
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "sourceMap": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "sourceType": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "sourceFormat": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "sourceList": {
+                                "type": [
+                                    "array",
+                                    "null"
+                                ],
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "extra": {
+                    "type": "object"
+                }
             }
         }
     }

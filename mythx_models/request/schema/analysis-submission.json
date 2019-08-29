@@ -13,25 +13,25 @@
     ],
     "properties": {
         "contractName": {
-            "type": "string"
+            "type": ["null" ,"string"]
         },
         "bytecode": {
-            "type": "string"
+            "type": ["null" ,"string"]
         },
         "deployedBytecode": {
-            "type": "string"
+            "type": ["null" ,"string"]
         },
         "sourceMap": {
-            "type": "string"
+            "type": ["null" ,"string"]
         },
         "deployedSourceMap": {
-            "type": "string"
+            "type": ["null" ,"string"]
         },
         "mainSource": {
-            "type": "string"
+            "type": ["null" ,"string"]
         },
         "sources": {
-            "type": "object",
+            "type": ["null" ,"object"],
             "patternProperties": {
                 ".*.sol$": {
                     "type": "object",
@@ -47,13 +47,13 @@
             "additionalProperties": false
         },
         "sourceList": {
-            "type": "array",
+            "type": ["null" ,"array"],
             "items": {
                 "type": "string"
             }
         },
         "version": {
-            "type": "string"
+            "type": ["null" ,"string"]
         },
         "analysisMode": {
             "enum": ["quick", "full"]
