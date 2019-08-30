@@ -39,6 +39,7 @@ class Analysis(BaseResponse):
         run_time: int = 0,
         client_tool_name: str = None,
         error: str = None,
+        info: str = None,
     ):
         self.uuid = uuid
         self.api_version = api_version
@@ -52,6 +53,7 @@ class Analysis(BaseResponse):
         self.submitted_by = submitted_by
         self.client_tool_name = client_tool_name
         self.error = error
+        self.info = info
 
     @classmethod
     def from_dict(cls, d):
@@ -83,6 +85,8 @@ class Analysis(BaseResponse):
         }
         if self.error is not None:
             d.update({"error": self.error})
+        if self.info is not None:
+            d.update({"info": self.error})
 
         return d
 
@@ -101,6 +105,7 @@ class Analysis(BaseResponse):
                 self.submitted_by == candidate.submitted_by,
                 self.client_tool_name == candidate.client_tool_name,
                 self.error == candidate.error,
+                self.info == candidate.info
             )
         )
 
