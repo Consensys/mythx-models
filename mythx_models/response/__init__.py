@@ -18,3 +18,4 @@ from mythx_models.response.issue import (
 from mythx_models.response.oas import OASResponse
 from mythx_models.response.version import VersionResponse
 from mythx_models.response.issue import SourceMap
+from mythx_models.response.analysis_input import AnalysisInputResponse
