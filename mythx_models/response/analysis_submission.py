@@ -28,7 +28,7 @@ class AnalysisSubmissionResponse(BaseResponse):
         return cls(analysis=Analysis.from_dict(d))
 
     def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """

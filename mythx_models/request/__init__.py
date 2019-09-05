@@ -9,3 +9,4 @@ from mythx_models.request.auth_refresh import AuthRefreshRequest
 from mythx_models.request.detected_issues import DetectedIssuesRequest
 from mythx_models.request.oas import OASRequest
 from mythx_models.request.version import VersionRequest
+from mythx_models.request.analysis_input import AnalysisInputRequest
