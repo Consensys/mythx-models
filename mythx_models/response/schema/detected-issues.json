@@ -24,6 +24,30 @@
                         "extra"
                     ],
                     "properties": {
+                        "decodedLocations": {
+                            "type": [
+                                "null",
+                                "array"
+                            ],
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "properties": {
+                                        "column": {
+                                            "type": "integer"
+                                        },
+                                        "line": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            }
+                        },
                         "swcID": {
                             "type": "string",
                             "default": ""

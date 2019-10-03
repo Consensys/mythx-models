@@ -170,7 +170,7 @@ class SourceLocation(JSONSerializable):
         )
 
     def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+        """Serialize the response model to a Python dict.
         :return: A dict holding the request model data
         """
 
@@ -192,6 +192,51 @@ class SourceLocation(JSONSerializable):
         )
 
 
+class DecodedLocation(JSONSerializable):
+    """A source location decoded by the API to line and column numbers."""
+
+    def __init__(self, start_line, start_column, end_line, end_column):
+        self.start_line = start_line
+        self.start_column = start_column
+        self.end_line = end_line
+        self.end_column = end_column
+
+    @classmethod
+    def from_dict(cls, l: list):
+        """Create the response domain model from a dict.
+
+        :param l: The list to deserialize from
+        :return: The domain model with the data from :code:`d` filled in
+        """
+
+        return cls(
+            start_line=l[0]["line"],
+            start_column=l[0]["column"],
+            end_line=l[1]["line"],
+            end_column=l[1]["column"],
+        )
+
+    def to_dict(self):
+        """Serialize the response model to a Python dict.
+
+        :return: A dict holding the request model data
+        """
+
+        return [
+            {"line": self.start_line, "column": self.start_column},
+            {"line": self.end_line, "column": self.end_column},
+        ]
+
+    def __eq__(self, other: "DecodedLocation"):
+        return all(
+            (
+                self.start_line == other.start_line,
+                self.start_column == other.start_column,
+                self.end_line == other.end_line,
+                self.end_column == other.end_column,
+            )
+        )
+
 
 class Issue(JSONSerializable):
     """The API response domain model for a single issue object."""
@@ -205,6 +250,7 @@ class Issue(JSONSerializable):
         severity: Severity,
         locations: List[SourceLocation],
         extra: Dict[str, Any],
+        decoded_locations: List[DecodedLocation] = None,
     ):
         self.swc_id = swc_id
         self.swc_title = swc_title
@@ -212,6 +258,7 @@ class Issue(JSONSerializable):
         self.description_long = description_long
         self.severity = severity
         self.locations = locations
+        self.decoded_locations = decoded_locations or []
         self.extra_data = extra
 
     @classmethod
@@ -221,7 +268,8 @@ class Issue(JSONSerializable):
         :param d: The dict to deserialize from
         :return: The domain model with the data from :code:`d` filled in
         """
-        locs = [
+
+        locations = [
             SourceLocation(
                 source_map=loc.get("sourceMap"),
                 source_type=loc.get("sourceType"),
@@ -230,13 +278,17 @@ class Issue(JSONSerializable):
             )
             for loc in d["locations"]
         ]
+        decoded_locations = [
+            DecodedLocation.from_dict(l) for l in d.get("decodedLocations", [])
+        ]
         return cls(
             swc_id=d["swcID"],
             swc_title=d["swcTitle"],
             description_short=d["description"]["head"],
             description_long=d["description"]["tail"],
             severity=Severity(d["severity"]) if d["severity"] else Severity.NONE,
-            locations=locs,
+            locations=locations,
+            decoded_locations=decoded_locations,
             extra=d["extra"],
         )
 
@@ -245,7 +297,7 @@ class Issue(JSONSerializable):
 
         :return: A dict holding the request model data
         """
-        return {
+        result = {
             "swcID": self.swc_id,
             "swcTitle": self.swc_title,
             "description": {
@@ -256,3 +308,9 @@ class Issue(JSONSerializable):
             "locations": [loc.to_dict() for loc in self.locations],
             "extra": self.extra_data,
         }
+        if self.decoded_locations:
+            result.update(
+                {"decodedLocations": [loc.to_dict() for loc in self.decoded_locations]}
+            )
+
+        return result

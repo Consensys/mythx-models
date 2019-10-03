@@ -105,7 +105,7 @@ class Analysis(BaseResponse):
                 self.submitted_by == candidate.submitted_by,
                 self.client_tool_name == candidate.client_tool_name,
                 self.error == candidate.error,
-                self.info == candidate.info
+                self.info == candidate.info,
             )
         )
 

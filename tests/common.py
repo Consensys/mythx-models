@@ -21,6 +21,7 @@ from mythx_models.response import (
     AuthRefreshResponse,
     DetectedIssuesResponse,
     Issue,
+    DecodedLocation,
     IssueReport,
     OASResponse,
     Severity,
@@ -98,6 +99,9 @@ SOURCE_LIST = ["PublicStorageArray.sol"]
 SOLC_VERSION = "0.5.0+commit.1d4f565a.Linux.g++"
 ANALYSIS_MODE = "full"
 
+DECODED_LOCATIONS = [[{"line": 1, "column": 2}, {"line": 3, "column": 4}]]
+DECODED_LOCATIONS_OBJ = [DecodedLocation(start_line=1, start_column=2, end_line=3, end_column=4)]
+
 GLOBAL_LOGOUT = False
 ETH_ADDRESS = "0x0"
 PASSWORD = "supersecure1337"
@@ -117,6 +121,7 @@ ISSUE_DICT = {
     "description": {"head": DESCRIPTION_HEAD, "tail": DESCRIPTION_TAIL},
     "severity": SEVERITY,
     "locations": [SOURCE_LOCATION],
+    "decodedLocations": DECODED_LOCATIONS,
     "extra": {},
 }
 ISSUE_OBJECT = Issue(
@@ -133,6 +138,7 @@ ISSUE_OBJECT = Issue(
             source_list=SOURCE_LIST,
         )
     ],
+    decoded_locations=DECODED_LOCATIONS_OBJ,
     extra={},
 )
 
@@ -380,6 +386,7 @@ ISSUE_REPORT_DICT = {
                     "sourceList": SOURCE_LIST,
                 }
             ],
+            "decodedLocations": DECODED_LOCATIONS,
             "extra": {},
         }
     ],
