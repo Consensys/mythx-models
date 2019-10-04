@@ -279,7 +279,7 @@ class Issue(JSONSerializable):
             for loc in d["locations"]
         ]
         decoded_locations = [
-            DecodedLocation.from_dict(l) for l in d.get("decodedLocations", [])
+            DecodedLocation.from_dict(l) for l in d.get("decodedLocations", []) if l
         ]
         return cls(
             swc_id=d["swcID"],

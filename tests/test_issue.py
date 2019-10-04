@@ -60,3 +60,27 @@ def test_decoded_locations_removed():
     issue = Issue.from_dict(issue_data)
     assert_issue(issue, skip_decoded=True)
     assert "decodedLocations" not in issue.to_dict()
+
+
+def test_decoded_locations_empty_removed():
+    issue_data = deepcopy(testdata.ISSUE_DICT)
+    issue_data["decodedLocations"] = []
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, skip_decoded=True)
+    assert "decodedLocations" not in issue.to_dict()
+
+
+def test_decoded_locations_only_removed():
+    issue_data = deepcopy(testdata.ISSUE_DICT)
+    issue_data["decodedLocations"] = [[]]
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, skip_decoded=True)
+    assert "decodedLocations" not in issue.to_dict()
+
+
+def test_decoded_locations_empty_skip():
+    issue_data = deepcopy(testdata.ISSUE_DICT)
+    issue_data["decodedLocations"].append([])
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, skip_decoded=True)
+    assert "decodedLocations" in issue.to_dict()
