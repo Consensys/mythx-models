@@ -2,15 +2,21 @@
 History
 =======
 
-1.3.5 (2019-10-04)
+1.4.1 (2019-10-04)
+------------------
+
+- Add fix for edge case where decoded locations are empty but still given
+
+
+1.4.0 (2019-10-04)
 ------------------
 
 - Update pytest from 5.1.2 to 5.2.0
 - Add support for decoded locations
 
 
-1.3.4 (2019-09-19)
-------------------
+1.3.4 + 1.3.5 (2019-09-19)
+--------------------------
 
 - Lift :code:`jsonschema` dependency even more for broad support
 
