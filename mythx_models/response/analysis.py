@@ -40,6 +40,7 @@ class Analysis(BaseResponse):
         client_tool_name: str = None,
         error: str = None,
         info: str = None,
+        group_id: str = None,
     ):
         self.uuid = uuid
         self.api_version = api_version
@@ -54,6 +55,7 @@ class Analysis(BaseResponse):
         self.client_tool_name = client_tool_name
         self.error = error
         self.info = info
+        self.group_id = group_id
 
     @classmethod
     def from_dict(cls, d):
@@ -82,6 +84,7 @@ class Analysis(BaseResponse):
             "submittedAt": serialize_api_timestamp(self.submitted_at),
             "submittedBy": self.submitted_by,
             "clientToolName": self.client_tool_name,
+            "groupId": self.group_id,
         }
         if self.error is not None:
             d.update({"error": self.error})
@@ -106,6 +109,7 @@ class Analysis(BaseResponse):
                 self.client_tool_name == candidate.client_tool_name,
                 self.error == candidate.error,
                 self.info == candidate.info,
+                self.group_id == candidate.group_id,
             )
         )
 
