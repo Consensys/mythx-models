@@ -109,6 +109,9 @@ ETH_ADDRESS = "0x0"
 PASSWORD = "supersecure1337"
 MOCK_API_URL = "mock://test.com/path"
 
+GROUP_ID_1 = "1680a1e2-b908-4c9a-a15b-636ef9b61487"
+GROUP_ID_2 = "2680a1e2-b908-4c9a-a15b-636ef9b61487"
+
 
 # ISSUE
 SOURCE_LOCATION = {
@@ -157,6 +160,7 @@ ANALYSIS_DICT = {
     "uuid": UUID_1,
     "clientToolName": CLIENT_TOOL_NAME_1,
     "runTime": 0,
+    "groupId": GROUP_ID_1,
 }
 ANALYSIS_OBJECT = Analysis(
     uuid=UUID_1,
@@ -169,6 +173,7 @@ ANALYSIS_OBJECT = Analysis(
     client_tool_name=CLIENT_TOOL_NAME_1,
     submitted_at=SUBMITTED_AT_1,
     submitted_by=SUBMITTED_BY_1,
+    group_id=GROUP_ID_1,
 )
 
 # LOGIN
@@ -259,6 +264,7 @@ ANALYSIS_SUBMISSION_RESPONSE_DICT = {
     "submittedAt": SUBMITTED_AT_1,
     "submittedBy": SUBMITTED_BY_1,
     "clientToolName": CLIENT_TOOL_NAME_1,
+    "groupId": GROUP_ID_1,
 }
 ANALYSIS_SUBMISSION_RESPONSE_OBJECT = AnalysisSubmissionResponse(
     analysis=Analysis(
@@ -273,6 +279,7 @@ ANALYSIS_SUBMISSION_RESPONSE_OBJECT = AnalysisSubmissionResponse(
         submitted_at=SUBMITTED_AT_1,
         submitted_by=SUBMITTED_BY_1,
         client_tool_name=CLIENT_TOOL_NAME_1,
+        group_id=GROUP_ID_1,
     )
 )
 
@@ -293,6 +300,7 @@ ANALYSIS_STATUS_RESPONSE_OBJECT = AnalysisStatusResponse(
         submitted_at=SUBMITTED_AT_1,
         submitted_by=SUBMITTED_BY_1,
         client_tool_name=CLIENT_TOOL_NAME_1,
+        group_id=GROUP_ID_1,
     )
 )
 
@@ -321,6 +329,7 @@ ANALYSIS_LIST_RESPONSE_DICT = {
             "submittedAt": SUBMITTED_AT_1,
             "submittedBy": SUBMITTED_BY_1,
             "clientToolName": CLIENT_TOOL_NAME_1,
+            "groupId": GROUP_ID_1,
         },
         {
             "uuid": UUID_2,
@@ -334,6 +343,7 @@ ANALYSIS_LIST_RESPONSE_DICT = {
             "submittedAt": SUBMITTED_AT_2,
             "submittedBy": SUBMITTED_BY_2,
             "clientToolName": CLIENT_TOOL_NAME_2,
+            "groupId": GROUP_ID_2,
         },
     ],
     "total": 2,
@@ -352,6 +362,7 @@ ANALYSIS_LIST_RESPONSE_OBJECT = AnalysisListResponse(
             submitted_at=SUBMITTED_AT_1,
             submitted_by=SUBMITTED_BY_1,
             client_tool_name=CLIENT_TOOL_NAME_1,
+            group_id=GROUP_ID_1,
         ),
         Analysis(
             uuid=UUID_2,
@@ -365,6 +376,7 @@ ANALYSIS_LIST_RESPONSE_OBJECT = AnalysisListResponse(
             submitted_at=SUBMITTED_AT_2,
             submitted_by=SUBMITTED_BY_2,
             client_tool_name=CLIENT_TOOL_NAME_2,
+            group_id=GROUP_ID_2,
         ),
     ],
     total=2,
