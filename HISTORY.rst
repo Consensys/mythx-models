@@ -2,6 +2,22 @@
 History
 =======
 
+1.5.1 (2019-10-31)
+------------------
+
+- Fix bug where new API field would raise a TypeError
+- Update :code:`pytest` to 5.2.2
+- Update :code:`sphinx` to 2.2.1
+
+
+1.5.0 (2019-10-19)
+------------------
+
+- Added support to group_id in models
+- Update :code:`pytest` to 5.2.1
+- Update :code:`pytest-cov` to 2.8.1
+
+
 1.4.1 (2019-10-04)
 ------------------
 
