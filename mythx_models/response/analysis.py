@@ -1,11 +1,15 @@
 """This module contains domain models regarding analysis jobs"""
 
 from enum import Enum
+import logging
 
 from inflection import underscore
 
 from mythx_models.response.base import BaseResponse
 from mythx_models.util import deserialize_api_timestamp, serialize_api_timestamp
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class AnalysisStatus(str, Enum):
@@ -41,6 +45,8 @@ class Analysis(BaseResponse):
         error: str = None,
         info: str = None,
         group_id: str = None,
+        *args,
+        **kwargs,
     ):
         self.uuid = uuid
         self.api_version = api_version
@@ -56,6 +62,10 @@ class Analysis(BaseResponse):
         self.error = error
         self.info = info
         self.group_id = group_id
+
+        if args or kwargs:
+            logging.warning("Got unexpected arguments args={}, kwargs={}".format(args, kwargs))
+
 
     @classmethod
     def from_dict(cls, d):
