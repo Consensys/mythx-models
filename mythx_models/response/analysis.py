@@ -63,7 +63,7 @@ class Analysis(BaseResponse):
         self.group_id = group_id
 
         if args or kwargs:
-            logging.warning(
+            LOGGER.warning(
                 "Got unexpected arguments args={}, kwargs={}".format(args, kwargs)
             )
 
