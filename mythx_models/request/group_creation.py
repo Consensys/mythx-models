@@ -1,14 +1,28 @@
-"""This module contains the GroupRequest domain model."""
+"""This module contains the AuthLogoutRequest domain model."""
 
-from mythx_models.exceptions import ValidationError
+import json
+from typing import Dict
+
 from mythx_models.request.base import BaseRequest
+from mythx_models.util import resolve_schema
 
 
-class GroupStatusRequest(BaseRequest):
-    """Perform an API request that gets data for the specified group ID."""
+class GroupCreationRequest(BaseRequest):
+    """Perform an API request creates a new analysis group."""
 
-    def __init__(self, group_id: str):
-        self.group_id = group_id
+    with open(resolve_schema(__file__, "group-creation.json")) as sf:
+        schema = json.load(sf)
+
+    def __init__(self, group_name: str = ""):
+        self.group_name = group_name
+
+    @property
+    def endpoint(self):
+        """The API's logout endpoint.
+
+        :return: A string denoting the group endpoint without the host prefix
+        """
+        return "v1/analysis-groups"
 
     @property
     def method(self):
@@ -16,29 +30,21 @@ class GroupStatusRequest(BaseRequest):
 
         :return: The uppercase HTTP method, e.g. "POST"
         """
-        return "GET"
-
-    @property
-    def endpoint(self):
-        """The API's group status endpoint.
-
-        :return: A string denoting the status endpoint without the host prefix
-        """
-        return "v1/analysis-groups/{}".format(self.group_id)
-
-    @property
-    def headers(self):
-        """Additional request headers.
-
-        :return: A dict (str -> str) instance mapping header name to header content
-        """
-        return {}
+        return "POST"
 
     @property
     def parameters(self):
         """Additional URL parameters
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
+        """
+        return {}
+
+    @property
+    def headers(self):
+        """Additional request headers.
+
+        :return: A dict (str -> str) instance mapping header name to header content
         """
         return {}
 
@@ -51,7 +57,7 @@ class GroupStatusRequest(BaseRequest):
         return {}
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d: Dict):
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -60,14 +66,14 @@ class GroupStatusRequest(BaseRequest):
         :param d: The dict to deserialize from
         :return: The domain model with the data from :code:`d` filled in
         """
-        group_id = d.get("group_id")
-        if group_id is None:
-            raise ValidationError("Missing group_id field in data {}".format(d))
-        return cls(group_id=group_id)
+        cls.validate(d)
+        return cls(group_name=d["groupName"])
 
     def to_dict(self):
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
         """
-        return {"group_id": self.group_id}
+        d = {"groupName": self.group_name}
+        self.validate(d)
+        return d
