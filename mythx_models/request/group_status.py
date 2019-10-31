@@ -2,8 +2,6 @@
 
 from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
-from mythx_models.util import resolve_schema
-import json
 
 
 class GroupRequest(BaseRequest):
