@@ -6,7 +6,7 @@ from mythx_models.util import resolve_schema
 
 
 class AnalysisSubmissionResponse(BaseResponse):
-    """The API response domain model for a successful analysis job submision."""
+    """The API response domain model for a successful analysis job submission."""
 
     with open(resolve_schema(__file__, "analysis-submission.json")) as sf:
         schema = json.load(sf)
