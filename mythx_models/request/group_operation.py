@@ -3,11 +3,10 @@
 from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
 
-
 GROUP_OPERATION_KEYS = ("type", "group_id")
 
 
-class GroupStatusRequest(BaseRequest):
+class GroupOperationRequest(BaseRequest):
     """Perform an API request that performs an action on the specified group ID."""
 
     def __init__(self, group_id: str, type_: str):

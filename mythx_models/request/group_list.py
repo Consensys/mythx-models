@@ -8,14 +8,20 @@ import dateutil.parser
 from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
 
-
 GROUP_LIST_KEYS = ("offset", "createdBy", "groupName", "dateFrom", "dateTo")
 
 
 class GroupListRequest(BaseRequest):
     """Perform an API request that lists the logged in user's past analyses."""
 
-    def __init__(self, offset: int, created_by: str, group_name: str, date_from: datetime, date_to: datetime):
+    def __init__(
+        self,
+        offset: int,
+        created_by: str,
+        group_name: str,
+        date_from: datetime,
+        date_to: datetime,
+    ):
         self.offset = offset
         self.created_by = created_by
         self.group_name = group_name
@@ -74,9 +80,7 @@ class GroupListRequest(BaseRequest):
         """
         if not all(k in d for k in GROUP_LIST_KEYS):
             raise ValidationError(
-                "Not all required keys {} found in data {}".format(
-                    GROUP_LIST_KEYS, d
-                )
+                "Not all required keys {} found in data {}".format(GROUP_LIST_KEYS, d)
             )
         req = cls(
             offset=d["offset"],

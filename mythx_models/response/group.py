@@ -2,9 +2,10 @@
 
 import logging
 from enum import Enum
+from typing import Dict, List
 
 from inflection import underscore
-from typing import List, Dict
+
 from mythx_models.response.base import BaseResponse
 from mythx_models.util import deserialize_api_timestamp, serialize_api_timestamp
 
@@ -14,7 +15,16 @@ LOGGER = logging.getLogger(__name__)
 class GroupStatistics(BaseResponse):
     """A container class holding data about a group's analysis jobs"""
 
-    def __init__(self, total: int, queued: int, running: int, failed: int, finished: int, *args, **kwargs):
+    def __init__(
+        self,
+        total: int,
+        queued: int,
+        running: int,
+        failed: int,
+        finished: int,
+        *args,
+        **kwargs
+    ):
         self.total = total
         self.queued = queued
         self.running = running
@@ -79,11 +89,7 @@ class VulnerabilityStatistics(BaseResponse):
 
         :return: A dict holding the request model data
         """
-        d = {
-            "high": self.high,
-            "medium": self.medium,
-            "low": self.low,
-        }
+        d = {"high": self.high, "medium": self.medium, "low": self.low}
         return d
 
 
@@ -126,7 +132,9 @@ class Group(BaseResponse):
         self.main_source_files = main_source_files
         self.status = GroupState(status.lower())
         self.analysis_statistics = GroupStatistics.from_dict(analysis_statistics)
-        self.vulnerability_statistics = VulnerabilityStatistics.from_dict(vulnerability_statistics)
+        self.vulnerability_statistics = VulnerabilityStatistics.from_dict(
+            vulnerability_statistics
+        )
 
         if args or kwargs:
             logging.warning(
@@ -159,7 +167,6 @@ class Group(BaseResponse):
             "status": self.status.lower(),
             "numAnalyses": self.analysis_statistics.to_dict(),
             "numVulnerabilities": self.vulnerability_statistics.to_dict(),
-
         }
         return d
 

@@ -1,7 +1,7 @@
 import json
 
-from mythx_models.response.group import Group
 from mythx_models.response.base import BaseResponse
+from mythx_models.response.group import Group
 from mythx_models.util import resolve_schema
 
 

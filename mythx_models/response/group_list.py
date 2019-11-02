@@ -2,8 +2,8 @@ import json
 from typing import List
 
 from mythx_models.exceptions import ValidationError
-from mythx_models.response.group import Group
 from mythx_models.response.base import BaseResponse
+from mythx_models.response.group import Group
 from mythx_models.util import resolve_schema
 
 INDEX_ERROR_MSG = "Group at index {} was not fetched"
@@ -50,10 +50,7 @@ class GroupListResponse(BaseResponse):
 
         :return: A dict holding the request model data
         """
-        d = {
-            "groups": [a.to_dict() for a in self.groups],
-            "total": len(self.groups),
-        }
+        d = {"groups": [a.to_dict() for a in self.groups], "total": len(self.groups)}
         self.validate(d)
         return d
 
