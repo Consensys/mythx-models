@@ -82,6 +82,7 @@ class GroupListRequest(BaseRequest):
             raise ValidationError(
                 "Not all required keys {} found in data {}".format(GROUP_LIST_KEYS, d)
             )
+        # TODO: Validate whether offset valid integer
         req = cls(
             offset=d["offset"],
             created_by=d["createdBy"],

@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 import dateutil.parser
 
 from mythx_models.request import (
@@ -433,3 +436,10 @@ def generate_request_dict(req):
         "headers": req.headers,
         "url": "https://test.com/" + req.endpoint,
     }
+
+
+def get_test_case(path):
+    with open(Path(__file__).parent / path) as f:
+        json_data = f.read()
+        dict_data = json.loads(json_data)
+    return json_data, dict_data

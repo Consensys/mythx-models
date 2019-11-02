@@ -63,6 +63,7 @@ class GroupStatusRequest(BaseRequest):
         group_id = d.get("group_id")
         if group_id is None:
             raise ValidationError("Missing group_id field in data {}".format(d))
+        # TODO: Validate whether UUID
         return cls(group_id=group_id)
 
     def to_dict(self):
