@@ -69,6 +69,7 @@ class GroupOperationRequest(BaseRequest):
                     GROUP_OPERATION_KEYS, d
                 )
             )
+        # TODO: Validate UUID and correct type
         return cls(group_id=d["group_id"], type_=d["type"])
 
     def to_dict(self):
