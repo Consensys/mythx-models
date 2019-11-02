@@ -1,7 +1,8 @@
 import json
+from datetime import datetime
 
 import pytest
-from datetime import datetime
+
 from mythx_models.exceptions import ValidationError
 from mythx_models.request import GroupListRequest
 
