@@ -60,6 +60,15 @@ class GroupStatistics(BaseResponse):
         }
         return d
 
+    def __eq__(self, other: "GroupStatistics"):
+        return all((
+            self.total == other.total,
+            self.queued == other.queued,
+            self.running == other.running,
+            self.failed == other.failed,
+            self.finished == other.finished
+        ))
+
 
 class VulnerabilityStatistics(BaseResponse):
     """A container class holding data about a group's vulnerabilities"""
@@ -91,6 +100,13 @@ class VulnerabilityStatistics(BaseResponse):
         """
         d = {"high": self.high, "medium": self.medium, "low": self.low}
         return d
+
+    def __eq__(self, other: "VulnerabilityStatistics"):
+        return all((
+            self.high == other.high,
+            self.medium == other.medium,
+            self.low == other.low
+        ))
 
 
 class GroupState(str, Enum):
@@ -149,6 +165,9 @@ class Group(BaseResponse):
         :return: The domain model with the data from :code:`d` filled in
         """
         d = {underscore(k): v for k, v in d.items()}
+        d["identifier"] = d.pop("id")
+        d["vulnerability_statistics"] = d.pop("num_vulnerabilities")
+        d["analysis_statistics"] = d.pop("num_analyses")
         return cls(**d)
 
     def to_dict(self):
@@ -169,6 +188,20 @@ class Group(BaseResponse):
             "numVulnerabilities": self.vulnerability_statistics.to_dict(),
         }
         return d
+
+    def __eq__(self, other: "Group"):
+        return all((
+            self.identifier == other.identifier,
+            self.name == other.name,
+            self.created_at == other.created_at,
+            self.created_by == other.created_by,
+            self.completed_at == other.completed_at,
+            self.progress == other.progress,
+            self.main_source_files == other.main_source_files,
+            self.status == other.status,
+            self.analysis_statistics == other.analysis_statistics,
+            self.vulnerability_statistics == other.vulnerability_statistics
+        ))
 
     def __repr__(self):
         return "<Group id={} name={}>".format(self.identifier, self.name)
