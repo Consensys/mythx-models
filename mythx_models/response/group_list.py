@@ -86,10 +86,10 @@ class GroupListResponse(BaseResponse):
     def __contains__(self, item: Group):
         if not type(item) in (Group, str):
             raise ValueError(
-                "Expected type Analysis or str but got {}".format(type(item))
+                "Expected type Group or str but got {}".format(type(item))
             )
         identifier = item.identifier if type(item) == Group else item
         return identifier in map(lambda x: x.identifier, self.groups)
 
     def __eq__(self, candidate):
-        return self.total == candidate.total and self.groups == candidate.analyses
+        return self.total == candidate.total and self.groups == candidate.groups
