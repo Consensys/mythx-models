@@ -20,18 +20,6 @@ class GroupListResponse(BaseResponse):
         self.total = total
 
     @classmethod
-    def validate(cls, candidate):
-        """Validate the response data structure and add an explicit type check.
-
-        :param candidate: The Python dict to validate
-        """
-        super().validate(candidate)
-        if not type(candidate) == dict:
-            raise ValidationError(
-                "Expected type dict but got {}".format(type(candidate))
-            )
-
-    @classmethod
     def from_dict(cls, d: dict):
         """Create the response domain model from a dict.
 
