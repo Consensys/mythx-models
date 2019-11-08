@@ -64,7 +64,7 @@ def test_from_valid_dict():
 
 def test_from_invalid_dict():
     with pytest.raises(ValidationError):
-        GroupListResponse.from_dict("[]")
+        GroupListResponse.from_dict([])
 
 
 def test_from_empty_dict():

@@ -18,6 +18,7 @@ def assert_request(req: GroupStatusRequest):
     assert req.headers == {}
     assert req.parameters == {}
     assert req.payload == {}
+    assert req.endpoint == "v1/analysis-groups/test"
 
 
 def test_from_invalid_json():

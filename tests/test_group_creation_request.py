@@ -17,6 +17,7 @@ def assert_request(req):
     assert req.headers == {}
     assert req.parameters == {}
     assert req.payload == {}
+    assert req.endpoint == "v1/analysis-groups"
 
 
 def test_from_valid_json():

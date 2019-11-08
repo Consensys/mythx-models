@@ -22,6 +22,7 @@ def assert_request(req: GroupListRequest):
     assert req.method == "GET"
     assert req.parameters == DICT_DATA
     assert req.headers == {}
+    assert req.endpoint == "v1/analysis-groups"
 
 
 def test_analysis_list_request_from_valid_json():
