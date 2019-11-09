@@ -44,6 +44,8 @@ class Analysis(BaseResponse):
         error: str = None,
         info: str = None,
         group_id: str = None,
+        analysis_mode: str = None,
+        group_name: str = None,
         *args,
         **kwargs
     ):
@@ -61,6 +63,8 @@ class Analysis(BaseResponse):
         self.error = error
         self.info = info
         self.group_id = group_id
+        self.group_name = group_name
+        self.analysis_mode = analysis_mode
 
         if args or kwargs:
             LOGGER.warning(
@@ -94,6 +98,8 @@ class Analysis(BaseResponse):
             "submittedAt": serialize_api_timestamp(self.submitted_at),
             "submittedBy": self.submitted_by,
             "clientToolName": self.client_tool_name,
+            "analysisMode": self.analysis_mode,
+            "groupName": self.group_name,
             "groupId": self.group_id,
         }
         if self.error is not None:
@@ -103,7 +109,7 @@ class Analysis(BaseResponse):
 
         return d
 
-    def __eq__(self, candidate):
+    def __eq__(self, candidate: "Analysis"):
         return all(
             (
                 self.uuid == candidate.uuid,
@@ -120,6 +126,8 @@ class Analysis(BaseResponse):
                 self.error == candidate.error,
                 self.info == candidate.info,
                 self.group_id == candidate.group_id,
+                self.analysis_mode == candidate.analysis_mode,
+                self.group_name == candidate.group_name,
             )
         )
 
