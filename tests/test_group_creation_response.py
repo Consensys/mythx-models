@@ -31,7 +31,7 @@ def assert_response(resp: GroupCreationResponse):
         total=0, queued=0, running=0, failed=0, finished=0
     )
     assert g.vulnerability_statistics == VulnerabilityStatistics(
-        high=0, medium=0, low=0
+        high=0, medium=0, low=0, none=0
     )
 
 

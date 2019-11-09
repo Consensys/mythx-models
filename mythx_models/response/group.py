@@ -73,10 +73,11 @@ class GroupStatistics(BaseResponse):
 class VulnerabilityStatistics(BaseResponse):
     """A container class holding data about a group's vulnerabilities"""
 
-    def __init__(self, high: int, medium: int, low: int, *args, **kwargs):
+    def __init__(self, high: int, medium: int, low: int, none: int, *args, **kwargs):
         self.high = high
         self.medium = medium
         self.low = low
+        self.none = none
 
         if args or kwargs:
             LOGGER.warning(
@@ -98,14 +99,15 @@ class VulnerabilityStatistics(BaseResponse):
 
         :return: A dict holding the request model data
         """
-        d = {"high": self.high, "medium": self.medium, "low": self.low}
+        d = {"high": self.high, "medium": self.medium, "low": self.low, "none": self.none}
         return d
 
     def __eq__(self, other: "VulnerabilityStatistics"):
         return all((
             self.high == other.high,
             self.medium == other.medium,
-            self.low == other.low
+            self.low == other.low,
+            self.none == other.none,
         ))
 
 
@@ -153,7 +155,7 @@ class Group(BaseResponse):
         )
 
         if args or kwargs:
-            logging.warning(
+            LOGGER.warning(
                 "Got unexpected arguments args={}, kwargs={}".format(args, kwargs)
             )
 
@@ -200,7 +202,7 @@ class Group(BaseResponse):
             self.main_source_files == other.main_source_files,
             self.status == other.status,
             self.analysis_statistics == other.analysis_statistics,
-            self.vulnerability_statistics == other.vulnerability_statistics
+            self.vulnerability_statistics == other.vulnerability_statistics,
         ))
 
     def __repr__(self):
