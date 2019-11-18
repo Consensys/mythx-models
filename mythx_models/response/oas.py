@@ -47,3 +47,6 @@ class OASResponse(BaseResponse):
         """
         d = {"data": self.data}
         return d
+
+    def __eq__(self, other: "OASResponse"):
+        return self.data == other.data

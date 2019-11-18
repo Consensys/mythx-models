@@ -80,4 +80,7 @@ class GroupListResponse(BaseResponse):
         return identifier in map(lambda x: x.identifier, self.groups)
 
     def __eq__(self, candidate):
-        return self.total == candidate.total and self.groups == candidate.groups
+        return all((
+            self.total == candidate.total,
+            self.groups == candidate.groups,
+        ))

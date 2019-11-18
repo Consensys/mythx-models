@@ -78,3 +78,6 @@ class DetectedIssuesRequest(AnalysisStatusRequest):
         d = {"uuid": self.uuid}
         self.validate(d)
         return d
+
+    def __eq__(self, other: "DetectedIssuesRequest"):
+        return self.uuid == other.uuid

@@ -83,3 +83,9 @@ class AuthRefreshRequest(BaseRequest):
         d = {"jwtTokens": {"access": self.access_token, "refresh": self.refresh_token}}
         self.validate(d)
         return d
+
+    def __eq__(self, other: "AuthRefreshRequest"):
+        return all((
+            self.access_token == other.access_token,
+            self.refresh_token == other.refresh_token,
+        ))
