@@ -105,3 +105,12 @@ class GroupListRequest(BaseRequest):
             "dateFrom": self.date_from.isoformat() if self.date_from else None,
             "dateTo": self.date_to.isoformat() if self.date_to else None,
         }
+
+    def __eq__(self, other: "GroupListRequest"):
+        return all((
+            self.offset == other.offset,
+            self.created_by == other.created_by,
+            self.group_name == other.group_name,
+            self.date_from == other.date_from,
+            self.date_to == other.date_to,
+        ))

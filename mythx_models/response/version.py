@@ -58,3 +58,12 @@ class VersionResponse(BaseResponse):
         }
         self.validate(d)
         return d
+
+    def __eq__(self, other: "VersionResponse"):
+        return all((
+            self.api_version == other.api_version,
+            self.maru_version == other.maru_version,
+            self.mythril_version == other.mythril_version,
+            self.harvey_version == other.harvey_version,
+            self.hashed_version == other.hashed_version,
+        ))

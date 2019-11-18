@@ -38,3 +38,6 @@ class AnalysisSubmissionResponse(BaseResponse):
 
     def __getattr__(self, name):
         return getattr(self.analysis, name)
+
+    def __eq__(self, other: "AnalysisSubmissionResponse"):
+        return self.analysis == other.analysis

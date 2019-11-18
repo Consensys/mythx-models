@@ -71,3 +71,6 @@ class AnalysisStatusRequest(BaseRequest):
         :return: A dict holding the request model data
         """
         return {"uuid": self.uuid}
+
+    def __eq__(self, other: "AnalysisStatusRequest"):
+        return self.uuid == other.uuid

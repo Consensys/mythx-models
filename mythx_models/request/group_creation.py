@@ -77,3 +77,6 @@ class GroupCreationRequest(BaseRequest):
         d = {"groupName": self.group_name}
         self.validate(d)
         return d
+
+    def __eq__(self, other: "GroupCreationRequest"):
+        return self.group_name == other.group_name

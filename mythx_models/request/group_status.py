@@ -72,3 +72,6 @@ class GroupStatusRequest(BaseRequest):
         :return: A dict holding the request model data
         """
         return {"group_id": self.group_id}
+
+    def __eq__(self, other: "GroupStatusRequest"):
+        return self.group_id == other.group_id
