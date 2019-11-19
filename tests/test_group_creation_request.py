@@ -16,7 +16,7 @@ def assert_request(req):
     assert req.method == "POST"
     assert req.headers == {}
     assert req.parameters == {}
-    assert req.payload == {}
+    assert req.payload == {"groupName": "test"}
     assert req.endpoint == "v1/analysis-groups"
 
 

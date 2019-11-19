@@ -54,7 +54,7 @@ class GroupCreationRequest(BaseRequest):
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
         """
-        return {}
+        return {"groupName": self.group_name}
 
     @classmethod
     def from_dict(cls, d: Dict):
