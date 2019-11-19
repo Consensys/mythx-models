@@ -16,7 +16,7 @@
             "type": "string"
         },
         "completedAt": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "progress": {
             "type": "integer"
