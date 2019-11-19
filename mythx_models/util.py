@@ -13,7 +13,7 @@ def deserialize_api_timestamp(timestamp_str: str):
     :param timestamp_str: The JS timestamp, e.g. :code:`2019-01-10T01:29:38.410Z`
     :return: A Python datetime object
     """
-    return dateutil.parser.parse(timestamp_str)
+    return dateutil.parser.parse(timestamp_str) if timestamp_str else None
 
 
 def serialize_api_timestamp(ts_obj: datetime):
@@ -22,6 +22,8 @@ def serialize_api_timestamp(ts_obj: datetime):
     :param ts_obj: A Python datetime object
     :return: The JS timestamp, e.g. :code:`2019-01-10T01:29:38.410Z`
     """
+    if not ts_obj:
+        return None
     ts_str = ts_obj.strftime("%Y-%m-%dT%H:%M:%S.%f")
     # chop off last 3 digits because JS
     return ts_str[:-3] + "Z"
