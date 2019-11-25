@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 
 from mythx_models.response import (
     Issue,
@@ -11,15 +12,17 @@ from mythx_models.response import (
 from . import common as testdata
 
 
-def assert_issue(issue: Issue):
+def assert_issue(issue: Issue, skip_decoded=False):
     assert issue.swc_id == testdata.SWC_ID
     assert issue.swc_title == testdata.SWC_TITLE
     assert issue.description_short == testdata.DESCRIPTION_HEAD
     assert issue.description_long == testdata.DESCRIPTION_TAIL
     assert issue.severity == Severity(testdata.SEVERITY)
+    if not skip_decoded:
+        assert issue.decoded_locations == testdata.DECODED_LOCATIONS_OBJ
     assert len(issue.locations) == 1
     location = issue.locations[0]
-    assert location.source_map == testdata.SOURCE_MAP
+    assert location.source_map.to_sourcemap() == testdata.SOURCE_MAP
     assert location.source_format == SourceFormat.EVM_BYZANTIUM_BYTECODE
     assert location.source_type == SourceType.RAW_BYTECODE
     assert location.source_list == testdata.SOURCE_LIST
@@ -47,5 +50,37 @@ def test_source_location_from_dict():
     sl = SourceLocation.from_dict(testdata.SOURCE_LOCATION)
     assert sl.source_format == testdata.SOURCE_FORMAT
     assert sl.source_list == testdata.SOURCE_LIST
-    assert sl.source_map == testdata.SOURCE_MAP
+    assert sl.source_map.to_sourcemap() == testdata.SOURCE_MAP
     assert sl.source_type == testdata.SOURCE_TYPE
+
+
+def test_decoded_locations_removed():
+    issue_data = deepcopy(testdata.ISSUE_DICT)
+    del issue_data["decodedLocations"]
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, skip_decoded=True)
+    assert "decodedLocations" not in issue.to_dict()
+
+
+def test_decoded_locations_empty_removed():
+    issue_data = deepcopy(testdata.ISSUE_DICT)
+    issue_data["decodedLocations"] = []
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, skip_decoded=True)
+    assert "decodedLocations" not in issue.to_dict()
+
+
+def test_decoded_locations_only_removed():
+    issue_data = deepcopy(testdata.ISSUE_DICT)
+    issue_data["decodedLocations"] = [[]]
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, skip_decoded=True)
+    assert "decodedLocations" not in issue.to_dict()
+
+
+def test_decoded_locations_empty_skip():
+    issue_data = deepcopy(testdata.ISSUE_DICT)
+    issue_data["decodedLocations"].append([])
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, skip_decoded=True)
+    assert "decodedLocations" in issue.to_dict()

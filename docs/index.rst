@@ -1,5 +1,5 @@
-Welcome to the PythX docs!
-==========================
+Welcome to the MythX Domain Model docs!
+=======================================
 
 .. toctree::
     :maxdepth: 2

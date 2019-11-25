@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 import dateutil.parser
 
 from mythx_models.request import (
@@ -19,6 +22,7 @@ from mythx_models.response import (
     AuthLoginResponse,
     AuthLogoutResponse,
     AuthRefreshResponse,
+    DecodedLocation,
     DetectedIssuesResponse,
     Issue,
     IssueReport,
@@ -98,11 +102,19 @@ SOURCE_LIST = ["PublicStorageArray.sol"]
 SOLC_VERSION = "0.5.0+commit.1d4f565a.Linux.g++"
 ANALYSIS_MODE = "full"
 
+DECODED_LOCATIONS = [[{"line": 1, "column": 2}, {"line": 3, "column": 4}]]
+DECODED_LOCATIONS_OBJ = [
+    DecodedLocation(start_line=1, start_column=2, end_line=3, end_column=4)
+]
+
 GLOBAL_LOGOUT = False
 ETH_ADDRESS = "0x0"
 PASSWORD = "supersecure1337"
 MOCK_API_URL = "mock://test.com/path"
 
+GROUP_ID_1 = "1680a1e2-b908-4c9a-a15b-636ef9b61487"
+GROUP_ID_2 = "2680a1e2-b908-4c9a-a15b-636ef9b61487"
+GROUP_NAME = "test"
 
 # ISSUE
 SOURCE_LOCATION = {
@@ -117,6 +129,7 @@ ISSUE_DICT = {
     "description": {"head": DESCRIPTION_HEAD, "tail": DESCRIPTION_TAIL},
     "severity": SEVERITY,
     "locations": [SOURCE_LOCATION],
+    "decodedLocations": DECODED_LOCATIONS,
     "extra": {},
 }
 ISSUE_OBJECT = Issue(
@@ -133,6 +146,7 @@ ISSUE_OBJECT = Issue(
             source_list=SOURCE_LIST,
         )
     ],
+    decoded_locations=DECODED_LOCATIONS_OBJ,
     extra={},
 )
 
@@ -148,7 +162,10 @@ ANALYSIS_DICT = {
     "submittedBy": SUBMITTED_BY_1,
     "uuid": UUID_1,
     "clientToolName": CLIENT_TOOL_NAME_1,
+    "analysisMode": ANALYSIS_MODE,
+    "groupName": GROUP_NAME,
     "runTime": 0,
+    "groupId": GROUP_ID_1,
 }
 ANALYSIS_OBJECT = Analysis(
     uuid=UUID_1,
@@ -161,6 +178,9 @@ ANALYSIS_OBJECT = Analysis(
     client_tool_name=CLIENT_TOOL_NAME_1,
     submitted_at=SUBMITTED_AT_1,
     submitted_by=SUBMITTED_BY_1,
+    group_id=GROUP_ID_1,
+    group_name=GROUP_NAME,
+    analysis_mode=ANALYSIS_MODE
 )
 
 # LOGIN
@@ -251,6 +271,9 @@ ANALYSIS_SUBMISSION_RESPONSE_DICT = {
     "submittedAt": SUBMITTED_AT_1,
     "submittedBy": SUBMITTED_BY_1,
     "clientToolName": CLIENT_TOOL_NAME_1,
+    "groupId": GROUP_ID_1,
+    "groupName": GROUP_NAME,
+    "analysisMode": ANALYSIS_MODE,
 }
 ANALYSIS_SUBMISSION_RESPONSE_OBJECT = AnalysisSubmissionResponse(
     analysis=Analysis(
@@ -265,6 +288,9 @@ ANALYSIS_SUBMISSION_RESPONSE_OBJECT = AnalysisSubmissionResponse(
         submitted_at=SUBMITTED_AT_1,
         submitted_by=SUBMITTED_BY_1,
         client_tool_name=CLIENT_TOOL_NAME_1,
+        group_id=GROUP_ID_1,
+        analysis_mode=ANALYSIS_MODE,
+        group_name=GROUP_NAME,
     )
 )
 
@@ -285,6 +311,9 @@ ANALYSIS_STATUS_RESPONSE_OBJECT = AnalysisStatusResponse(
         submitted_at=SUBMITTED_AT_1,
         submitted_by=SUBMITTED_BY_1,
         client_tool_name=CLIENT_TOOL_NAME_1,
+        group_id=GROUP_ID_1,
+        group_name=GROUP_NAME,
+        analysis_mode=ANALYSIS_MODE,
     )
 )
 
@@ -313,6 +342,9 @@ ANALYSIS_LIST_RESPONSE_DICT = {
             "submittedAt": SUBMITTED_AT_1,
             "submittedBy": SUBMITTED_BY_1,
             "clientToolName": CLIENT_TOOL_NAME_1,
+            "groupId": GROUP_ID_1,
+            "groupName": GROUP_NAME,
+            "analysisMode": ANALYSIS_MODE,
         },
         {
             "uuid": UUID_2,
@@ -326,6 +358,9 @@ ANALYSIS_LIST_RESPONSE_DICT = {
             "submittedAt": SUBMITTED_AT_2,
             "submittedBy": SUBMITTED_BY_2,
             "clientToolName": CLIENT_TOOL_NAME_2,
+            "groupId": GROUP_ID_2,
+            "groupName": GROUP_NAME,
+            "analysisMode": ANALYSIS_MODE,
         },
     ],
     "total": 2,
@@ -344,6 +379,9 @@ ANALYSIS_LIST_RESPONSE_OBJECT = AnalysisListResponse(
             submitted_at=SUBMITTED_AT_1,
             submitted_by=SUBMITTED_BY_1,
             client_tool_name=CLIENT_TOOL_NAME_1,
+            group_id=GROUP_ID_1,
+            group_name=GROUP_NAME,
+            analysis_mode=ANALYSIS_MODE,
         ),
         Analysis(
             uuid=UUID_2,
@@ -357,6 +395,9 @@ ANALYSIS_LIST_RESPONSE_OBJECT = AnalysisListResponse(
             submitted_at=SUBMITTED_AT_2,
             submitted_by=SUBMITTED_BY_2,
             client_tool_name=CLIENT_TOOL_NAME_2,
+            group_id=GROUP_ID_2,
+            group_name=GROUP_NAME,
+            analysis_mode=ANALYSIS_MODE,
         ),
     ],
     total=2,
@@ -380,6 +421,7 @@ ISSUE_REPORT_DICT = {
                     "sourceList": SOURCE_LIST,
                 }
             ],
+            "decodedLocations": DECODED_LOCATIONS,
             "extra": {},
         }
     ],
@@ -412,3 +454,10 @@ def generate_request_dict(req):
         "headers": req.headers,
         "url": "https://test.com/" + req.endpoint,
     }
+
+
+def get_test_case(path):
+    with open(str(Path(__file__).parent / path)) as f:
+        json_data = f.read()
+        dict_data = json.loads(json_data)
+    return json_data, dict_data

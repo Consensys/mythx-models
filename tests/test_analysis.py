@@ -51,3 +51,10 @@ def test_repr():
     analysis_repr = repr(testdata.ANALYSIS_OBJECT)
     assert testdata.ANALYSIS_OBJECT.uuid in analysis_repr
     assert testdata.ANALYSIS_OBJECT.status in analysis_repr
+
+
+def test_unexpected_param():
+    data = copy(testdata.ANALYSIS_DICT)
+    data["extra_key"] = "test"
+    analysis = Analysis.from_dict(data)
+    assert_analysis(analysis)

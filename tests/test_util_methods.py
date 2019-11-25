@@ -117,6 +117,10 @@ from mythx_models.util import (
                 tzinfo=tzutc(),
             ),
         ),
+        (
+            None,
+            None,
+        ),
     ],
 )
 def test_ts_serde(api_ts, datetime_ts):

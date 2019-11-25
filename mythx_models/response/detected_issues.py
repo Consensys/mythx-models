@@ -74,6 +74,15 @@ class IssueReport(JSONSerializable):
     def __delitem__(self, key):
         del self.issues[key]
 
+    def __eq__(self, other: "IssueReport"):
+        return all((
+            self.issues == other.issues,
+            self.source_type == other.source_type,
+            self.source_format == other.source_format,
+            self.source_list == other.source_list,
+            self.meta_data == other.meta_data,
+        ))
+
 
 class DetectedIssuesResponse(BaseResponse):
     """The API response domain model for a report of the detected issues."""
@@ -114,14 +123,14 @@ class DetectedIssuesResponse(BaseResponse):
 
         return cls(issue_reports=[IssueReport.from_dict(i) for i in d["issueReports"]])
 
-    def to_dict(self):
+    def to_dict(self, as_list=False):
         """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """
         d = {"issueReports": [report.to_dict() for report in self.issue_reports]}
         self.validate(d["issueReports"])
-        return d
+        return d["issueReports"] if as_list else d
 
     def to_json(self):
         """Serialize the model to JSON format.
@@ -163,3 +172,6 @@ class DetectedIssuesResponse(BaseResponse):
 
     def __delitem__(self, key: int):
         del self.issue_reports[key]
+
+    def __eq__(self, other: "DetectedIssuesResponse"):
+        return self.issue_reports == other.issue_reports

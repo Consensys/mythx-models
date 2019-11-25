@@ -27,7 +27,7 @@ def assert_detected_issues(resp):
     assert issue.severity == Severity(testdata.SEVERITY)
     assert len(issue.locations) == 1
     location = issue.locations[0]
-    assert location.source_map == testdata.SOURCE_MAP
+    assert location.source_map.to_sourcemap() == testdata.SOURCE_MAP
     assert location.source_format == SourceFormat.EVM_BYZANTIUM_BYTECODE
     assert location.source_type == SourceType.RAW_BYTECODE
     assert location.source_list == testdata.SOURCE_LIST
@@ -41,9 +41,9 @@ def test_detected_issues_from_valid_json():
     assert_detected_issues(resp)
 
 
-def test_detected_issues_from_invalid_json():
-    with pytest.raises(ValidationError):
-        DetectedIssuesResponse.from_json("[]")
+def test_detected_issues_from_empty_json():
+    resp = DetectedIssuesResponse.from_json("[]")
+    assert resp.issue_reports == []
 
 
 def test_detected_issues_from_dict():
@@ -61,9 +61,9 @@ def test_detected_issues_from_invalid_type():
         DetectedIssuesResponse.from_dict("foo")
 
 
-def test_detected_issues_from_invalid_list():
-    with pytest.raises(ValidationError):
-        DetectedIssuesResponse.from_dict([])
+def test_detected_issues_from_empty_list():
+    resp = DetectedIssuesResponse.from_dict([])
+    assert resp.issue_reports == []
 
 
 def test_detected_issues_from_invalid_dict():

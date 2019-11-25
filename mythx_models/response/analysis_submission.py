@@ -6,7 +6,7 @@ from mythx_models.util import resolve_schema
 
 
 class AnalysisSubmissionResponse(BaseResponse):
-    """The API response domain model for a successful analysis job submision."""
+    """The API response domain model for a successful analysis job submission."""
 
     with open(resolve_schema(__file__, "analysis-submission.json")) as sf:
         schema = json.load(sf)
@@ -28,7 +28,7 @@ class AnalysisSubmissionResponse(BaseResponse):
         return cls(analysis=Analysis.from_dict(d))
 
     def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """
@@ -38,3 +38,6 @@ class AnalysisSubmissionResponse(BaseResponse):
 
     def __getattr__(self, name):
         return getattr(self.analysis, name)
+
+    def __eq__(self, other: "AnalysisSubmissionResponse"):
+        return self.analysis == other.analysis

@@ -70,3 +70,7 @@ class OASRequest(BaseRequest):
         :return: A dict holding the request model data
         """
         return {}
+
+
+    def __eq__(self, other: "OASRequest"):
+        return self.mode == other.mode

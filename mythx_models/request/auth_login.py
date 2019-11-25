@@ -80,3 +80,9 @@ class AuthLoginRequest(BaseRequest):
         d = {"ethAddress": self.eth_address, "password": self.password}
         self.validate(d)
         return d
+
+    def __eq__(self, other: "AuthLoginRequest"):
+        return all((
+            self.eth_address == other.eth_address,
+            self.password == other.password,
+        ))

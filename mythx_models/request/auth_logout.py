@@ -77,3 +77,6 @@ class AuthLogoutRequest(BaseRequest):
         d = {"global": self.global_}
         self.validate(d)
         return d
+
+    def __eq__(self, other: "AuthLogoutRequest"):
+        return self.global_ == other.global_

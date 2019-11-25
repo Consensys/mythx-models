@@ -95,4 +95,7 @@ class AnalysisListResponse(BaseResponse):
         return uuid in map(lambda x: x.uuid, self.analyses)
 
     def __eq__(self, candidate):
-        return self.total == candidate.total and self.analyses == candidate.analyses
+        return all((
+            self.total == candidate.total,
+            self.analyses == candidate.analyses,
+        ))

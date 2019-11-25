@@ -1,11 +1,14 @@
 """This module contains domain models regarding analysis jobs"""
 
+import logging
 from enum import Enum
 
 from inflection import underscore
 
 from mythx_models.response.base import BaseResponse
 from mythx_models.util import deserialize_api_timestamp, serialize_api_timestamp
+
+LOGGER = logging.getLogger(__name__)
 
 
 class AnalysisStatus(str, Enum):
@@ -39,6 +42,12 @@ class Analysis(BaseResponse):
         run_time: int = 0,
         client_tool_name: str = None,
         error: str = None,
+        info: str = None,
+        group_id: str = None,
+        analysis_mode: str = None,
+        group_name: str = None,
+        *args,
+        **kwargs
     ):
         self.uuid = uuid
         self.api_version = api_version
@@ -52,6 +61,15 @@ class Analysis(BaseResponse):
         self.submitted_by = submitted_by
         self.client_tool_name = client_tool_name
         self.error = error
+        self.info = info
+        self.group_id = group_id
+        self.group_name = group_name
+        self.analysis_mode = analysis_mode
+
+        if args or kwargs:
+            LOGGER.warning(
+                "Got unexpected arguments args={}, kwargs={}".format(args, kwargs)
+            )
 
     @classmethod
     def from_dict(cls, d):
@@ -80,13 +98,18 @@ class Analysis(BaseResponse):
             "submittedAt": serialize_api_timestamp(self.submitted_at),
             "submittedBy": self.submitted_by,
             "clientToolName": self.client_tool_name,
+            "analysisMode": self.analysis_mode,
+            "groupName": self.group_name,
+            "groupId": self.group_id,
         }
         if self.error is not None:
             d.update({"error": self.error})
+        if self.info is not None:
+            d.update({"info": self.error})
 
         return d
 
-    def __eq__(self, candidate):
+    def __eq__(self, candidate: "Analysis"):
         return all(
             (
                 self.uuid == candidate.uuid,
@@ -101,6 +124,10 @@ class Analysis(BaseResponse):
                 self.submitted_by == candidate.submitted_by,
                 self.client_tool_name == candidate.client_tool_name,
                 self.error == candidate.error,
+                self.info == candidate.info,
+                self.group_id == candidate.group_id,
+                self.analysis_mode == candidate.analysis_mode,
+                self.group_name == candidate.group_name,
             )
         )
 
