@@ -1,6 +1,6 @@
 import json
 from copy import deepcopy
-
+from typing import Dict
 import pytest
 
 from mythx_models.exceptions import ValidationError
@@ -10,6 +10,8 @@ from mythx_models.response import (
     Severity,
     SourceFormat,
     SourceType,
+    Issue,
+    SourceLocation
 )
 
 from .common import get_test_case
@@ -23,12 +25,17 @@ def assert_detected_issues(resp):
     report = resp.issue_reports[0]
     assert type(report) == IssueReport
     issue = report.issues[0]
-    data = DICT_DATA[0]["issues"][0]
+    assert_issue(issue, DICT_DATA[0]["issues"][0])
+
+
+def assert_issue(issue: Issue, data: Dict, skip_decoded: bool = False):
     assert issue.swc_id == data["swcID"]
     assert issue.swc_title == data["swcTitle"]
     assert issue.description_short == data["description"]["head"]
     assert issue.description_long == data["description"]["tail"]
     assert issue.severity == Severity(data["severity"])
+    if not skip_decoded:
+        assert issue.decoded_locations[0].to_dict() == data["decodedLocations"][0]
     assert len(issue.locations) == 1
     location = issue.locations[0]
     assert location.source_map.to_sourcemap() == data["locations"][0]["sourceMap"]
@@ -38,7 +45,7 @@ def assert_detected_issues(resp):
 
 
 def test_detected_issues_from_valid_json():
-    resp = DetectedIssuesResponse.from_json(json.dumps(DICT_DATA))
+    resp = DetectedIssuesResponse.from_json(JSON_DATA)
     assert_detected_issues(resp)
 
 
@@ -173,3 +180,62 @@ def test_invalid_delete():
 def test_invalid_report_delete():
     with pytest.raises(IndexError):
         del OBJ_DATA[0][100]
+
+
+def test_issue_from_valid_json():
+    issue = Issue.from_json(json.dumps(DICT_DATA[0]["issues"][0]))
+    assert_issue(issue, DICT_DATA[0]["issues"][0])
+
+
+def test_issue_from_dict():
+    issue = Issue.from_dict(DICT_DATA[0]["issues"][0])
+    assert_issue(issue, DICT_DATA[0]["issues"][0])
+
+
+def test_issue_to_json():
+    assert json.loads(OBJ_DATA.issue_reports[0][0].to_json()) == DICT_DATA[0]["issues"][0]
+
+
+def test_issue_to_dict():
+    assert OBJ_DATA.issue_reports[0][0].to_dict() == DICT_DATA[0]["issues"][0]
+
+
+def test_source_location_from_dict():
+    loc2 = DICT_DATA[0]["issues"][0]["locations"][0]
+    sl = SourceLocation.from_dict(loc2)
+    assert sl.source_format == loc2["sourceFormat"]
+    assert sl.source_list == loc2["sourceList"]
+    assert sl.source_map.to_sourcemap() == loc2["sourceMap"]
+    assert sl.source_type == loc2["sourceType"]
+
+
+def test_decoded_locations_removed():
+    issue_data = deepcopy(DICT_DATA[0]["issues"][0])
+    del issue_data["decodedLocations"]
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, DICT_DATA[0]["issues"][0], skip_decoded=True)
+    assert "decodedLocations" not in issue.to_dict()
+
+
+def test_decoded_locations_empty_removed():
+    issue_data = deepcopy(DICT_DATA[0]["issues"][0])
+    issue_data["decodedLocations"] = []
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, DICT_DATA[0]["issues"][0], skip_decoded=True)
+    assert "decodedLocations" not in issue.to_dict()
+
+
+def test_decoded_locations_only_removed():
+    issue_data = deepcopy(DICT_DATA[0]["issues"][0])
+    issue_data["decodedLocations"] = [[]]
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, DICT_DATA[0]["issues"][0], skip_decoded=True)
+    assert "decodedLocations" not in issue.to_dict()
+
+
+def test_decoded_locations_empty_skip():
+    issue_data = deepcopy(DICT_DATA[0]["issues"][0])
+    issue_data["decodedLocations"].append([])
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, DICT_DATA[0]["issues"][0], skip_decoded=True)
+    assert "decodedLocations" in issue.to_dict()
