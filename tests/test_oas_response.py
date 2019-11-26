@@ -5,17 +5,17 @@ import pytest
 from mythx_models.exceptions import ValidationError
 from mythx_models.response import OASResponse
 
-from . import common as testdata
+OBJ_DATA = OASResponse.from_json("openapi stuff")
 
 
 def test_oas_response_from_valid_json():
-    resp = OASResponse.from_json(testdata.OPENAPI_RESPONSE)
-    assert resp.data == testdata.OPENAPI_RESPONSE
+    resp = OASResponse.from_json("openapi stuff")
+    assert resp.data == "openapi stuff"
 
 
 def test_oas_response_from_valid_dict():
-    resp = OASResponse.from_dict({"data": testdata.OPENAPI_RESPONSE})
-    assert resp.data == testdata.OPENAPI_RESPONSE
+    resp = OASResponse.from_dict({"data": "openapi stuff"})
+    assert resp.data == "openapi stuff"
 
 
 def test_oas_response_from_invalid_dict():
@@ -29,12 +29,8 @@ def test_oas_response_invalid_type():
 
 
 def test_oas_response_to_json():
-    assert testdata.OPENAPI_RESPONSE_OBJECT.to_json() == json.dumps(
-        {"data": testdata.OPENAPI_RESPONSE}
-    )
+    assert OBJ_DATA.to_json() == json.dumps({"data": "openapi stuff"})
 
 
 def test_oas_response_to_dict():
-    assert testdata.OPENAPI_RESPONSE_OBJECT.to_dict() == {
-        "data": testdata.OPENAPI_RESPONSE
-    }
+    assert OBJ_DATA.to_dict() == {"data": "openapi stuff"}

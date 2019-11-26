@@ -5,43 +5,43 @@ import pytest
 from mythx_models.exceptions import ValidationError
 from mythx_models.response import VersionResponse
 
-from . import common as testdata
+from .common import get_test_case
+
+JSON_DATA, DICT_DATA = get_test_case("testdata/version-response.json")
+OBJ_DATA = VersionResponse.from_json(JSON_DATA)
 
 
 def assert_version_response(resp: VersionResponse):
-    assert resp.api_version == testdata.API_VERSION_1
-    assert resp.maru_version == testdata.MARU_VERSION_1
-    assert resp.mythril_version == testdata.MYTHRIL_VERSION_1
-    assert resp.harvey_version == testdata.HARVEY_VERSION_1
-    assert resp.hashed_version == testdata.HASHED_VERSION_1
+    assert resp.api_version == DICT_DATA["api"]
+    assert resp.maru_version == DICT_DATA["maru"]
+    assert resp.mythril_version == DICT_DATA["mythril"]
+    assert resp.harvey_version == DICT_DATA["harvey"]
+    assert resp.hashed_version == DICT_DATA["hash"]
 
 
-def test_auth_logout_request_from_valid_json():
-    resp = VersionResponse.from_json(json.dumps(testdata.VERSION_RESPONSE_DICT))
+def test_version_response_from_valid_json():
+    resp = VersionResponse.from_json(JSON_DATA)
     assert_version_response(resp)
 
 
-def test_auth_logout_request_from_valid_dict():
-    resp = VersionResponse.from_dict(testdata.VERSION_RESPONSE_DICT)
+def test_version_response_from_valid_dict():
+    resp = VersionResponse.from_dict(DICT_DATA)
     assert_version_response(resp)
 
 
-def test_auth_logout_request_from_invalid_dict():
+def test_version_response_from_invalid_dict():
     with pytest.raises(ValidationError):
         VersionResponse.from_dict({})
 
 
-def test_auth_logout_request_from_invalid_json():
+def test_version_response_from_invalid_json():
     with pytest.raises(ValidationError):
         VersionResponse.from_json("{}")
 
 
-def test_auth_logout_request_to_json():
-    assert (
-        json.loads(testdata.VERSION_RESPONSE_OBJECT.to_json())
-        == testdata.VERSION_RESPONSE_DICT
-    )
+def test_version_response_to_json():
+    assert json.loads(OBJ_DATA.to_json()) == DICT_DATA
 
 
-def test_auth_logout_request_to_dict():
-    assert testdata.VERSION_RESPONSE_OBJECT.to_dict() == testdata.VERSION_RESPONSE_DICT
+def test_version_response_to_dict():
+    assert OBJ_DATA.to_dict() == DICT_DATA

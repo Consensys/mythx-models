@@ -61,13 +61,15 @@ class GroupStatistics(BaseResponse):
         return d
 
     def __eq__(self, other: "GroupStatistics"):
-        return all((
-            self.total == other.total,
-            self.queued == other.queued,
-            self.running == other.running,
-            self.failed == other.failed,
-            self.finished == other.finished
-        ))
+        return all(
+            (
+                self.total == other.total,
+                self.queued == other.queued,
+                self.running == other.running,
+                self.failed == other.failed,
+                self.finished == other.finished,
+            )
+        )
 
 
 class VulnerabilityStatistics(BaseResponse):
@@ -99,16 +101,23 @@ class VulnerabilityStatistics(BaseResponse):
 
         :return: A dict holding the request model data
         """
-        d = {"high": self.high, "medium": self.medium, "low": self.low, "none": self.none}
+        d = {
+            "high": self.high,
+            "medium": self.medium,
+            "low": self.low,
+            "none": self.none,
+        }
         return d
 
     def __eq__(self, other: "VulnerabilityStatistics"):
-        return all((
-            self.high == other.high,
-            self.medium == other.medium,
-            self.low == other.low,
-            self.none == other.none,
-        ))
+        return all(
+            (
+                self.high == other.high,
+                self.medium == other.medium,
+                self.low == other.low,
+                self.none == other.none,
+            )
+        )
 
 
 class GroupState(str, Enum):
@@ -192,18 +201,20 @@ class Group(BaseResponse):
         return d
 
     def __eq__(self, other: "Group"):
-        return all((
-            self.identifier == other.identifier,
-            self.name == other.name,
-            self.created_at == other.created_at,
-            self.created_by == other.created_by,
-            self.completed_at == other.completed_at,
-            self.progress == other.progress,
-            self.main_source_files == other.main_source_files,
-            self.status == other.status,
-            self.analysis_statistics == other.analysis_statistics,
-            self.vulnerability_statistics == other.vulnerability_statistics,
-        ))
+        return all(
+            (
+                self.identifier == other.identifier,
+                self.name == other.name,
+                self.created_at == other.created_at,
+                self.created_by == other.created_by,
+                self.completed_at == other.completed_at,
+                self.progress == other.progress,
+                self.main_source_files == other.main_source_files,
+                self.status == other.status,
+                self.analysis_statistics == other.analysis_statistics,
+                self.vulnerability_statistics == other.vulnerability_statistics,
+            )
+        )
 
     def __repr__(self):
         return "<Group id={} name={}>".format(self.identifier, self.name)

@@ -75,13 +75,15 @@ class IssueReport(JSONSerializable):
         del self.issues[key]
 
     def __eq__(self, other: "IssueReport"):
-        return all((
-            self.issues == other.issues,
-            self.source_type == other.source_type,
-            self.source_format == other.source_format,
-            self.source_list == other.source_list,
-            self.meta_data == other.meta_data,
-        ))
+        return all(
+            (
+                self.issues == other.issues,
+                self.source_type == other.source_type,
+                self.source_format == other.source_format,
+                self.source_list == other.source_list,
+                self.meta_data == other.meta_data,
+            )
+        )
 
 
 class DetectedIssuesResponse(BaseResponse):

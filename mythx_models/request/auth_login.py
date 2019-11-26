@@ -82,7 +82,6 @@ class AuthLoginRequest(BaseRequest):
         return d
 
     def __eq__(self, other: "AuthLoginRequest"):
-        return all((
-            self.eth_address == other.eth_address,
-            self.password == other.password,
-        ))
+        return all(
+            (self.eth_address == other.eth_address, self.password == other.password)
+        )

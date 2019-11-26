@@ -1,17 +1,19 @@
 import json
+from copy import deepcopy
+from datetime import datetime
 
 import pytest
-from copy import deepcopy
+from dateutil.tz import tzutc
+
 from mythx_models.exceptions import ValidationError
 from mythx_models.response import (
     Group,
+    GroupListResponse,
     GroupState,
     GroupStatistics,
-    GroupListResponse,
     VulnerabilityStatistics,
 )
-from datetime import datetime
-from dateutil.tz import tzutc
+
 from .common import get_test_case
 
 JSON_DATA, DICT_DATA = get_test_case("testdata/group-list-response.json")
@@ -38,9 +40,7 @@ def assert_response_data(expected, g: Group):
 def test_from_valid_json():
     assert len(OBJ_DATA.groups) == 2
     for i, group in enumerate(OBJ_DATA.groups):
-        assert_response_data(
-            DICT_DATA["groups"][i], group
-        )
+        assert_response_data(DICT_DATA["groups"][i], group)
 
 
 def test_from_invalid_json():
@@ -57,9 +57,7 @@ def test_from_valid_dict():
     resp = GroupListResponse.from_dict(DICT_DATA)
     assert len(resp.groups) == 2
     for i, group in enumerate(resp.groups):
-        assert_response_data(
-            DICT_DATA["groups"][i], group
-        )
+        assert_response_data(DICT_DATA["groups"][i], group)
 
 
 def test_from_invalid_dict():
@@ -88,9 +86,7 @@ def test_iteration():
 
 
 def test_valid_getitem():
-    for idx, group in list(
-        enumerate(OBJ_DATA.groups)
-    ):
+    for idx, group in list(enumerate(OBJ_DATA.groups)):
         assert OBJ_DATA[idx] == group
 
 
@@ -121,9 +117,7 @@ def test_valid_setitem():
     group_list[0] = "foo"
     assert group_list.groups[0] == "foo"
     assert group_list[0] == "foo"
-    assert len(group_list.groups) == len(
-        OBJ_DATA.groups
-    )
+    assert len(group_list.groups) == len(OBJ_DATA.groups)
 
 
 def test_invalid_setitem():
@@ -133,9 +127,7 @@ def test_invalid_setitem():
 
 def test_reversed():
     group_list = deepcopy(OBJ_DATA)
-    assert list(reversed(group_list)) == list(
-        reversed(OBJ_DATA.groups)
-    )
+    assert list(reversed(group_list)) == list(reversed(OBJ_DATA.groups))
     assert group_list.total == OBJ_DATA.total
 
 

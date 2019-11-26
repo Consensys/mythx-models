@@ -1,16 +1,17 @@
 import json
+from datetime import datetime
 
 import pytest
+from dateutil.tz import tzutc
 
 from mythx_models.exceptions import ValidationError
 from mythx_models.response import (
+    GroupOperationResponse,
     GroupState,
     GroupStatistics,
-    GroupOperationResponse,
     VulnerabilityStatistics,
 )
-from datetime import datetime
-from dateutil.tz import tzutc
+
 from .common import get_test_case
 
 JSON_DATA, DICT_DATA = get_test_case("testdata/group-operation-response.json")

@@ -5,20 +5,23 @@ import pytest
 from mythx_models.exceptions import ValidationError
 from mythx_models.request import AuthRefreshRequest
 
-from . import common as testdata
+from .common import get_test_case
+
+JSON_DATA, DICT_DATA = get_test_case("testdata/auth-refresh-request.json")
+OBJ_DATA = AuthRefreshRequest.from_json(JSON_DATA)
 
 
 def assert_auth_refresh_request(req: AuthRefreshRequest):
-    assert req.access_token == testdata.ACCESS_TOKEN_1
-    assert req.refresh_token == testdata.REFRESH_TOKEN_1
+    assert req.access_token == DICT_DATA["jwtTokens"]["access"]
+    assert req.refresh_token == DICT_DATA["jwtTokens"]["refresh"]
     assert req.method == "POST"
     assert req.headers == {}
     assert req.parameters == {}
-    assert req.payload == testdata.REFRESH_REQUEST_PAYLOAD_DICT
+    assert req.payload == DICT_DATA
 
 
 def test_auth_refresh_request_from_valid_json():
-    resp = AuthRefreshRequest.from_json(json.dumps(testdata.REFRESH_REQUEST_DICT))
+    resp = AuthRefreshRequest.from_json(JSON_DATA)
     assert_auth_refresh_request(resp)
 
 
@@ -28,7 +31,7 @@ def test_auth_refresh_request_from_invalid_json():
 
 
 def test_auth_refresh_request_from_valid_dict():
-    resp = AuthRefreshRequest.from_dict(testdata.REFRESH_REQUEST_DICT)
+    resp = AuthRefreshRequest.from_dict(DICT_DATA)
     assert_auth_refresh_request(resp)
 
 
@@ -38,11 +41,8 @@ def test_auth_refresh_request_from_invalid_dict():
 
 
 def test_auth_refresh_request_to_json():
-    assert (
-        json.loads(testdata.REFRESH_REQUEST_OBJECT.to_json())
-        == testdata.REFRESH_REQUEST_DICT
-    )
+    assert json.loads(OBJ_DATA.to_json()) == DICT_DATA
 
 
 def test_auth_refresh_request_to_dict():
-    assert testdata.REFRESH_REQUEST_OBJECT.to_dict() == testdata.REFRESH_REQUEST_DICT
+    assert OBJ_DATA.to_dict() == DICT_DATA

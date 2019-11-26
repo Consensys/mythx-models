@@ -73,14 +73,9 @@ class GroupListResponse(BaseResponse):
 
     def __contains__(self, item: Group):
         if not type(item) in (Group, str):
-            raise ValueError(
-                "Expected type Group or str but got {}".format(type(item))
-            )
+            raise ValueError("Expected type Group or str but got {}".format(type(item)))
         identifier = item.identifier if type(item) == Group else item
         return identifier in map(lambda x: x.identifier, self.groups)
 
     def __eq__(self, candidate):
-        return all((
-            self.total == candidate.total,
-            self.groups == candidate.groups,
-        ))
+        return all((self.total == candidate.total, self.groups == candidate.groups))

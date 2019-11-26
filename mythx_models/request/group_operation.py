@@ -80,7 +80,4 @@ class GroupOperationRequest(BaseRequest):
         return {"group_id": self.group_id, "type": self.type}
 
     def __eq__(self, other: "GroupOperationRequest"):
-        return all((
-            self.group_id == other.group_id,
-            self.type == other.type,
-        ))
+        return all((self.group_id == other.group_id, self.type == other.type))

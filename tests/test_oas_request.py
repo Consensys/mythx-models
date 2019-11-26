@@ -3,7 +3,10 @@ import pytest
 from mythx_models.exceptions import ValidationError
 from mythx_models.request import OASRequest
 
-from . import common as testdata
+from .common import get_test_case
+
+JSON_DATA, DICT_DATA = get_test_case("testdata/oas-request.json")
+OBJ_DATA = OASRequest.from_json(JSON_DATA)
 
 
 def assert_version_request(req):
@@ -33,8 +36,8 @@ def test_invalid_format():
 
 
 def test_oas_request_to_json():
-    assert testdata.OPENAPI_REQUEST_OBJECT.to_json() == "{}"
+    assert OBJ_DATA.to_json() == "{}"
 
 
 def test_oas_request_to_dict():
-    assert testdata.OPENAPI_REQUEST_OBJECT.to_dict() == {}
+    assert OBJ_DATA.to_dict() == {}

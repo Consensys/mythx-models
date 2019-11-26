@@ -5,20 +5,23 @@ import pytest
 from mythx_models.exceptions import ValidationError
 from mythx_models.request import AuthLoginRequest
 
-from . import common as testdata
+from .common import get_test_case
+
+JSON_DATA, DICT_DATA = get_test_case("testdata/auth-login-request.json")
+OBJ_DATA = AuthLoginRequest.from_json(JSON_DATA)
 
 
 def assert_login(req: AuthLoginRequest):
-    assert req.eth_address == testdata.ETH_ADDRESS
-    assert req.password == testdata.PASSWORD
+    assert req.eth_address == DICT_DATA["ethAddress"]
+    assert req.password == DICT_DATA["password"]
     assert req.method == "POST"
     assert req.headers == {}
     assert req.parameters == {}
-    assert req.payload == testdata.LOGIN_REQUEST_DICT
+    assert req.payload == DICT_DATA
 
 
 def test_login_from_valid_json():
-    req = AuthLoginRequest.from_json(json.dumps(testdata.LOGIN_REQUEST_DICT))
+    req = AuthLoginRequest.from_json(JSON_DATA)
     assert_login(req)
 
 
@@ -28,7 +31,7 @@ def test_login_from_invalid_json():
 
 
 def test_login_from_valid_dict():
-    req = AuthLoginRequest.from_dict(testdata.LOGIN_REQUEST_DICT)
+    req = AuthLoginRequest.from_dict(DICT_DATA)
     assert_login(req)
 
 
@@ -38,11 +41,8 @@ def test_login_from_invalid_dict():
 
 
 def test_login_to_json():
-    assert (
-        json.loads(testdata.LOGIN_REQUEST_OBJECT.to_json())
-        == testdata.LOGIN_REQUEST_DICT
-    )
+    assert json.loads(OBJ_DATA.to_json()) == DICT_DATA
 
 
 def test_login_to_dict():
-    assert testdata.LOGIN_REQUEST_OBJECT.to_dict() == testdata.LOGIN_REQUEST_DICT
+    assert OBJ_DATA.to_dict() == DICT_DATA
