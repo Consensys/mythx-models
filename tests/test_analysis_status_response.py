@@ -6,7 +6,10 @@ from mythx_models.exceptions import ValidationError
 from mythx_models.response import Analysis, AnalysisStatusResponse
 from mythx_models.util import serialize_api_timestamp
 
-from . import common as testdata
+from .common import get_test_case
+
+JSON_DATA, DICT_DATA = get_test_case("testdata/analysis-status-response.json")
+OBJ_DATA = AnalysisStatusResponse.from_json(JSON_DATA)
 
 
 def assert_analysis_data(expected, analysis: Analysis):
@@ -24,9 +27,9 @@ def assert_analysis_data(expected, analysis: Analysis):
 
 def test_analysis_list_from_valid_json():
     resp = AnalysisStatusResponse.from_json(
-        json.dumps(testdata.ANALYSIS_STATUS_RESPONSE_DICT)
+        JSON_DATA
     )
-    assert_analysis_data(testdata.ANALYSIS_STATUS_RESPONSE_DICT, resp.analysis)
+    assert_analysis_data(DICT_DATA, resp.analysis)
 
 
 def test_analysis_list_from_empty_json():
@@ -35,8 +38,8 @@ def test_analysis_list_from_empty_json():
 
 
 def test_analysis_list_from_valid_dict():
-    resp = AnalysisStatusResponse.from_dict(testdata.ANALYSIS_STATUS_RESPONSE_DICT)
-    assert_analysis_data(testdata.ANALYSIS_STATUS_RESPONSE_DICT, resp.analysis)
+    resp = AnalysisStatusResponse.from_dict(DICT_DATA)
+    assert_analysis_data(DICT_DATA, resp.analysis)
 
 
 def test_analysis_list_from_empty_dict():
@@ -45,10 +48,8 @@ def test_analysis_list_from_empty_dict():
 
 
 def test_analysis_list_to_dict():
-    d = testdata.ANALYSIS_STATUS_RESPONSE_OBJECT.to_dict()
-    assert d == testdata.ANALYSIS_STATUS_RESPONSE_DICT
+    assert OBJ_DATA.to_dict() == DICT_DATA
 
 
 def test_analysis_list_to_json():
-    json_str = testdata.ANALYSIS_STATUS_RESPONSE_OBJECT.to_json()
-    assert json.loads(json_str) == testdata.ANALYSIS_STATUS_RESPONSE_DICT
+    assert json.loads(OBJ_DATA.to_json()) == DICT_DATA
