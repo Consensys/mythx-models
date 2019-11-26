@@ -8,7 +8,10 @@ from mythx_models.response import AnalysisListResponse
 from mythx_models.response.analysis import Analysis
 from mythx_models.util import serialize_api_timestamp
 
-from . import common as testdata
+from .common import get_test_case
+
+JSON_DATA, DICT_DATA = get_test_case("testdata/analysis-list-response.json")
+OBJ_DATA = AnalysisListResponse.from_json(JSON_DATA)
 
 
 def assert_analysis_data(expected, analysis: Analysis):
@@ -22,16 +25,16 @@ def assert_analysis_data(expected, analysis: Analysis):
     assert expected["submittedAt"] == serialize_api_timestamp(analysis.submitted_at)
     assert expected["submittedBy"] == analysis.submitted_by
     assert expected["uuid"] == analysis.uuid
+    assert expected["groupName"] == analysis.group_name
+    assert expected["groupId"] == analysis.group_id
+    assert expected["analysisMode"] == analysis.analysis_mode
 
 
 def test_analysis_list_from_valid_json():
-    resp = AnalysisListResponse.from_json(
-        json.dumps(testdata.ANALYSIS_LIST_RESPONSE_DICT)
-    )
-    assert len(resp.analyses) == 2
-    for i, analysis in enumerate(resp.analyses):
+    assert len(OBJ_DATA.analyses) == 2
+    for i, analysis in enumerate(OBJ_DATA.analyses):
         assert_analysis_data(
-            testdata.ANALYSIS_LIST_RESPONSE_DICT["analyses"][i], analysis
+            DICT_DATA["analyses"][i], analysis
         )
 
 
@@ -46,11 +49,10 @@ def test_analysis_list_from_empty_json():
 
 
 def test_analysis_list_from_valid_dict():
-    resp = AnalysisListResponse.from_dict(testdata.ANALYSIS_LIST_RESPONSE_DICT)
-    assert len(resp.analyses) == 2
-    for i, analysis in enumerate(resp.analyses):
+    assert len(OBJ_DATA.analyses) == 2
+    for i, analysis in enumerate(OBJ_DATA.analyses):
         assert_analysis_data(
-            testdata.ANALYSIS_LIST_RESPONSE_DICT["analyses"][i], analysis
+            DICT_DATA["analyses"][i], analysis
         )
 
 
@@ -65,109 +67,107 @@ def test_analysis_list_from_empty_dict():
 
 
 def test_analysis_list_to_dict():
-    d = testdata.ANALYSIS_LIST_RESPONSE_OBJECT.to_dict()
-    assert d == testdata.ANALYSIS_LIST_RESPONSE_DICT
+    assert OBJ_DATA.to_dict() == DICT_DATA
 
 
 def test_analysis_list_to_json():
-    json_str = testdata.ANALYSIS_LIST_RESPONSE_OBJECT.to_json()
-    assert json.loads(json_str) == testdata.ANALYSIS_LIST_RESPONSE_DICT
+    assert json.loads(OBJ_DATA.to_json()) == DICT_DATA
 
 
 def test_iteration():
-    uuids = (testdata.UUID_1, testdata.UUID_2)
+    uuids = ("0680a1e2-b908-4c9a-a15b-636ef9b61486", "0680a1e2-b908-4c9a-a15b-636ef9b61487")
     # XXX: Don't use zip here to make sure __iter__ returns
-    for idx, analysis in enumerate(testdata.ANALYSIS_LIST_RESPONSE_OBJECT):
+    for idx, analysis in enumerate(OBJ_DATA):
         assert uuids[idx] == analysis.uuid
 
 
 def test_valid_getitem():
     for idx, analysis in list(
-        enumerate(testdata.ANALYSIS_LIST_RESPONSE_OBJECT.analyses)
+        enumerate(OBJ_DATA.analyses)
     ):
-        assert testdata.ANALYSIS_LIST_RESPONSE_OBJECT[idx] == analysis
+        assert OBJ_DATA[idx] == analysis
 
 
 def test_invalid_getitem_index():
     with pytest.raises(IndexError):
-        testdata.ANALYSIS_LIST_RESPONSE_OBJECT[1337]
+        OBJ_DATA[1337]
 
 
 def test_oob_getitem_slice():
-    testdata.ANALYSIS_LIST_RESPONSE_OBJECT[1337:9001] == []
+    assert OBJ_DATA[1337:9001] == []
 
 
 def test_valid_delitem():
-    analysis_list = deepcopy(testdata.ANALYSIS_LIST_RESPONSE_OBJECT)
+    analysis_list = deepcopy(OBJ_DATA)
     del analysis_list[0]
-    assert analysis_list.analyses == testdata.ANALYSIS_LIST_RESPONSE_OBJECT.analyses[1:]
-    assert analysis_list.total == testdata.ANALYSIS_LIST_RESPONSE_OBJECT.total - 1
-    assert len(analysis_list) == testdata.ANALYSIS_LIST_RESPONSE_OBJECT.total - 1
+    assert analysis_list.analyses == OBJ_DATA[1:]
+    assert analysis_list.total == OBJ_DATA.total - 1
+    assert len(analysis_list) == OBJ_DATA.total - 1
 
 
 def test_invalid_delitem():
     with pytest.raises(IndexError):
-        del testdata.ANALYSIS_LIST_RESPONSE_OBJECT[1337]
+        del OBJ_DATA[1337]
 
 
 def test_valid_setitem():
-    analysis_list = deepcopy(testdata.ANALYSIS_LIST_RESPONSE_OBJECT)
+    analysis_list = deepcopy(OBJ_DATA)
     analysis_list[0] = "foo"
     assert analysis_list.analyses[0] == "foo"
     assert analysis_list[0] == "foo"
     assert len(analysis_list.analyses) == len(
-        testdata.ANALYSIS_LIST_RESPONSE_OBJECT.analyses
+        OBJ_DATA.analyses
     )
 
 
 def test_invalid_setitem():
     with pytest.raises(IndexError):
-        testdata.ANALYSIS_LIST_RESPONSE_OBJECT[1337] = "foo"
+        OBJ_DATA[1337] = "foo"
 
 
 def test_reversed():
-    analysis_list = deepcopy(testdata.ANALYSIS_LIST_RESPONSE_OBJECT)
+    analysis_list = deepcopy(OBJ_DATA)
     assert list(reversed(analysis_list)) == list(
-        reversed(testdata.ANALYSIS_LIST_RESPONSE_OBJECT.analyses)
+        reversed(OBJ_DATA.analyses)
     )
-    assert analysis_list.total == testdata.ANALYSIS_LIST_RESPONSE_OBJECT.total
+    assert analysis_list.total == OBJ_DATA.total
 
 
 def test_valid_object_contains():
-    assert testdata.ANALYSIS_OBJECT in testdata.ANALYSIS_LIST_RESPONSE_OBJECT
+    assert OBJ_DATA.analyses[0] in OBJ_DATA
 
 
 def test_valid_uuid_contains():
-    assert testdata.ANALYSIS_OBJECT.uuid in testdata.ANALYSIS_LIST_RESPONSE_OBJECT
+    assert OBJ_DATA.analyses[0].uuid in OBJ_DATA
 
 
 def test_contains_error():
     with pytest.raises(ValueError):
-        1 in testdata.ANALYSIS_LIST_RESPONSE_OBJECT
+        1 in OBJ_DATA
 
 
 def test_invalid_object_contains():
-    analysis = deepcopy(testdata.ANALYSIS_OBJECT)
+    analysis = deepcopy(OBJ_DATA.analyses[0])
     analysis.uuid = "something else"
-    assert not analysis in testdata.ANALYSIS_LIST_RESPONSE_OBJECT
+    assert analysis not in OBJ_DATA
 
 
 def test_invalid_uuid_contains():
-    assert not "foo" in testdata.ANALYSIS_LIST_RESPONSE_OBJECT
+    assert "foo" not in OBJ_DATA
 
 
 def test_list_not_equals():
-    analysis_list = deepcopy(testdata.ANALYSIS_LIST_RESPONSE_OBJECT)
+    analysis_list = deepcopy(OBJ_DATA)
     analysis_list.total = 0
-    assert analysis_list != testdata.ANALYSIS_LIST_RESPONSE_OBJECT
+    assert analysis_list != OBJ_DATA
 
 
 def test_nested_analysis_not_equals():
-    analysis_list = deepcopy(testdata.ANALYSIS_LIST_RESPONSE_OBJECT)
+    analysis_list = deepcopy(OBJ_DATA)
     analysis_list.analyses[0].uuid = "foo"
-    assert analysis_list != testdata.ANALYSIS_LIST_RESPONSE_OBJECT
+    assert analysis_list != OBJ_DATA
 
 
 def test_valid_equals():
-    analysis_list = deepcopy(testdata.ANALYSIS_LIST_RESPONSE_OBJECT)
-    assert analysis_list == testdata.ANALYSIS_LIST_RESPONSE_OBJECT
+    analysis_list = deepcopy(OBJ_DATA)
+    assert analysis_list == OBJ_DATA
