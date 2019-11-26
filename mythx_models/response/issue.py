@@ -96,12 +96,9 @@ class SourceMapLocation:
         return "<SourceMapComponent ({})>".format(self.to_component_string())
 
     def __eq__(self, other: "SourceMapLocation"):
-        return all((
-            self.o == other.o,
-            self.l == other.l,
-            self.f == other.f,
-            self.j == other.j,
-        ))
+        return all(
+            (self.o == other.o, self.l == other.l, self.f == other.f, self.j == other.j)
+        )
 
 
 class SourceMap:
@@ -327,13 +324,15 @@ class Issue(JSONSerializable):
         return result
 
     def __eq__(self, other: "Issue"):
-        return all((
-            self.swc_id == other.swc_id,
-            self.swc_title == other.swc_title,
-            self.description_short == other.description_short,
-            self.description_long == other.description_long,
-            self.severity == other.severity,
-            self.locations == other.locations,
-            self.decoded_locations == other.decoded_locations,
-            self.extra_data == other.extra_data,
-        ))
+        return all(
+            (
+                self.swc_id == other.swc_id,
+                self.swc_title == other.swc_title,
+                self.description_short == other.description_short,
+                self.description_long == other.description_long,
+                self.severity == other.severity,
+                self.locations == other.locations,
+                self.decoded_locations == other.decoded_locations,
+                self.extra_data == other.extra_data,
+            )
+        )

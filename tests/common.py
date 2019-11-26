@@ -180,7 +180,7 @@ ANALYSIS_OBJECT = Analysis(
     submitted_by=SUBMITTED_BY_1,
     group_id=GROUP_ID_1,
     group_name=GROUP_NAME,
-    analysis_mode=ANALYSIS_MODE
+    analysis_mode=ANALYSIS_MODE,
 )
 
 # LOGIN
@@ -327,6 +327,8 @@ ANALYSIS_LIST_REQUEST_OBJECT = AnalysisListRequest(
     offset=OFFSET,
     date_from=dateutil.parser.parse(DATE_FROM),
     date_to=dateutil.parser.parse(DATE_TO),
+    created_by="test",
+    group_name=GROUP_NAME,
 )
 ANALYSIS_LIST_RESPONSE_DICT = {
     "analyses": [

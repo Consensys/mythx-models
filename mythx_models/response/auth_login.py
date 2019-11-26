@@ -41,7 +41,9 @@ class AuthLoginResponse(BaseResponse):
         return d
 
     def __eq__(self, other: "AuthLoginResponse"):
-        return all((
-            self.access_token == other.access_token,
-            self.refresh_token == other.refresh_token
-        ))
+        return all(
+            (
+                self.access_token == other.access_token,
+                self.refresh_token == other.refresh_token,
+            )
+        )

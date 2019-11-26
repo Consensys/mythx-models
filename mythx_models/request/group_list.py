@@ -107,10 +107,12 @@ class GroupListRequest(BaseRequest):
         }
 
     def __eq__(self, other: "GroupListRequest"):
-        return all((
-            self.offset == other.offset,
-            self.created_by == other.created_by,
-            self.group_name == other.group_name,
-            self.date_from == other.date_from,
-            self.date_to == other.date_to,
-        ))
+        return all(
+            (
+                self.offset == other.offset,
+                self.created_by == other.created_by,
+                self.group_name == other.group_name,
+                self.date_from == other.date_from,
+                self.date_to == other.date_to,
+            )
+        )

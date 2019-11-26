@@ -71,6 +71,5 @@ class OASRequest(BaseRequest):
         """
         return {}
 
-
     def __eq__(self, other: "OASRequest"):
         return self.mode == other.mode

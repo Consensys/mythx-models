@@ -14,10 +14,19 @@ ANALYSIS_LIST_KEYS = ("offset", "dateFrom", "dateTo")
 class AnalysisListRequest(BaseRequest):
     """Perform an API request that lists the logged in user's past analyses."""
 
-    def __init__(self, offset: int, date_from: datetime, date_to: datetime):
+    def __init__(
+        self,
+        offset: int,
+        date_from: datetime,
+        date_to: datetime,
+        created_by: str,
+        group_name: str,
+    ):
         self.offset = offset
         self.date_from = date_from
         self.date_to = date_to
+        self.created_by = created_by
+        self.group_name = group_name
 
     @property
     def endpoint(self):
@@ -79,6 +88,8 @@ class AnalysisListRequest(BaseRequest):
             offset=d["offset"],
             date_from=dateutil.parser.parse(d["dateFrom"]),
             date_to=dateutil.parser.parse(d["dateTo"]),
+            created_by=d["createdBy"],
+            group_name=d["groupName"],
         )
 
         return req
@@ -91,12 +102,18 @@ class AnalysisListRequest(BaseRequest):
         return {
             "offset": self.offset,
             "dateFrom": self.date_from.isoformat() if self.date_from else None,
-            "dateTo": self.date_to.isoformat() if self.date_to else None,
+            "dateTo": self.date_from.isoformat() if self.date_from else None,
+            "createdBy": self.created_by,
+            "groupName": self.group_name,
         }
 
     def __eq__(self, other: "AnalysisListRequest"):
-        return all((
-            self.offset == other.offset,
-            self.date_from == other.date_from,
-            self.date_to == other.date_to,
-        ))
+        return all(
+            (
+                self.offset == other.offset,
+                self.date_from == other.date_from,
+                self.date_to == other.date_to,
+                self.created_by == other.created_by,
+                self.group_name == other.group_name,
+            )
+        )
