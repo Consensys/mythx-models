@@ -5,11 +5,14 @@ import pytest
 from mythx_models.exceptions import ValidationError
 from mythx_models.request import AnalysisStatusRequest
 
-from . import common as testdata
+from .common import get_test_case
+
+JSON_DATA, DICT_DATA = get_test_case("testdata/analysis-status-request.json")
+OBJ_DATA = AnalysisStatusRequest.from_json(JSON_DATA)
 
 
 def assert_status_request(req: AnalysisStatusRequest):
-    assert req.uuid == testdata.UUID_1
+    assert req.uuid == OBJ_DATA.uuid
     assert req.method == "GET"
     assert req.headers == {}
     assert req.parameters == {}
@@ -17,9 +20,7 @@ def assert_status_request(req: AnalysisStatusRequest):
 
 
 def test_analysis_status_request_from_valid_json():
-    req = AnalysisStatusRequest.from_json(
-        json.dumps(testdata.ANALYSIS_STATUS_REQUEST_DICT)
-    )
+    req = AnalysisStatusRequest.from_json(JSON_DATA)
     assert_status_request(req)
 
 
@@ -29,7 +30,7 @@ def test_analysis_status_request_from_invalid_json():
 
 
 def test_analysis_status_request_from_valid_dict():
-    req = AnalysisStatusRequest.from_dict(testdata.ANALYSIS_STATUS_REQUEST_DICT)
+    req = AnalysisStatusRequest.from_dict(DICT_DATA)
     assert_status_request(req)
 
 
@@ -40,13 +41,13 @@ def test_analysis_status_request_from_invalid_dict():
 
 def test_analysis_status_request_to_json():
     assert (
-        json.loads(testdata.ANALYSIS_STATUS_REQUEST_OBJECT.to_json())
-        == testdata.ANALYSIS_STATUS_REQUEST_DICT
+        json.loads(OBJ_DATA.to_json())
+        == DICT_DATA
     )
 
 
 def test_analysis_status_request_to_dict():
     assert (
-        testdata.ANALYSIS_STATUS_REQUEST_OBJECT.to_dict()
-        == testdata.ANALYSIS_STATUS_REQUEST_DICT
+        OBJ_DATA.to_dict()
+        == DICT_DATA
     )
