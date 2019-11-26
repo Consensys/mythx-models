@@ -3,7 +3,10 @@ import pytest
 from mythx_models.exceptions import ValidationError
 from mythx_models.response import AuthLogoutResponse
 
-from . import common as testdata
+from .common import get_test_case
+
+JSON_DATA, DICT_DATA = get_test_case("testdata/auth-logout-response.json")
+OBJ_DATA = AuthLogoutResponse.from_json(JSON_DATA)
 
 
 def test_auth_login_response_from_valid_json():
@@ -27,8 +30,8 @@ def test_auth_login_response_from_invalid_dict():
 
 
 def test_auth_login_response_to_json():
-    assert testdata.LOGOUT_RESPONSE_OBJECT.to_json() == "{}"
+    assert OBJ_DATA.to_json() == "{}"
 
 
 def test_auth_login_response_to_dict():
-    assert testdata.LOGOUT_RESPONSE_OBJECT.to_dict() == {}
+    assert OBJ_DATA.to_dict() == {}
