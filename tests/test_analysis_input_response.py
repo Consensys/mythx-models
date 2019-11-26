@@ -78,9 +78,7 @@ def test_analysis_submission_request_source_only():
 
 
 def test_analysis_submission_request_invalid_mode():
-    req = AnalysisInputResponse(
-        bytecode=DICT_DATA["bytecode"], analysis_mode="invalid"
-    )
+    req = AnalysisInputResponse(bytecode=DICT_DATA["bytecode"], analysis_mode="invalid")
     with pytest.raises(ValidationError):
         req.to_dict()
 
