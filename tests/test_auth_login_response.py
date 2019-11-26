@@ -5,16 +5,19 @@ import pytest
 from mythx_models.exceptions import ValidationError
 from mythx_models.response import AuthLoginResponse
 
-from . import common as testdata
+from .common import get_test_case
+
+JSON_DATA, DICT_DATA = get_test_case("testdata/auth-login-response.json")
+OBJ_DATA = AuthLoginResponse.from_json(JSON_DATA)
 
 
 def assert_auth_login_response(resp: AuthLoginResponse):
-    assert resp.access_token == testdata.ACCESS_TOKEN_1
-    assert resp.refresh_token == testdata.REFRESH_TOKEN_1
+    assert resp.access_token == DICT_DATA["jwtTokens"]["access"]
+    assert resp.refresh_token == DICT_DATA["jwtTokens"]["refresh"]
 
 
 def test_auth_login_response_from_valid_json():
-    resp = AuthLoginResponse.from_json(json.dumps(testdata.LOGIN_RESPONSE_DICT))
+    resp = AuthLoginResponse.from_json(JSON_DATA)
     assert_auth_login_response(resp)
 
 
@@ -24,7 +27,7 @@ def test_auth_login_response_from_invalid_json():
 
 
 def test_auth_login_response_from_valid_dict():
-    resp = AuthLoginResponse.from_dict(testdata.LOGIN_RESPONSE_DICT)
+    resp = AuthLoginResponse.from_dict(DICT_DATA)
     assert_auth_login_response(resp)
 
 
@@ -34,11 +37,8 @@ def test_auth_login_response_from_invalid_dict():
 
 
 def test_auth_login_response_to_json():
-    assert (
-        json.loads(testdata.LOGIN_RESPONSE_OBJECT.to_json())
-        == testdata.LOGIN_RESPONSE_DICT
-    )
+    assert json.loads(OBJ_DATA.to_json()) == DICT_DATA
 
 
 def test_auth_login_response_to_dict():
-    assert testdata.LOGIN_RESPONSE_OBJECT.to_dict() == testdata.LOGIN_RESPONSE_DICT
+    assert OBJ_DATA.to_dict() == DICT_DATA
