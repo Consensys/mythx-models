@@ -28,9 +28,7 @@ def assert_submission_request(req: AnalysisSubmissionRequest):
 
 
 def test_analysis_submission_request_from_valid_json():
-    req = AnalysisSubmissionRequest.from_json(
-        JSON_DATA
-    )
+    req = AnalysisSubmissionRequest.from_json(JSON_DATA)
     assert_submission_request(req)
 
 
@@ -50,17 +48,11 @@ def test_analysis_submission_request_from_invalid_dict():
 
 
 def test_analysis_submission_request_to_json():
-    assert (
-        json.loads(OBJ_DATA.to_json())
-        == DICT_DATA
-    )
+    assert json.loads(OBJ_DATA.to_json()) == DICT_DATA
 
 
 def test_analysis_submission_request_to_dict():
-    assert (
-        OBJ_DATA.to_dict()
-        == DICT_DATA
-    )
+    assert OBJ_DATA.to_dict() == DICT_DATA
 
 
 def test_analysis_submission_request_bytecode_only():
@@ -86,7 +78,9 @@ def test_analysis_submission_request_source_only():
 
 
 def test_analysis_submission_request_invalid_mode():
-    req = AnalysisSubmissionRequest(bytecode=DICT_DATA["bytecode"], analysis_mode="invalid")
+    req = AnalysisSubmissionRequest(
+        bytecode=DICT_DATA["bytecode"], analysis_mode="invalid"
+    )
     with pytest.raises(ValidationError):
         req.to_dict()
 

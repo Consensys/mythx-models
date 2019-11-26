@@ -40,14 +40,8 @@ def test_analysis_status_request_from_invalid_dict():
 
 
 def test_analysis_status_request_to_json():
-    assert (
-        json.loads(OBJ_DATA.to_json())
-        == DICT_DATA
-    )
+    assert json.loads(OBJ_DATA.to_json()) == DICT_DATA
 
 
 def test_analysis_status_request_to_dict():
-    assert (
-        OBJ_DATA.to_dict()
-        == DICT_DATA
-    )
+    assert OBJ_DATA.to_dict() == DICT_DATA

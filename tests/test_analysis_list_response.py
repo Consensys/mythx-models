@@ -33,9 +33,7 @@ def assert_analysis_data(expected, analysis: Analysis):
 def test_analysis_list_from_valid_json():
     assert len(OBJ_DATA.analyses) == 2
     for i, analysis in enumerate(OBJ_DATA.analyses):
-        assert_analysis_data(
-            DICT_DATA["analyses"][i], analysis
-        )
+        assert_analysis_data(DICT_DATA["analyses"][i], analysis)
 
 
 def test_analysis_list_from_invalid_json():
@@ -51,9 +49,7 @@ def test_analysis_list_from_empty_json():
 def test_analysis_list_from_valid_dict():
     assert len(OBJ_DATA.analyses) == 2
     for i, analysis in enumerate(OBJ_DATA.analyses):
-        assert_analysis_data(
-            DICT_DATA["analyses"][i], analysis
-        )
+        assert_analysis_data(DICT_DATA["analyses"][i], analysis)
 
 
 def test_analysis_list_from_invalid_dict():
@@ -75,16 +71,17 @@ def test_analysis_list_to_json():
 
 
 def test_iteration():
-    uuids = ("0680a1e2-b908-4c9a-a15b-636ef9b61486", "0680a1e2-b908-4c9a-a15b-636ef9b61487")
+    uuids = (
+        "0680a1e2-b908-4c9a-a15b-636ef9b61486",
+        "0680a1e2-b908-4c9a-a15b-636ef9b61487",
+    )
     # XXX: Don't use zip here to make sure __iter__ returns
     for idx, analysis in enumerate(OBJ_DATA):
         assert uuids[idx] == analysis.uuid
 
 
 def test_valid_getitem():
-    for idx, analysis in list(
-        enumerate(OBJ_DATA.analyses)
-    ):
+    for idx, analysis in list(enumerate(OBJ_DATA.analyses)):
         assert OBJ_DATA[idx] == analysis
 
 
@@ -115,9 +112,7 @@ def test_valid_setitem():
     analysis_list[0] = "foo"
     assert analysis_list.analyses[0] == "foo"
     assert analysis_list[0] == "foo"
-    assert len(analysis_list.analyses) == len(
-        OBJ_DATA.analyses
-    )
+    assert len(analysis_list.analyses) == len(OBJ_DATA.analyses)
 
 
 def test_invalid_setitem():
@@ -127,9 +122,7 @@ def test_invalid_setitem():
 
 def test_reversed():
     analysis_list = deepcopy(OBJ_DATA)
-    assert list(reversed(analysis_list)) == list(
-        reversed(OBJ_DATA.analyses)
-    )
+    assert list(reversed(analysis_list)) == list(reversed(OBJ_DATA.analyses))
     assert analysis_list.total == OBJ_DATA.total
 
 

@@ -26,9 +26,7 @@ def assert_analysis_data(expected, analysis: Analysis):
 
 
 def test_analysis_list_from_valid_json():
-    resp = AnalysisStatusResponse.from_json(
-        JSON_DATA
-    )
+    resp = AnalysisStatusResponse.from_json(JSON_DATA)
     assert_analysis_data(DICT_DATA, resp.analysis)
 
 
