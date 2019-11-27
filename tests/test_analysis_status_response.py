@@ -1,5 +1,6 @@
 import json
 from copy import deepcopy
+
 import pytest
 
 from mythx_models.exceptions import ValidationError

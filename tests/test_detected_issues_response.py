@@ -1,17 +1,18 @@
 import json
 from copy import deepcopy
 from typing import Dict
+
 import pytest
 
 from mythx_models.exceptions import ValidationError
 from mythx_models.response import (
     DetectedIssuesResponse,
+    Issue,
     IssueReport,
     Severity,
     SourceFormat,
+    SourceLocation,
     SourceType,
-    Issue,
-    SourceLocation
 )
 
 from .common import get_test_case
@@ -193,7 +194,9 @@ def test_issue_from_dict():
 
 
 def test_issue_to_json():
-    assert json.loads(OBJ_DATA.issue_reports[0][0].to_json()) == DICT_DATA[0]["issues"][0]
+    assert (
+        json.loads(OBJ_DATA.issue_reports[0][0].to_json()) == DICT_DATA[0]["issues"][0]
+    )
 
 
 def test_issue_to_dict():
@@ -239,3 +242,12 @@ def test_decoded_locations_empty_skip():
     issue = Issue.from_dict(issue_data)
     assert_issue(issue, DICT_DATA[0]["issues"][0], skip_decoded=True)
     assert "decodedLocations" in issue.to_dict()
+
+
+def test_decoded_locations_none_skip():
+    issue_data = deepcopy(DICT_DATA[0]["issues"][0])
+    issue_data["decodedLocations"] = None
+    issue = Issue.from_dict(issue_data)
+    assert_issue(issue, DICT_DATA[0]["issues"][0], skip_decoded=True)
+    print(issue.to_dict())
+    assert "decodedLocations" not in issue.to_dict()
