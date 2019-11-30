@@ -33,7 +33,7 @@
         "sources": {
             "type": ["null" ,"object"],
             "patternProperties": {
-                ".*.sol$": {
+                ".*": {
                     "type": "object",
                     "anyOf": [{
                             "required": ["source"]

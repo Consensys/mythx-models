@@ -1,7 +1,7 @@
 import json
 
 import pytest
-
+from copy import deepcopy
 from mythx_models.exceptions import ValidationError
 from mythx_models.request import AnalysisSubmissionRequest
 
@@ -89,3 +89,9 @@ def test_analysis_submission_request_missing_field():
     req = AnalysisSubmissionRequest()
     with pytest.raises(ValidationError):
         req.to_dict()
+
+
+def test_key_without_extension():
+    req = deepcopy(OBJ_DATA)
+    OBJ_DATA.sources["noextensionhere"] = OBJ_DATA.sources.pop("PublicStorageArray.sol")
+    OBJ_DATA.to_dict()  # trigger validation
