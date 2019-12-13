@@ -2,11 +2,17 @@
 
 import logging
 from enum import Enum
+from typing import Dict
 
 from inflection import underscore
 
 from mythx_models.response.base import BaseResponse
-from mythx_models.util import deserialize_api_timestamp, serialize_api_timestamp
+from mythx_models.response.group import VulnerabilityStatistics
+from mythx_models.util import (
+    deserialize_api_timestamp,
+    dict_delete_none_fields,
+    serialize_api_timestamp,
+)
 
 LOGGER = logging.getLogger(__name__)
 
@@ -39,6 +45,9 @@ class Analysis(BaseResponse):
         status: AnalysisStatus,
         submitted_at: str,
         submitted_by: str,
+        main_source: str = None,
+        num_sources: int = None,
+        vulnerability_statistics: Dict[str, int] = None,
         run_time: int = 0,
         client_tool_name: str = None,
         error: str = None,
@@ -49,6 +58,13 @@ class Analysis(BaseResponse):
         *args,
         **kwargs
     ):
+        if vulnerability_statistics is None:
+            self.vulnerability_statistics = None
+        else:
+            self.vulnerability_statistics = VulnerabilityStatistics.from_dict(
+                vulnerability_statistics
+            )
+
         self.uuid = uuid
         self.api_version = api_version
         self.mythril_version = mythril_version
@@ -59,6 +75,8 @@ class Analysis(BaseResponse):
         self.status = AnalysisStatus(status.title())
         self.submitted_at = deserialize_api_timestamp(submitted_at)
         self.submitted_by = submitted_by
+        self.main_source = main_source
+        self.num_sources = num_sources
         self.client_tool_name = client_tool_name
         self.error = error
         self.info = info
@@ -79,10 +97,12 @@ class Analysis(BaseResponse):
         :return: The domain model with the data from :code:`d` filled in
         """
         d = {underscore(k): v for k, v in d.items()}
+        if "num_vulnerabilities" in d:
+            d["vulnerability_statistics"] = d.pop("num_vulnerabilities")
         return cls(**d)
 
     def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """
@@ -97,6 +117,11 @@ class Analysis(BaseResponse):
             "status": self.status.title(),
             "submittedAt": serialize_api_timestamp(self.submitted_at),
             "submittedBy": self.submitted_by,
+            "mainSource": self.main_source,
+            "numSources": self.num_sources,
+            "numVulnerabilities": self.vulnerability_statistics.to_dict()
+            if self.vulnerability_statistics
+            else None,
             "clientToolName": self.client_tool_name,
             "analysisMode": self.analysis_mode,
             "groupName": self.group_name,
@@ -107,7 +132,7 @@ class Analysis(BaseResponse):
         if self.info is not None:
             d.update({"info": self.error})
 
-        return d
+        return dict_delete_none_fields(d)
 
     def __eq__(self, candidate: "Analysis"):
         return all(
@@ -122,6 +147,9 @@ class Analysis(BaseResponse):
                 self.status == candidate.status,
                 self.submitted_at == candidate.submitted_at,
                 self.submitted_by == candidate.submitted_by,
+                self.main_source == candidate.main_source,
+                self.num_sources == candidate.num_sources,
+                self.vulnerability_statistics == candidate.vulnerability_statistics,
                 self.client_tool_name == candidate.client_tool_name,
                 self.error == candidate.error,
                 self.info == candidate.info,

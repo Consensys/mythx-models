@@ -1,7 +1,8 @@
 import json
+from copy import deepcopy
 
 import pytest
-from copy import deepcopy
+
 from mythx_models.exceptions import ValidationError
 from mythx_models.request import AnalysisSubmissionRequest
 

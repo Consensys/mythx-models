@@ -52,6 +52,51 @@
                     "submittedBy": {
                         "type": "string"
                     },
+                    "mainSource": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "numSources": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "numVulnerabilities": {
+                        "type": [
+                            "object",
+                            "null"
+                        ],
+                        "properties": {
+                            "high": {
+                                "type": [
+                                    "integer",
+                                    "null"
+                                ]
+                            },
+                            "medium": {
+                                "type": [
+                                    "integer",
+                                    "null"
+                                ]
+                            },
+                            "low": {
+                                "type": [
+                                    "integer",
+                                    "null"
+                                ]
+                            },
+                            "none": {
+                                "type": [
+                                    "integer",
+                                    "null"
+                                ]
+                            }
+                        },
+                        "additionalProperties": false
+                    },
                     "uuid": {
                         "type": "string"
                     }

@@ -75,7 +75,15 @@ class GroupStatistics(BaseResponse):
 class VulnerabilityStatistics(BaseResponse):
     """A container class holding data about a group's vulnerabilities"""
 
-    def __init__(self, high: int, medium: int, low: int, none: int, *args, **kwargs):
+    def __init__(
+        self,
+        high: int = None,
+        medium: int = None,
+        low: int = None,
+        none: int = None,
+        *args,
+        **kwargs
+    ):
         self.high = high
         self.medium = medium
         self.low = low
