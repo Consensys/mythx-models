@@ -56,7 +56,7 @@
             "type": ["null" ,"string"]
         },
         "analysisMode": {
-            "enum": ["quick", "full"]
+            "enum": ["quick", "standard", "deep"]
         }
     }
 }
