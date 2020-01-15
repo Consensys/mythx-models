@@ -38,7 +38,12 @@ class AnalysisSubmissionRequest(BaseRequest):
         self.sources = sources
         self.source_list = source_list
         self.solc_version = solc_version
-        self.analysis_mode = analysis_mode
+        # set alias for full mode for backwards compatibility - new modes are quick, standard, deep
+        self.analysis_mode = self._get_analysis_mode(analysis_mode)
+
+    @staticmethod
+    def _get_analysis_mode(mode: str) -> str:
+        return "standard" if mode == "full" else mode
 
     @property
     def endpoint(self):
@@ -90,6 +95,9 @@ class AnalysisSubmissionRequest(BaseRequest):
         :param d: The dict to deserialize from
         :return: The domain model with the data from :code:`d` filled in
         """
+        if d.get("analysisMode"):
+            d["analysisMode"] = cls._get_analysis_mode(d["analysisMode"])
+
         cls.validate(d)
         return cls(
             contract_name=d.get("contractName"),
