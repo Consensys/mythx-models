@@ -11,8 +11,8 @@ class AuthLoginResponse(BaseResponse):
     with open(resolve_schema(__file__, "auth.json")) as sf:
         schema = json.load(sf)
 
-    def __init__(self, access_token: str, refresh_token: str):
-        self.access_token = access_token
+    def __init__(self, api_key: str, refresh_token: str):
+        self.api_key = api_key
         self.refresh_token = refresh_token
 
     @classmethod
@@ -27,23 +27,23 @@ class AuthLoginResponse(BaseResponse):
         """
         cls.validate(d)
         return cls(
-            access_token=d["jwtTokens"]["access"],
+            api_key=d["jwtTokens"]["access"],
             refresh_token=d["jwtTokens"]["refresh"],
         )
 
     def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """
-        d = {"jwtTokens": {"access": self.access_token, "refresh": self.refresh_token}}
+        d = {"jwtTokens": {"access": self.api_key, "refresh": self.refresh_token}}
         self.validate(d)
         return d
 
     def __eq__(self, other: "AuthLoginResponse"):
         return all(
             (
-                self.access_token == other.access_token,
+                self.api_key == other.api_key,
                 self.refresh_token == other.refresh_token,
             )
         )

@@ -12,7 +12,7 @@ OBJ_DATA = AuthLoginRequest.from_json(JSON_DATA)
 
 
 def assert_login(req: AuthLoginRequest):
-    assert req.eth_address == DICT_DATA["ethAddress"]
+    assert req.username == DICT_DATA["username"]
     assert req.password == DICT_DATA["password"]
     assert req.method == "POST"
     assert req.headers == {}

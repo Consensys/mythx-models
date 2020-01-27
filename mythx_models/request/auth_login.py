@@ -15,8 +15,8 @@ class AuthLoginRequest(BaseRequest):
     with open(resolve_schema(__file__, "auth-login.json")) as sf:
         schema = json.load(sf)
 
-    def __init__(self, eth_address: str, password: str):
-        self.eth_address = eth_address
+    def __init__(self, username: str, password: str):
+        self.username = username
         self.password = password
 
     @property
@@ -70,18 +70,18 @@ class AuthLoginRequest(BaseRequest):
         :return: The domain model with the data from :code:`d` filled in
         """
         cls.validate(d)
-        return cls(eth_address=d["ethAddress"], password=d["password"])
+        return cls(username=d["username"], password=d["password"])
 
     def to_dict(self):
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
         """
-        d = {"ethAddress": self.eth_address, "password": self.password}
+        d = {"username": self.username, "password": self.password}
         self.validate(d)
         return d
 
     def __eq__(self, other: "AuthLoginRequest"):
         return all(
-            (self.eth_address == other.eth_address, self.password == other.password)
+            (self.username == other.username, self.password == other.password)
         )

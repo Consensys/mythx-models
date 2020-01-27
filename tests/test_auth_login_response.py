@@ -12,7 +12,7 @@ OBJ_DATA = AuthLoginResponse.from_json(JSON_DATA)
 
 
 def assert_auth_login_response(resp: AuthLoginResponse):
-    assert resp.access_token == DICT_DATA["jwtTokens"]["access"]
+    assert resp.api_key == DICT_DATA["jwtTokens"]["access"]
     assert resp.refresh_token == DICT_DATA["jwtTokens"]["refresh"]
 
 
