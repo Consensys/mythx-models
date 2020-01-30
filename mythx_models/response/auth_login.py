@@ -27,8 +27,7 @@ class AuthLoginResponse(BaseResponse):
         """
         cls.validate(d)
         return cls(
-            api_key=d["jwtTokens"]["access"],
-            refresh_token=d["jwtTokens"]["refresh"],
+            api_key=d["jwtTokens"]["access"], refresh_token=d["jwtTokens"]["refresh"]
         )
 
     def to_dict(self):
@@ -42,8 +41,5 @@ class AuthLoginResponse(BaseResponse):
 
     def __eq__(self, other: "AuthLoginResponse"):
         return all(
-            (
-                self.api_key == other.api_key,
-                self.refresh_token == other.refresh_token,
-            )
+            (self.api_key == other.api_key, self.refresh_token == other.refresh_token)
         )

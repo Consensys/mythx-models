@@ -27,19 +27,22 @@ def test_analysis_list_request_from_valid_json():
     assert_analysis_list_request(req)
 
 
-def test_analysis_list_request_from_invalid_json():
-    with pytest.raises(ValidationError):
-        AnalysisListRequest.from_json("{}")
+def test_analysis_list_request_from_empty_json():
+    req = AnalysisListRequest.from_json("{}")
+    assert req.to_dict() == {
+        "offset": None,
+        "createdBy": None,
+        "groupName": None,
+        "dateFrom": None,
+        "dateTo": None,
+        "groupId": None,
+        "mainSource": None,
+    }
 
 
 def test_analysis_list_request_from_valid_dict():
     req = AnalysisListRequest.from_dict(DICT_DATA)
     assert_analysis_list_request(req)
-
-
-def test_analysis_list_request_from_invalid_dict():
-    with pytest.raises(ValidationError):
-        AnalysisListRequest.from_dict({})
 
 
 def test_analysis_list_request_to_json():

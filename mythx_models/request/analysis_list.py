@@ -8,25 +8,27 @@ import dateutil.parser
 from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
 
-ANALYSIS_LIST_KEYS = ("offset", "dateFrom", "dateTo")
-
 
 class AnalysisListRequest(BaseRequest):
     """Perform an API request that lists the logged in user's past analyses."""
 
     def __init__(
         self,
-        offset: int,
-        date_from: datetime,
-        date_to: datetime,
-        created_by: str,
-        group_name: str,
+        offset: int = None,
+        date_from: datetime = None,
+        date_to: datetime = None,
+        created_by: str = None,
+        group_name: str = None,
+        group_id: str = None,
+        main_source: str = None,
     ):
         self.offset = offset
         self.date_from = date_from
         self.date_to = date_to
         self.created_by = created_by
         self.group_name = group_name
+        self.group_id = group_id
+        self.main_source = main_source
 
     @property
     def endpoint(self):
@@ -78,18 +80,17 @@ class AnalysisListRequest(BaseRequest):
         :param d: The dict to deserialize from
         :return: The domain model with the data from :code:`d` filled in
         """
-        if not all(k in d for k in ANALYSIS_LIST_KEYS):
-            raise ValidationError(
-                "Not all required keys {} found in data {}".format(
-                    ANALYSIS_LIST_KEYS, d
-                )
-            )
+
         req = cls(
-            offset=d["offset"],
-            date_from=dateutil.parser.parse(d["dateFrom"]),
-            date_to=dateutil.parser.parse(d["dateTo"]),
-            created_by=d["createdBy"],
-            group_name=d["groupName"],
+            offset=d.get("offset"),
+            date_from=dateutil.parser.parse(d.get("dateFrom"))
+            if d.get("dateFrom")
+            else None,
+            date_to=dateutil.parser.parse(d.get("dateTo")) if d.get("dateTo") else None,
+            created_by=d.get("createdBy"),
+            group_name=d.get("groupName"),
+            group_id=d.get("groupId"),
+            main_source=d.get("mainSource"),
         )
 
         return req
@@ -105,6 +106,8 @@ class AnalysisListRequest(BaseRequest):
             "dateTo": self.date_from.isoformat() if self.date_from else None,
             "createdBy": self.created_by,
             "groupName": self.group_name,
+            "groupId": self.group_id,
+            "mainSource": self.main_source,
         }
 
     def __eq__(self, other: "AnalysisListRequest"):
@@ -115,5 +118,7 @@ class AnalysisListRequest(BaseRequest):
                 self.date_to == other.date_to,
                 self.created_by == other.created_by,
                 self.group_name == other.group_name,
+                self.group_id == other.group_id,
+                self.main_source == other.main_source,
             )
         )
