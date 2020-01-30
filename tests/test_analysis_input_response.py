@@ -12,7 +12,9 @@ OBJ_DATA = AnalysisInputResponse.from_json(JSON_DATA)
 
 
 def assert_submission_request(req: AnalysisInputResponse):
-    DICT_DATA["analysisMode"] = DICT_DATA["analysisMode"] if DICT_DATA["analysisMode"] != "full" else "standard"
+    DICT_DATA["analysisMode"] = (
+        DICT_DATA["analysisMode"] if DICT_DATA["analysisMode"] != "full" else "standard"
+    )
     assert req.contract_name == DICT_DATA["contractName"]
     assert req.bytecode == DICT_DATA["bytecode"]
     assert req.main_source == DICT_DATA["mainSource"]
