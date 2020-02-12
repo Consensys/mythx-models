@@ -2,13 +2,13 @@
 
 from datetime import datetime
 from os import path
-from typing import Dict
+from typing import Dict, Union
 
 import dateutil.parser
 
 
-def deserialize_api_timestamp(timestamp_str: str):
-    """Deserialize a JavaScript API timestand into Python datetime format.
+def deserialize_api_timestamp(timestamp_str: str) -> datetime:
+    """Deserialize a JavaScript API timestamp into Python datetime format.
 
     :param timestamp_str: The JS timestamp, e.g. :code:`2019-01-10T01:29:38.410Z`
     :return: A Python datetime object
@@ -16,7 +16,7 @@ def deserialize_api_timestamp(timestamp_str: str):
     return dateutil.parser.parse(timestamp_str) if timestamp_str else None
 
 
-def serialize_api_timestamp(ts_obj: datetime):
+def serialize_api_timestamp(ts_obj: datetime) -> Union[str, None]:
     """Serialize a Python datetime object to its JS equivalent.
 
     :param ts_obj: A Python datetime object
@@ -29,7 +29,7 @@ def serialize_api_timestamp(ts_obj: datetime):
     return ts_str[:-3] + "Z"
 
 
-def dict_delete_none_fields(d: Dict):
+def dict_delete_none_fields(d: Dict) -> Dict:
     """Remove all keys that have "None" values in a dict.
 
     :param d: The dictionary to sanitize
@@ -43,8 +43,9 @@ def dict_delete_none_fields(d: Dict):
     return d
 
 
-def resolve_schema(module_path, filename):
-    """Return a path leading to the internal JSON schema files used for validation.
+def resolve_schema(module_path: str, filename: str) -> str:
+    """Return a path leading to the internal JSON schema files used for
+    validation.
 
     :param module_path: The calling module's path (used as base path)
     :param filename: The JSON schema file's name
