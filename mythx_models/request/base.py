@@ -3,6 +3,7 @@
 import abc
 import logging
 from typing import Dict
+
 from mythx_models.base import BaseModel
 
 LOGGER = logging.getLogger(__name__)

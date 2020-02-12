@@ -2,7 +2,7 @@
 
 
 import json
-from typing import List, Dict, Iterator
+from typing import Dict, Iterator, List
 
 from mythx_models.exceptions import ValidationError
 from mythx_models.response.analysis import Analysis

@@ -1,8 +1,9 @@
 """This module contains the OASRequest domain model."""
 
+from typing import Dict
+
 from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
-from typing import Dict
 
 
 class OASRequest(BaseRequest):

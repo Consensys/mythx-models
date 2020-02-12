@@ -1,7 +1,7 @@
 """This module contains the GroupListResponse domain model."""
 
 import json
-from typing import List, Dict, Iterator
+from typing import Dict, Iterator, List
 
 from mythx_models.response.base import BaseResponse
 from mythx_models.response.group import Group

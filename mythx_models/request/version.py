@@ -1,7 +1,8 @@
 """This module contains the VersionRequest domain model."""
 
-from mythx_models.request.base import BaseRequest
 from typing import Dict
+
+from mythx_models.request.base import BaseRequest
 
 
 class VersionRequest(BaseRequest):

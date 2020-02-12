@@ -1,7 +1,8 @@
 """This module contains the AnalysisSubmissionResponse domain model."""
 
 import json
-from typing import Dict, Any
+from typing import Any, Dict
+
 from mythx_models.response.analysis import Analysis
 from mythx_models.response.base import BaseResponse
 from mythx_models.util import resolve_schema

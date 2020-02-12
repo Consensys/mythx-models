@@ -4,6 +4,7 @@ import abc
 import json
 import logging
 from typing import Dict
+
 import jsonschema
 
 from mythx_models.exceptions import ValidationError

@@ -36,7 +36,9 @@ class SourceFormat(str, Enum):
 
 
 class SourceMapLocation:
-    def __init__(self, offset: int = 0, length: int = 0, file_id: int = -1, jump_type: str = "-"):
+    def __init__(
+        self, offset: int = 0, length: int = 0, file_id: int = -1, jump_type: str = "-"
+    ):
         self.o = int(offset)
         self.l = int(length)
         self.f = int(file_id)
@@ -106,7 +108,9 @@ class SourceMap:
         self.components = self.decompress(source_map)
 
     @staticmethod
-    def sourcemap_reducer(accumulator: Tuple[int, int, int, str], component: str) -> List[str]:
+    def sourcemap_reducer(
+        accumulator: Tuple[int, int, int, str], component: str
+    ) -> List[str]:
         parts = component.split(":")
         full = []
         for i in range(4):
@@ -205,7 +209,9 @@ class SourceLocation(JSONSerializable):
 class DecodedLocation(JSONSerializable):
     """A source location decoded by the API to line and column numbers."""
 
-    def __init__(self, start_line: int, start_column: int, end_line: int, end_column: int):
+    def __init__(
+        self, start_line: int, start_column: int, end_line: int, end_column: int
+    ):
         self.start_line = start_line
         self.start_column = start_column
         self.end_line = end_line

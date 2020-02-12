@@ -1,8 +1,9 @@
 """This module contains the GroupOperation domain model."""
 
+from typing import Dict
+
 from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
-from typing import Dict
 
 GROUP_OPERATION_KEYS = ("type", "group_id")
 
