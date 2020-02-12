@@ -1,5 +1,7 @@
 """This module contains the GroupOperation domain model."""
 
+from typing import Dict
+
 from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
 
@@ -7,14 +9,15 @@ GROUP_OPERATION_KEYS = ("type", "group_id")
 
 
 class GroupOperationRequest(BaseRequest):
-    """Perform an API request that performs an action on the specified group ID."""
+    """Perform an API request that performs an action on the specified group
+    ID."""
 
     def __init__(self, group_id: str, type_: str):
         self.group_id = group_id
         self.type = type_
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -22,7 +25,7 @@ class GroupOperationRequest(BaseRequest):
         return "POST"
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's group status endpoint.
 
         :return: A string denoting the status endpoint without the host prefix
@@ -30,7 +33,7 @@ class GroupOperationRequest(BaseRequest):
         return "v1/analysis-groups/{}".format(self.group_id)
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -38,15 +41,15 @@ class GroupOperationRequest(BaseRequest):
         return {}
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return {}
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -54,7 +57,7 @@ class GroupOperationRequest(BaseRequest):
         return {"type": self.type}
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "GroupOperationRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -72,12 +75,12 @@ class GroupOperationRequest(BaseRequest):
         # TODO: Validate UUID and correct type
         return cls(group_id=d["group_id"], type_=d["type"])
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
         """
         return {"group_id": self.group_id, "type": self.type}
 
-    def __eq__(self, other: "GroupOperationRequest"):
+    def __eq__(self, other: "GroupOperationRequest") -> bool:
         return all((self.group_id == other.group_id, self.type == other.type))

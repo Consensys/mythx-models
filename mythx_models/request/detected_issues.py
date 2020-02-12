@@ -8,7 +8,8 @@ from mythx_models.util import resolve_schema
 
 
 class DetectedIssuesRequest(AnalysisStatusRequest):
-    """Perform an API request that lists the detected issues of a finished analysis job."""
+    """Perform an API request that lists the detected issues of a finished
+    analysis job."""
 
     with open(resolve_schema(__file__, "detected-issues.json")) as sf:
         schema = json.load(sf)
@@ -18,7 +19,7 @@ class DetectedIssuesRequest(AnalysisStatusRequest):
         self.uuid = uuid
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's analysis issue report endpoint.
 
         :return: A string denoting the issue report endpoint without the host prefix
@@ -26,7 +27,7 @@ class DetectedIssuesRequest(AnalysisStatusRequest):
         return "v1/analyses/{}/issues".format(self.uuid)
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -34,15 +35,15 @@ class DetectedIssuesRequest(AnalysisStatusRequest):
         return "GET"
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return {}
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -50,7 +51,7 @@ class DetectedIssuesRequest(AnalysisStatusRequest):
         return {}
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -58,7 +59,7 @@ class DetectedIssuesRequest(AnalysisStatusRequest):
         return {}
 
     @classmethod
-    def from_dict(cls, d: Dict):
+    def from_dict(cls, d: Dict) -> "DetectedIssuesRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -70,7 +71,7 @@ class DetectedIssuesRequest(AnalysisStatusRequest):
         cls.validate(d)
         return cls(uuid=d["uuid"])
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
@@ -79,5 +80,5 @@ class DetectedIssuesRequest(AnalysisStatusRequest):
         self.validate(d)
         return d
 
-    def __eq__(self, other: "DetectedIssuesRequest"):
+    def __eq__(self, other: "DetectedIssuesRequest") -> bool:
         return self.uuid == other.uuid

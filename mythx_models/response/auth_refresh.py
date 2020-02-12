@@ -1,3 +1,5 @@
+"""This module contains the AuthRefreshResponse domain model."""
+
 import json
 from typing import Dict
 
@@ -6,7 +8,8 @@ from mythx_models.util import resolve_schema
 
 
 class AuthRefreshResponse(BaseResponse):
-    """The API response domain model for a successful authentication refresh."""
+    """The API response domain model for a successful authentication
+    refresh."""
 
     with open(resolve_schema(__file__, "auth.json")) as sf:
         schema = json.load(sf)
@@ -16,7 +19,7 @@ class AuthRefreshResponse(BaseResponse):
         self.refresh_token = refresh_token
 
     @classmethod
-    def from_dict(cls, d: Dict):
+    def from_dict(cls, d: Dict) -> "AuthRefreshResponse":
         """Create the response domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -31,8 +34,8 @@ class AuthRefreshResponse(BaseResponse):
             refresh_token=d["jwtTokens"]["refresh"],
         )
 
-    def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+    def to_dict(self) -> Dict:
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """
@@ -40,7 +43,7 @@ class AuthRefreshResponse(BaseResponse):
         self.validate(d)
         return d
 
-    def __eq__(self, other: "AuthRefreshResponse"):
+    def __eq__(self, other: "AuthRefreshResponse") -> bool:
         return all(
             (
                 self.access_token == other.access_token,

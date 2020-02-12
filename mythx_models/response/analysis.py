@@ -1,4 +1,4 @@
-"""This module contains domain models regarding analysis jobs"""
+"""This module contains domain models regarding analysis jobs."""
 
 import logging
 from enum import Enum
@@ -29,9 +29,10 @@ class AnalysisStatus(str, Enum):
 class Analysis(BaseResponse):
     """An object describing an analysis job.
 
-    Such a model was built, because many other API responses deliver the same data when it comes
-    to analysis jobs. This makes the code more DRY, validation easier, and allows for recursive
-    SerDe (e.g. mapping :code:`from_dict` to a deserialized JSON list of job objects.
+    Such a model was built, because many other API responses deliver the
+    same data when it comes to analysis jobs. This makes the code more
+    DRY, validation easier, and allows for recursive SerDe (e.g. mapping
+    :code:`from_dict` to a deserialized JSON list of job objects.
     """
 
     def __init__(
@@ -90,7 +91,7 @@ class Analysis(BaseResponse):
             )
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "Analysis":
         """Create the response domain model from a dict.
 
         :param d: The dict to deserialize from
@@ -101,7 +102,7 @@ class Analysis(BaseResponse):
             d["vulnerability_statistics"] = d.pop("num_vulnerabilities")
         return cls(**d)
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
@@ -134,7 +135,7 @@ class Analysis(BaseResponse):
 
         return dict_delete_none_fields(d)
 
-    def __eq__(self, candidate: "Analysis"):
+    def __eq__(self, candidate: "Analysis") -> bool:
         return all(
             (
                 self.uuid == candidate.uuid,
@@ -159,5 +160,5 @@ class Analysis(BaseResponse):
             )
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "<Analysis uuid={} status={}>".format(self.uuid, self.status)

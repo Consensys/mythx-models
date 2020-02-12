@@ -46,7 +46,7 @@ class AnalysisSubmissionRequest(BaseRequest):
         return "standard" if mode == "full" else mode
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's analysis submission endpoint.
 
         :return: A string denoting the submission endpoint without the host prefix
@@ -54,7 +54,7 @@ class AnalysisSubmissionRequest(BaseRequest):
         return "v1/analyses"
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -62,15 +62,15 @@ class AnalysisSubmissionRequest(BaseRequest):
         return "POST"
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return {}
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -78,7 +78,7 @@ class AnalysisSubmissionRequest(BaseRequest):
         return {}
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -86,7 +86,7 @@ class AnalysisSubmissionRequest(BaseRequest):
         return {"data": self.to_dict()}
 
     @classmethod
-    def from_dict(cls, d: Dict):
+    def from_dict(cls, d: Dict) -> "AnalysisSubmissionRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -112,7 +112,7 @@ class AnalysisSubmissionRequest(BaseRequest):
             analysis_mode=d.get("analysisMode"),
         )
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
@@ -134,7 +134,7 @@ class AnalysisSubmissionRequest(BaseRequest):
         self.validate(base_dict)
         return base_dict
 
-    def __eq__(self, candidate):
+    def __eq__(self, candidate) -> bool:
         """Perform an equality check on two Request domain models."""
 
         return all(

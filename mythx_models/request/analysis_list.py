@@ -31,7 +31,7 @@ class AnalysisListRequest(BaseRequest):
         self.main_source = main_source
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's analysis list endpoint.
 
         :return: A string denoting the list endpoint without the host prefix
@@ -39,7 +39,7 @@ class AnalysisListRequest(BaseRequest):
         return "v1/analyses"
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -47,7 +47,7 @@ class AnalysisListRequest(BaseRequest):
         return "GET"
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -55,15 +55,15 @@ class AnalysisListRequest(BaseRequest):
         return {}
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return self.to_dict()
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -71,7 +71,7 @@ class AnalysisListRequest(BaseRequest):
         return {}
 
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Dict[str, Any]) -> "AnalysisListRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -95,7 +95,7 @@ class AnalysisListRequest(BaseRequest):
 
         return req
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
@@ -110,7 +110,7 @@ class AnalysisListRequest(BaseRequest):
             "mainSource": self.main_source,
         }
 
-    def __eq__(self, other: "AnalysisListRequest"):
+    def __eq__(self, other: "AnalysisListRequest") -> bool:
         return all(
             (
                 self.offset == other.offset,

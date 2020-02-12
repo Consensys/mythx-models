@@ -1,5 +1,8 @@
+"""This module contains the AnalysisListResponse domain model."""
+
+
 import json
-from typing import List
+from typing import Dict, Iterator, List
 
 from mythx_models.exceptions import ValidationError
 from mythx_models.response.analysis import Analysis
@@ -20,7 +23,7 @@ class AnalysisListResponse(BaseResponse):
         self.total = total
 
     @classmethod
-    def validate(cls, candidate):
+    def validate(cls, candidate) -> None:
         """Validate the response data structure and add an explicit type check.
 
         :param candidate: The Python dict to validate
@@ -32,7 +35,7 @@ class AnalysisListResponse(BaseResponse):
             )
 
     @classmethod
-    def from_dict(cls, d: dict):
+    def from_dict(cls, d: dict) -> "AnalysisListResponse":
         """Create the response domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -45,8 +48,8 @@ class AnalysisListResponse(BaseResponse):
         analyses = [Analysis.from_dict(a) for a in d["analyses"]]
         return cls(analyses=analyses, total=d["total"])
 
-    def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+    def to_dict(self) -> Dict:
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """
@@ -57,36 +60,43 @@ class AnalysisListResponse(BaseResponse):
         self.validate(d)
         return d
 
-    def __iter__(self):
+    def __iter__(self) -> Analysis:
+        """Iterate over all analyses contained in the list."""
         for analysis in self.analyses:
             yield analysis
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: int) -> Analysis:
+        """Get an analysis at a specific list index."""
         try:
             return self.analyses[idx]
         except IndexError:
             raise IndexError(INDEX_ERROR_MSG.format(idx))
 
-    def __setitem__(self, idx, value):
+    def __setitem__(self, idx: int, value: Analysis) -> None:
+        """Set a list item to a specified value."""
         try:
             self.analyses[idx] = value
         except IndexError:
             raise IndexError(INDEX_ERROR_MSG.format(idx))
 
-    def __delitem__(self, idx):
+    def __delitem__(self, idx: int) -> None:
+        """Delete an analysis at a specified list index."""
         try:
             del self.analyses[idx]
             self.total -= 1
         except IndexError:
             raise IndexError(INDEX_ERROR_MSG.format(idx))
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """Get the length of the analysis list."""
         return self.total
 
-    def __reversed__(self):
+    def __reversed__(self) -> Iterator[Analysis]:
+        """Reverse the analysis list order."""
         return reversed(self.analyses)
 
-    def __contains__(self, item):
+    def __contains__(self, item) -> bool:
+        """Check whether a specific analysis is contained in the list."""
         if not type(item) in (Analysis, str):
             raise ValueError(
                 "Expected type Analysis or str but got {}".format(type(item))
@@ -94,5 +104,5 @@ class AnalysisListResponse(BaseResponse):
         uuid = item.uuid if type(item) == Analysis else item
         return uuid in map(lambda x: x.uuid, self.analyses)
 
-    def __eq__(self, candidate):
+    def __eq__(self, candidate) -> bool:
         return all((self.total == candidate.total, self.analyses == candidate.analyses))

@@ -1,5 +1,7 @@
 """This module contains the VersionRequest domain model."""
 
+from typing import Dict
+
 from mythx_models.request.base import BaseRequest
 
 
@@ -7,7 +9,7 @@ class VersionRequest(BaseRequest):
     """Perform an API request that fetches API version information."""
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's version endpoint.
 
         :return: A string denoting the version endpoint without the host prefix
@@ -15,7 +17,7 @@ class VersionRequest(BaseRequest):
         return "v1/version"
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -23,7 +25,7 @@ class VersionRequest(BaseRequest):
         return "GET"
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -31,15 +33,15 @@ class VersionRequest(BaseRequest):
         return {}
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return {}
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -47,7 +49,7 @@ class VersionRequest(BaseRequest):
         return {}
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "VersionRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -58,7 +60,7 @@ class VersionRequest(BaseRequest):
         """
         return cls()
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data

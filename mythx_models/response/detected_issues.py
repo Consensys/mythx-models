@@ -1,6 +1,7 @@
-"""This module contains the response models for the detected issues endpoint and a report helper."""
+"""This module contains the response models for the detected issues endpoint
+and a report helper."""
 import json
-from typing import Any, Dict, List
+from typing import Any, Dict, Iterator, List
 
 from mythx_models.base import JSONSerializable
 from mythx_models.exceptions import ValidationError
@@ -27,7 +28,7 @@ class IssueReport(JSONSerializable):
         self.meta_data = meta_data
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "IssueReport":
         """Create the issue report domain model from a dict.
 
         :param d: The dict to deserialize from
@@ -41,7 +42,7 @@ class IssueReport(JSONSerializable):
             meta_data=d["meta"],
         )
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the issue report domain model to a Python dict.
 
         :return: A dict holding the request model data
@@ -55,26 +56,26 @@ class IssueReport(JSONSerializable):
         }
         return d
 
-    def __contains__(self, key: str):
+    def __contains__(self, key: str) -> bool:
         return any(map(lambda i: i.swc_id == key, self.issues))
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.issues)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Issue]:
         for issue in self.issues:
             yield issue
 
-    def __getitem__(self, key):
+    def __getitem__(self, key) -> Issue:
         return self.issues[key]
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key, value) -> None:
         self.issues[key] = value
 
-    def __delitem__(self, key):
+    def __delitem__(self, key) -> None:
         del self.issues[key]
 
-    def __eq__(self, other: "IssueReport"):
+    def __eq__(self, other: "IssueReport") -> bool:
         return all(
             (
                 self.issues == other.issues,
@@ -96,7 +97,7 @@ class DetectedIssuesResponse(BaseResponse):
         self.issue_reports = issue_reports
 
     @classmethod
-    def from_dict(cls, d: Dict):
+    def from_dict(cls, d: Dict) -> "DetectedIssuesResponse":
         """Create the response domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -125,7 +126,7 @@ class DetectedIssuesResponse(BaseResponse):
 
         return cls(issue_reports=[IssueReport.from_dict(i) for i in d["issueReports"]])
 
-    def to_dict(self, as_list=False):
+    def to_dict(self, as_list=False) -> Dict:
         """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
@@ -134,7 +135,7 @@ class DetectedIssuesResponse(BaseResponse):
         self.validate(d["issueReports"])
         return d["issueReports"] if as_list else d
 
-    def to_json(self):
+    def to_json(self) -> str:
         """Serialize the model to JSON format.
 
         Internally, this method is using the :code:`to_dict` method.
@@ -143,7 +144,9 @@ class DetectedIssuesResponse(BaseResponse):
         """
         return json.dumps([report.to_dict() for report in self.issue_reports])
 
-    def __contains__(self, key: str):
+    def __contains__(self, key: str) -> bool:
+        """Check whether a specified SWC ID is contained in any of the
+        reports."""
         if not type(key) == str:
             raise ValueError(
                 "Expected SWC ID of type str but got {} of type {}".format(
@@ -155,25 +158,29 @@ class DetectedIssuesResponse(BaseResponse):
                 return True
         return False
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Issue]:
         for report in self.issue_reports:
             for issue in report:
                 yield issue
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """Return the number of issues across all reports."""
         total_detected_issues = 0
         for report in self.issue_reports:
             total_detected_issues += len(report)
         return total_detected_issues
 
-    def __getitem__(self, key: int):
+    def __getitem__(self, key: int) -> IssueReport:
+        """Get an issue report at a specific index."""
         return self.issue_reports[key]
 
-    def __setitem__(self, key: int, value: IssueReport):
+    def __setitem__(self, key: int, value: IssueReport) -> None:
+        """Set an issue report at a specified index."""
         self.issue_reports[key] = value
 
-    def __delitem__(self, key: int):
+    def __delitem__(self, key: int) -> None:
+        """Delete an issue report at a specified index."""
         del self.issue_reports[key]
 
-    def __eq__(self, other: "DetectedIssuesResponse"):
+    def __eq__(self, other: "DetectedIssuesResponse") -> bool:
         return self.issue_reports == other.issue_reports

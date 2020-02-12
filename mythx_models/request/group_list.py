@@ -29,7 +29,7 @@ class GroupListRequest(BaseRequest):
         self.date_to = date_to
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's group list endpoint.
 
         :return: A string denoting the list endpoint without the host prefix
@@ -37,7 +37,7 @@ class GroupListRequest(BaseRequest):
         return "v1/analysis-groups"
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -45,7 +45,7 @@ class GroupListRequest(BaseRequest):
         return "GET"
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -53,15 +53,15 @@ class GroupListRequest(BaseRequest):
         return {}
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return self.to_dict()
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -69,7 +69,7 @@ class GroupListRequest(BaseRequest):
         return {}
 
     @classmethod
-    def from_dict(cls, d: Dict[str, Any]):
+    def from_dict(cls, d: Dict[str, Any]) -> "GroupListRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -93,7 +93,7 @@ class GroupListRequest(BaseRequest):
 
         return req
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
@@ -106,7 +106,7 @@ class GroupListRequest(BaseRequest):
             "dateTo": self.date_to.isoformat() if self.date_to else None,
         }
 
-    def __eq__(self, other: "GroupListRequest"):
+    def __eq__(self, other: "GroupListRequest") -> bool:
         return all(
             (
                 self.offset == other.offset,

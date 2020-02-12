@@ -1,3 +1,5 @@
+"""This module contains the AnalysisStatusResponse domain model."""
+
 from mythx_models.response.analysis_submission import AnalysisSubmissionResponse
 
 

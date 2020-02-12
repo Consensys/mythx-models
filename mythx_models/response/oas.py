@@ -1,3 +1,5 @@
+"""This module contains the OASResponse domain model."""
+
 import json
 from typing import Dict
 
@@ -17,7 +19,7 @@ class OASResponse(BaseResponse):
         self.data = data
 
     @classmethod
-    def from_dict(cls, d: Dict):
+    def from_dict(cls, d: Dict) -> "OASResponse":
         """Create the response domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -30,23 +32,23 @@ class OASResponse(BaseResponse):
         return cls(data=d["data"])
 
     @classmethod
-    def from_json(cls, json_str: str):
+    def from_json(cls, json_str: str) -> "OASResponse":
         """
 
-        :param json_str:
-        :return:
+        :param json_str: The string to decode from
+        :return: An OASResponse instance
         """
         # overwrite from base response because the API doesn't actually deliver
         # JSON but raw YAML/HTML
         return cls.from_dict({"data": json_str})
 
-    def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+    def to_dict(self) -> Dict:
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """
         d = {"data": self.data}
         return d
 
-    def __eq__(self, other: "OASResponse"):
+    def __eq__(self, other: "OASResponse") -> bool:
         return self.data == other.data

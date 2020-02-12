@@ -2,6 +2,7 @@
 
 import abc
 import logging
+from typing import Dict
 
 from mythx_models.base import BaseModel
 
@@ -13,7 +14,7 @@ class BaseRequest(BaseModel, abc.ABC):
 
     @property
     @abc.abstractmethod
-    def payload(self):
+    def payload(self) -> Dict:
         """An abstract property returning the request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -22,7 +23,7 @@ class BaseRequest(BaseModel, abc.ABC):
 
     @property
     @abc.abstractmethod
-    def headers(self):
+    def headers(self) -> Dict:
         """An abstract property returning additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -31,8 +32,8 @@ class BaseRequest(BaseModel, abc.ABC):
 
     @property
     @abc.abstractmethod
-    def parameters(self):
-        """An abstract property returning additional URL parameters
+    def parameters(self) -> Dict:
+        """An abstract property returning additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
@@ -40,9 +41,18 @@ class BaseRequest(BaseModel, abc.ABC):
 
     @property
     @abc.abstractmethod
-    def method(self):
+    def method(self) -> str:
         """An abstract property returning the HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
+        """
+        pass
+
+    @property
+    @abc.abstractmethod
+    def endpoint(self) -> str:
+        """The API's endpoint to hit.
+
+        :return: A string denoting the API endpoint without the host prefix
         """
         pass

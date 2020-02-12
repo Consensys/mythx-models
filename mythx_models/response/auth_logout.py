@@ -1,3 +1,6 @@
+"""This module contains the AuthLogoutResponse domain model."""
+
+
 from typing import Dict
 
 from mythx_models.exceptions import ValidationError
@@ -8,7 +11,7 @@ class AuthLogoutResponse(BaseResponse):
     """The API response domain model for a successful logout action."""
 
     @classmethod
-    def from_dict(cls, d: Dict):
+    def from_dict(cls, d: Dict) -> "AuthLogoutResponse":
         """Create the response domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -23,8 +26,8 @@ class AuthLogoutResponse(BaseResponse):
             )
         return cls()
 
-    def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+    def to_dict(self) -> Dict:
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """

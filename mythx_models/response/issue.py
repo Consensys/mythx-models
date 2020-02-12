@@ -1,7 +1,7 @@
 """This module contains domain models regrading found issues."""
 
 from enum import Enum
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 from mythx_models.base import JSONSerializable
 
@@ -36,40 +36,42 @@ class SourceFormat(str, Enum):
 
 
 class SourceMapLocation:
-    def __init__(self, offset=0, length=0, file_id=-1, jump_type="-"):
+    def __init__(
+        self, offset: int = 0, length: int = 0, file_id: int = -1, jump_type: str = "-"
+    ):
         self.o = int(offset)
         self.l = int(length)
         self.f = int(file_id)
         self.j = jump_type
 
     @property
-    def offset(self):
+    def offset(self) -> int:
         return self.o
 
     @offset.setter
-    def offset(self, value):
+    def offset(self, value: int) -> None:
         value = int(value)
         if value <= 0:
             raise ValueError("Expected positive offset but received {}".format(value))
         self.o = int(value)
 
     @property
-    def length(self):
+    def length(self) -> int:
         return self.l
 
     @length.setter
-    def length(self, value):
+    def length(self, value: int) -> None:
         value = int(value)
         if value <= 0:
             raise ValueError("Expected positive length but received {}".format(value))
         self.l = int(value)
 
     @property
-    def file_id(self):
+    def file_id(self) -> int:
         return self.f
 
     @file_id.setter
-    def file_id(self, value):
+    def file_id(self, value: int) -> None:
         value = int(value)
         if value < -1:
             raise ValueError(
@@ -78,24 +80,24 @@ class SourceMapLocation:
         self.f = int(value)
 
     @property
-    def jump_type(self):
+    def jump_type(self) -> str:
         return self.j
 
     @jump_type.setter
-    def jump_type(self, value):
+    def jump_type(self, value: str) -> None:
         if value not in ("i", "o", "-"):
             raise ValueError(
                 "Invalid jump type {}, must be one of i, o, -".format(value)
             )
         self.j = value
 
-    def to_component_string(self):
+    def to_component_string(self) -> str:
         return "{}:{}:{}:{}".format(self.o, self.l, self.f, self.j)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "<SourceMapComponent ({})>".format(self.to_component_string())
 
-    def __eq__(self, other: "SourceMapLocation"):
+    def __eq__(self, other: "SourceMapLocation") -> bool:
         return all(
             (self.o == other.o, self.l == other.l, self.f == other.f, self.j == other.j)
         )
@@ -106,7 +108,9 @@ class SourceMap:
         self.components = self.decompress(source_map)
 
     @staticmethod
-    def sourcemap_reducer(accumulator, component):
+    def sourcemap_reducer(
+        accumulator: Tuple[int, int, int, str], component: str
+    ) -> List[str]:
         parts = component.split(":")
         full = []
         for i in range(4):
@@ -115,7 +119,7 @@ class SourceMap:
             full.append(part)
         return full
 
-    def decompress(self, source_map):
+    def decompress(self, source_map: str) -> List[SourceMapLocation]:
         components = source_map.split(";")
         accumulator = (-1, -1, -2, "")
         result = []
@@ -127,7 +131,7 @@ class SourceMap:
 
         return [SourceMapLocation(*c) for c in result]
 
-    def compress(self):
+    def compress(self) -> str:
         compressed = []
         accumulator = (-1, -1, -2, "")
         for val in self.components:
@@ -141,10 +145,10 @@ class SourceMap:
             compressed.append(":".join(compr).rstrip(":"))
         return ";".join(compressed)
 
-    def to_sourcemap(self):
+    def to_sourcemap(self) -> str:
         return self.compress()
 
-    def __eq__(self, other: "SourceMap"):
+    def __eq__(self, other: "SourceMap") -> bool:
         return self.components == other.components
 
 
@@ -164,8 +168,9 @@ class SourceLocation(JSONSerializable):
         self.source_list = source_list
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "SourceLocation":
         """Create the response domain model from a dict.
+
         :param d: The dict to deserialize from
         :return: The domain model with the data from :code:`d` filled in
         """
@@ -177,8 +182,9 @@ class SourceLocation(JSONSerializable):
             source_list=d["sourceList"],
         )
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the response model to a Python dict.
+
         :return: A dict holding the request model data
         """
 
@@ -189,7 +195,7 @@ class SourceLocation(JSONSerializable):
             "sourceList": self.source_list,
         }
 
-    def __eq__(self, other: "SourceLocation"):
+    def __eq__(self, other: "SourceLocation") -> bool:
         return all(
             (
                 self.source_map.to_sourcemap() == other.source_map.to_sourcemap(),
@@ -203,14 +209,16 @@ class SourceLocation(JSONSerializable):
 class DecodedLocation(JSONSerializable):
     """A source location decoded by the API to line and column numbers."""
 
-    def __init__(self, start_line, start_column, end_line, end_column):
+    def __init__(
+        self, start_line: int, start_column: int, end_line: int, end_column: int
+    ):
         self.start_line = start_line
         self.start_column = start_column
         self.end_line = end_line
         self.end_column = end_column
 
     @classmethod
-    def from_dict(cls, l: list):
+    def from_dict(cls, l: List) -> "DecodedLocation":
         """Create the response domain model from a dict.
 
         :param l: The list to deserialize from
@@ -224,10 +232,10 @@ class DecodedLocation(JSONSerializable):
             end_column=l[1]["column"],
         )
 
-    def to_dict(self):
-        """Serialize the response model to a Python dict.
+    def to_dict(self) -> List:
+        """Serialize the response model to a Python list.
 
-        :return: A dict holding the request model data
+        :return: A list holding the request model data
         """
 
         return [
@@ -235,7 +243,7 @@ class DecodedLocation(JSONSerializable):
             {"line": self.end_line, "column": self.end_column},
         ]
 
-    def __eq__(self, other: "DecodedLocation"):
+    def __eq__(self, other: "DecodedLocation") -> bool:
         return all(
             (
                 self.start_line == other.start_line,
@@ -270,7 +278,7 @@ class Issue(JSONSerializable):
         self.extra_data = extra
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d: Dict) -> "Issue":
         """Create the response domain model from a dict.
 
         :param d: The dict to deserialize from
@@ -304,7 +312,7 @@ class Issue(JSONSerializable):
             extra=d["extra"],
         )
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
@@ -327,7 +335,7 @@ class Issue(JSONSerializable):
 
         return result
 
-    def __eq__(self, other: "Issue"):
+    def __eq__(self, other: "Issue") -> bool:
         return all(
             (
                 self.swc_id == other.swc_id,
