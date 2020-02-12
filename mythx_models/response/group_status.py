@@ -1,5 +1,7 @@
-import json
+"""This module contains the GroupStatusResponse domain model."""
 
+import json
+from typing import Dict, Any
 from mythx_models.response.base import BaseResponse
 from mythx_models.response.group import Group
 from mythx_models.util import resolve_schema
@@ -15,7 +17,7 @@ class GroupStatusResponse(BaseResponse):
         self.group = group
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "GroupStatusResponse":
         """Create the response domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -27,7 +29,7 @@ class GroupStatusResponse(BaseResponse):
         cls.validate(d)
         return cls(group=Group.from_dict(d))
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
@@ -36,8 +38,8 @@ class GroupStatusResponse(BaseResponse):
         self.validate(d)
         return d
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str) -> Any:
         return getattr(self.group, name)
 
-    def __eq__(self, other: "GroupStatusResponse"):
+    def __eq__(self, other: "GroupStatusResponse") -> bool:
         return self.group == other.group

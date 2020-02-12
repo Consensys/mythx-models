@@ -1,3 +1,5 @@
+"""This module contains the VersionResponse domain model."""
+
 import json
 from typing import Dict
 
@@ -26,7 +28,7 @@ class VersionResponse(BaseResponse):
         self.hashed_version = hashed_version
 
     @classmethod
-    def from_dict(cls, d: Dict):
+    def from_dict(cls, d: Dict) -> "VersionResponse":
         """Create the response domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -44,8 +46,8 @@ class VersionResponse(BaseResponse):
             hashed_version=d["hash"],
         )
 
-    def to_dict(self):
-        """Serialize the reponse model to a Python dict.
+    def to_dict(self) -> Dict:
+        """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
         """
@@ -59,7 +61,7 @@ class VersionResponse(BaseResponse):
         self.validate(d)
         return d
 
-    def __eq__(self, other: "VersionResponse"):
+    def __eq__(self, other: "VersionResponse") -> bool:
         return all(
             (
                 self.api_version == other.api_version,

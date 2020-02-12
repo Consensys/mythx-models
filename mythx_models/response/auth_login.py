@@ -1,3 +1,5 @@
+"""This module contains the AuthLoginResponse domain model."""
+
 import json
 from typing import Dict
 
@@ -16,7 +18,7 @@ class AuthLoginResponse(BaseResponse):
         self.refresh_token = refresh_token
 
     @classmethod
-    def from_dict(cls, d: Dict):
+    def from_dict(cls, d: Dict) -> "AuthLoginResponse":
         """Create the response domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -30,7 +32,7 @@ class AuthLoginResponse(BaseResponse):
             api_key=d["jwtTokens"]["access"], refresh_token=d["jwtTokens"]["refresh"]
         )
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
@@ -39,7 +41,7 @@ class AuthLoginResponse(BaseResponse):
         self.validate(d)
         return d
 
-    def __eq__(self, other: "AuthLoginResponse"):
+    def __eq__(self, other: "AuthLoginResponse") -> bool:
         return all(
             (self.api_key == other.api_key, self.refresh_token == other.refresh_token)
         )

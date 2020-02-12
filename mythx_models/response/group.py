@@ -1,4 +1,4 @@
-"""This module contains domain models regarding analysis jobs"""
+"""This module contains domain models regarding analysis jobs."""
 
 import logging
 from enum import Enum
@@ -13,7 +13,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class GroupStatistics(BaseResponse):
-    """A container class holding data about a group's analysis jobs"""
+    """A container class holding data about a group's analysis jobs."""
 
     def __init__(
         self,
@@ -37,7 +37,7 @@ class GroupStatistics(BaseResponse):
             )
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "GroupStatistics":
         """Create the response domain model from a dict.
 
         :param d: The dict to deserialize from
@@ -46,7 +46,7 @@ class GroupStatistics(BaseResponse):
         d = {k: v for k, v in d.items()}
         return cls(**d)
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
@@ -60,7 +60,7 @@ class GroupStatistics(BaseResponse):
         }
         return d
 
-    def __eq__(self, other: "GroupStatistics"):
+    def __eq__(self, other: "GroupStatistics") -> bool:
         return all(
             (
                 self.total == other.total,
@@ -73,7 +73,7 @@ class GroupStatistics(BaseResponse):
 
 
 class VulnerabilityStatistics(BaseResponse):
-    """A container class holding data about a group's vulnerabilities"""
+    """A container class holding data about a group's vulnerabilities."""
 
     def __init__(
         self,
@@ -95,7 +95,7 @@ class VulnerabilityStatistics(BaseResponse):
             )
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "VulnerabilityStatistics":
         """Create the response domain model from a dict.
 
         :param d: The dict to deserialize from
@@ -104,7 +104,7 @@ class VulnerabilityStatistics(BaseResponse):
         d = {k: v for k, v in d.items()}
         return cls(**d)
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
@@ -117,7 +117,7 @@ class VulnerabilityStatistics(BaseResponse):
         }
         return d
 
-    def __eq__(self, other: "VulnerabilityStatistics"):
+    def __eq__(self, other: "VulnerabilityStatistics") -> bool:
         return all(
             (
                 self.high == other.high,
@@ -138,9 +138,10 @@ class GroupState(str, Enum):
 class Group(BaseResponse):
     """An object describing an analysis group.
 
-    Such a model was built, because many other API responses deliver the same data when it comes
-    to analysis groups. This makes the code more DRY, validation easier, and allows for recursive
-    SerDe (e.g. mapping :code:`from_dict` to a deserialized JSON list of job objects.
+    Such a model was built, because many other API responses deliver the
+    same data when it comes to analysis groups. This makes the code more
+    DRY, validation easier, and allows for recursive SerDe (e.g. mapping
+    :code:`from_dict` to a deserialized JSON list of job objects.
     """
 
     def __init__(
@@ -177,7 +178,7 @@ class Group(BaseResponse):
             )
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "Group":
         """Create the response domain model from a dict.
 
         :param d: The dict to deserialize from
@@ -189,7 +190,7 @@ class Group(BaseResponse):
         d["analysis_statistics"] = d.pop("num_analyses")
         return cls(**d)
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the response model to a Python dict.
 
         :return: A dict holding the request model data
@@ -208,7 +209,7 @@ class Group(BaseResponse):
         }
         return d
 
-    def __eq__(self, other: "Group"):
+    def __eq__(self, other: "Group") -> bool:
         return all(
             (
                 self.identifier == other.identifier,
@@ -224,5 +225,5 @@ class Group(BaseResponse):
             )
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "<Group id={} name={}>".format(self.identifier, self.name)

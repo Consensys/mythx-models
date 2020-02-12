@@ -1,4 +1,4 @@
-"""This module contains the MythX response domain models"""
+"""This module contains the MythX response domain models."""
 
 from mythx_models.response.analysis import Analysis, AnalysisStatus
 from mythx_models.response.analysis_input import AnalysisInputResponse
