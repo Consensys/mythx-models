@@ -1,4 +1,4 @@
-"""This module contains the MythX request domain models"""
+"""This module contains the MythX request domain models."""
 
 from mythx_models.request.analysis_input import AnalysisInputRequest
 from mythx_models.request.analysis_list import AnalysisListRequest

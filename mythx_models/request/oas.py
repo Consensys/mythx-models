@@ -2,6 +2,7 @@
 
 from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
+from typing import Dict
 
 
 class OASRequest(BaseRequest):
@@ -13,7 +14,7 @@ class OASRequest(BaseRequest):
         self.mode = mode
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's OpenAPI spec endpoint.
 
         :return: A string denoting the OpenAPI endpoint without the host prefix
@@ -21,7 +22,7 @@ class OASRequest(BaseRequest):
         return "v1/openapi" + (".yaml" if self.mode == "yaml" else "")
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -29,7 +30,7 @@ class OASRequest(BaseRequest):
         return "GET"
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -37,15 +38,15 @@ class OASRequest(BaseRequest):
         return {}
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return {}
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -53,7 +54,7 @@ class OASRequest(BaseRequest):
         return {}
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "OASRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -64,12 +65,12 @@ class OASRequest(BaseRequest):
         """
         return cls()
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
         """
         return {}
 
-    def __eq__(self, other: "OASRequest"):
+    def __eq__(self, other: "OASRequest") -> bool:
         return self.mode == other.mode

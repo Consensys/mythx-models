@@ -6,11 +6,10 @@ from typing import Dict
 from mythx_models.request.base import BaseRequest
 from mythx_models.util import resolve_schema
 
-AUTH_LOGIN_KEYS = ("ethAddress", "password")
-
 
 class AuthLoginRequest(BaseRequest):
-    """Perform an API request that performs a login action with Ethereum address and password."""
+    """Perform an API request that performs a login action with Ethereum
+    address and password."""
 
     with open(resolve_schema(__file__, "auth-login.json")) as sf:
         schema = json.load(sf)
@@ -20,7 +19,7 @@ class AuthLoginRequest(BaseRequest):
         self.password = password
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's login endpoint.
 
         :return: A string denoting the login endpoint without the host prefix
@@ -28,7 +27,7 @@ class AuthLoginRequest(BaseRequest):
         return "v1/auth/login"
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -36,15 +35,15 @@ class AuthLoginRequest(BaseRequest):
         return "POST"
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return {}
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -52,7 +51,7 @@ class AuthLoginRequest(BaseRequest):
         return {}
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -60,7 +59,7 @@ class AuthLoginRequest(BaseRequest):
         return self.to_dict()
 
     @classmethod
-    def from_dict(cls, d: Dict[str, str]):
+    def from_dict(cls, d: Dict[str, str]) -> "AuthLoginRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -72,7 +71,7 @@ class AuthLoginRequest(BaseRequest):
         cls.validate(d)
         return cls(username=d["username"], password=d["password"])
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
@@ -81,5 +80,5 @@ class AuthLoginRequest(BaseRequest):
         self.validate(d)
         return d
 
-    def __eq__(self, other: "AuthLoginRequest"):
+    def __eq__(self, other: "AuthLoginRequest") -> bool:
         return all((self.username == other.username, self.password == other.password))

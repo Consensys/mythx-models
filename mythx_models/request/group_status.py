@@ -2,6 +2,7 @@
 
 from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
+from typing import Dict
 
 
 class GroupStatusRequest(BaseRequest):
@@ -11,7 +12,7 @@ class GroupStatusRequest(BaseRequest):
         self.group_id = group_id
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -19,7 +20,7 @@ class GroupStatusRequest(BaseRequest):
         return "GET"
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's group status endpoint.
 
         :return: A string denoting the status endpoint without the host prefix
@@ -27,7 +28,7 @@ class GroupStatusRequest(BaseRequest):
         return "v1/analysis-groups/{}".format(self.group_id)
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -35,15 +36,15 @@ class GroupStatusRequest(BaseRequest):
         return {}
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return {}
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -51,7 +52,7 @@ class GroupStatusRequest(BaseRequest):
         return {}
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "GroupStatusRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -66,12 +67,12 @@ class GroupStatusRequest(BaseRequest):
         # TODO: Validate whether UUID
         return cls(group_id=group_id)
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
         """
         return {"group_id": self.group_id}
 
-    def __eq__(self, other: "GroupStatusRequest"):
+    def __eq__(self, other: "GroupStatusRequest") -> bool:
         return self.group_id == other.group_id

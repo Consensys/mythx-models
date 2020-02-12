@@ -8,7 +8,8 @@ from mythx_models.util import resolve_schema
 
 
 class AuthRefreshRequest(BaseRequest):
-    """Perform an API request that refreshes the logged-in user's access token."""
+    """Perform an API request that refreshes the logged-in user's access
+    token."""
 
     with open(resolve_schema(__file__, "auth-refresh.json")) as sf:
         schema = json.load(sf)
@@ -18,7 +19,7 @@ class AuthRefreshRequest(BaseRequest):
         self.refresh_token = refresh_token
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's auth refresh endpoint.
 
         :return: A string denoting the refresh endpoint without the host prefix
@@ -26,7 +27,7 @@ class AuthRefreshRequest(BaseRequest):
         return "v1/auth/refresh"
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -34,15 +35,15 @@ class AuthRefreshRequest(BaseRequest):
         return "POST"
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return {}
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -50,7 +51,7 @@ class AuthRefreshRequest(BaseRequest):
         return {}
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -60,7 +61,7 @@ class AuthRefreshRequest(BaseRequest):
         }
 
     @classmethod
-    def from_dict(cls, d: Dict):
+    def from_dict(cls, d: Dict) -> "AuthRefreshRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -75,7 +76,7 @@ class AuthRefreshRequest(BaseRequest):
             refresh_token=d["jwtTokens"]["refresh"],
         )
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
@@ -84,7 +85,7 @@ class AuthRefreshRequest(BaseRequest):
         self.validate(d)
         return d
 
-    def __eq__(self, other: "AuthRefreshRequest"):
+    def __eq__(self, other: "AuthRefreshRequest") -> bool:
         return all(
             (
                 self.access_token == other.access_token,

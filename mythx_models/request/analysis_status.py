@@ -2,16 +2,18 @@
 
 from mythx_models.exceptions import ValidationError
 from mythx_models.request.base import BaseRequest
+from typing import Dict
 
 
 class AnalysisStatusRequest(BaseRequest):
-    """Perform an API request that gets the status of a previously submitted analysis job."""
+    """Perform an API request that gets the status of a previously submitted
+    analysis job."""
 
     def __init__(self, uuid: str):
         self.uuid = uuid
 
     @property
-    def method(self):
+    def method(self) -> str:
         """The HTTP method to perform.
 
         :return: The uppercase HTTP method, e.g. "POST"
@@ -19,7 +21,7 @@ class AnalysisStatusRequest(BaseRequest):
         return "GET"
 
     @property
-    def endpoint(self):
+    def endpoint(self) -> str:
         """The API's analysis status endpoint.
 
         :return: A string denoting the status endpoint without the host prefix
@@ -27,7 +29,7 @@ class AnalysisStatusRequest(BaseRequest):
         return "v1/analyses/{}".format(self.uuid)
 
     @property
-    def headers(self):
+    def headers(self) -> Dict:
         """Additional request headers.
 
         :return: A dict (str -> str) instance mapping header name to header content
@@ -35,15 +37,15 @@ class AnalysisStatusRequest(BaseRequest):
         return {}
 
     @property
-    def parameters(self):
-        """Additional URL parameters
+    def parameters(self) -> Dict:
+        """Additional URL parameters.
 
         :return: A dict (str -> str) instance mapping parameter name to parameter content
         """
         return {}
 
     @property
-    def payload(self):
+    def payload(self) -> Dict:
         """The request's payload data.
 
         :return: A Python dict to be serialized into JSON format and submitted to the endpoint.
@@ -51,7 +53,7 @@ class AnalysisStatusRequest(BaseRequest):
         return {}
 
     @classmethod
-    def from_dict(cls, d):
+    def from_dict(cls, d) -> "AnalysisStatusRequest":
         """Create the request domain model from a dict.
 
         This also validates the dict's schema and raises a :code:`ValidationError`
@@ -65,12 +67,12 @@ class AnalysisStatusRequest(BaseRequest):
             raise ValidationError("Missing uuid field in data {}".format(d))
         return cls(uuid=uuid)
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         """Serialize the request model to a Python dict.
 
         :return: A dict holding the request model data
         """
         return {"uuid": self.uuid}
 
-    def __eq__(self, other: "AnalysisStatusRequest"):
+    def __eq__(self, other: "AnalysisStatusRequest") -> bool:
         return self.uuid == other.uuid
