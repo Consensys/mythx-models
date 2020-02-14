@@ -210,7 +210,7 @@ class DecodedLocation(JSONSerializable):
     """A source location decoded by the API to line and column numbers."""
 
     def __init__(
-        self, start_line: int, start_column: int, end_line: int, end_column: int
+        self, start_line: int = None, start_column: int = None, end_line: int = None, end_column: int = None
     ):
         self.start_line = start_line
         self.start_column = start_column
@@ -237,6 +237,9 @@ class DecodedLocation(JSONSerializable):
 
         :return: A list holding the request model data
         """
+        if all((self.start_line is None, self.start_column is None, self.end_line is None, self.end_column is None)):
+            # handle empty source location
+            return []
 
         return [
             {"line": self.start_line, "column": self.start_column},
@@ -296,7 +299,7 @@ class Issue(JSONSerializable):
         ]
 
         decoded_locations = (
-            [DecodedLocation.from_dict(l) for l in d.get("decodedLocations") if l]
+            [DecodedLocation.from_dict(l) if l else DecodedLocation() for l in d.get("decodedLocations")]
             if d.get("decodedLocations")
             else []
         )

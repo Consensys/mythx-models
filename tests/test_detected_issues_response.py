@@ -233,7 +233,7 @@ def test_decoded_locations_only_removed():
     issue_data["decodedLocations"] = [[]]
     issue = Issue.from_dict(issue_data)
     assert_issue(issue, DICT_DATA[0]["issues"][0], skip_decoded=True)
-    assert "decodedLocations" not in issue.to_dict()
+    assert issue.to_dict().get("decodedLocations") == [[]]
 
 
 def test_decoded_locations_empty_skip():
