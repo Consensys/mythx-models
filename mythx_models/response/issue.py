@@ -230,7 +230,7 @@ class DecodedLocation(JSONSerializable):
             start_column=l[0]["column"],
             end_line=l[1]["line"],
             end_column=l[1]["column"],
-            hidden=l[2],
+            hidden=l[2] if len(l) > 2 else False,
         )
 
     def to_dict(self) -> List:
