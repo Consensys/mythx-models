@@ -210,12 +210,13 @@ class DecodedLocation(JSONSerializable):
     """A source location decoded by the API to line and column numbers."""
 
     def __init__(
-        self, start_line: int = None, start_column: int = None, end_line: int = None, end_column: int = None
+        self, start_line: int = None, start_column: int = None, end_line: int = None, end_column: int = None, hidden: bool = False,
     ):
         self.start_line = start_line
         self.start_column = start_column
         self.end_line = end_line
         self.end_column = end_column
+        self.hidden = hidden
 
     @classmethod
     def from_dict(cls, l: List) -> "DecodedLocation":
@@ -224,12 +225,12 @@ class DecodedLocation(JSONSerializable):
         :param l: The list to deserialize from
         :return: The domain model with the data from :code:`d` filled in
         """
-
         return cls(
             start_line=l[0]["line"],
             start_column=l[0]["column"],
             end_line=l[1]["line"],
             end_column=l[1]["column"],
+            hidden=l[2],
         )
 
     def to_dict(self) -> List:
@@ -244,6 +245,7 @@ class DecodedLocation(JSONSerializable):
         return [
             {"line": self.start_line, "column": self.start_column},
             {"line": self.end_line, "column": self.end_column},
+            self.hidden,
         ]
 
     def __eq__(self, other: "DecodedLocation") -> bool:
@@ -253,6 +255,7 @@ class DecodedLocation(JSONSerializable):
                 self.start_column == other.start_column,
                 self.end_line == other.end_line,
                 self.end_column == other.end_column,
+                self.hidden == other.hidden,
             )
         )
 
@@ -269,7 +272,7 @@ class Issue(JSONSerializable):
         severity: Severity,
         locations: List[SourceLocation],
         extra: Dict[str, Any],
-        decoded_locations: List[DecodedLocation] = None,
+        decoded_locations: List[List[DecodedLocation]] = None,
     ):
         self.swc_id = swc_id
         self.swc_title = swc_title
@@ -298,11 +301,16 @@ class Issue(JSONSerializable):
             for loc in d["locations"]
         ]
 
-        decoded_locations = (
-            [DecodedLocation.from_dict(l) if l else DecodedLocation() for l in d.get("decodedLocations")]
-            if d.get("decodedLocations")
-            else []
-        )
+        raw_decoded_locations = d.get("decodedLocations", [])
+        if raw_decoded_locations and len(raw_decoded_locations):
+            decoded_locations = (
+                [
+                    DecodedLocation.from_dict(dl) if dl else DecodedLocation()
+                    for dl in raw_decoded_locations
+                ]
+            )
+        else:
+            decoded_locations = []
 
         return cls(
             swc_id=d["swcID"],
@@ -327,7 +335,7 @@ class Issue(JSONSerializable):
                 "head": self.description_short,
                 "tail": self.description_long,
             },
-            "severity": self.severity,
+            "severity": self.severity.name.title(),
             "locations": [loc.to_dict() for loc in self.locations],
             "extra": self.extra_data,
         }
