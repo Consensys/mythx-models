@@ -32,19 +32,26 @@
                             "items": {
                                 "type": "array",
                                 "items": {
-                                    "type": "object",
-                                    "required": [
-                                        "column",
-                                        "line"
-                                    ],
-                                    "properties": {
-                                        "column": {
-                                            "type": "integer"
+                                    "anyOf": [
+                                        {
+                                            "type": "boolean"
                                         },
-                                        "line": {
-                                            "type": "integer"
+                                        {
+                                            "type": "object",
+                                            "required": [
+                                                "column",
+                                                "line"
+                                            ],
+                                            "properties": {
+                                                "column": {
+                                                    "type": "integer"
+                                                },
+                                                "line": {
+                                                    "type": "integer"
+                                                }
+                                            }
                                         }
-                                    }
+                                    ]
                                 }
                             }
                         },
