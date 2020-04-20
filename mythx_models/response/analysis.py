@@ -56,6 +56,8 @@ class Analysis(BaseResponse):
         group_id: str = None,
         analysis_mode: str = None,
         group_name: str = None,
+        upgraded: bool = None,
+        property_checking: bool = None,
         *args,
         **kwargs
     ):
@@ -84,9 +86,11 @@ class Analysis(BaseResponse):
         self.group_id = group_id
         self.group_name = group_name
         self.analysis_mode = analysis_mode
+        self.upgraded = upgraded
+        self.property_checking = property_checking
 
         if args or kwargs:
-            LOGGER.warning(
+            LOGGER.debug(
                 "Got unexpected arguments args={}, kwargs={}".format(args, kwargs)
             )
 
