@@ -19,7 +19,7 @@
             "type": ["string", "null"]
         },
         "progress": {
-            "type": "integer"
+            "type": "number"
         },
         "status": {
             "type": "string",
