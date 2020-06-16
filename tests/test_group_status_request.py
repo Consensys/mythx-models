@@ -2,7 +2,6 @@ import json
 
 import pytest
 
-from mythx_models.exceptions import ValidationError
 from mythx_models.request import GroupStatusRequest
 
 from .common import get_test_case
@@ -20,9 +19,9 @@ def assert_request(req: GroupStatusRequest):
     assert req.endpoint == "v1/analysis-groups/test"
 
 
-def test_from_invalid_json():
-    with pytest.raises(ValidationError):
-        GroupStatusRequest.from_json("{}")
+# def test_from_invalid_json():
+#     with pytest.raises(ValidationError):
+#         GroupStatusRequest.from_json("{}")
 
 
 def test_from_valid_dict():
@@ -30,9 +29,9 @@ def test_from_valid_dict():
     assert_request(req)
 
 
-def test_from_invalid_dict():
-    with pytest.raises(ValidationError):
-        GroupStatusRequest.from_dict({})
+# def test_from_invalid_dict():
+#     with pytest.raises(ValidationError):
+#         GroupStatusRequest.from_dict({})
 
 
 def test_to_json():

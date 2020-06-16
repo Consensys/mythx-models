@@ -3,7 +3,6 @@ from datetime import datetime
 
 import pytest
 
-from mythx_models.exceptions import ValidationError
 from mythx_models.request import GroupListRequest
 
 from .common import get_test_case
@@ -30,9 +29,9 @@ def test_analysis_list_request_from_valid_json():
     assert_request(req)
 
 
-def test_analysis_list_request_from_invalid_json():
-    with pytest.raises(ValidationError):
-        GroupListRequest.from_json("{}")
+# def test_analysis_list_request_from_invalid_json():
+#     with pytest.raises(ValidationError):
+#         GroupListRequest.from_json("{}")
 
 
 def test_analysis_list_request_from_valid_dict():
@@ -40,9 +39,9 @@ def test_analysis_list_request_from_valid_dict():
     assert_request(req)
 
 
-def test_analysis_list_request_from_invalid_dict():
-    with pytest.raises(ValidationError):
-        GroupListRequest.from_dict({})
+# def test_analysis_list_request_from_invalid_dict():
+#     with pytest.raises(ValidationError):
+#         GroupListRequest.from_dict({})
 
 
 def test_analysis_list_request_to_json():

@@ -2,7 +2,6 @@ import json
 
 import pytest
 
-from mythx_models.exceptions import ValidationError
 from mythx_models.request import AuthLogoutRequest
 
 from .common import get_test_case
@@ -24,9 +23,9 @@ def test_auth_logout_request_from_valid_json():
     assert_logout_request(req)
 
 
-def test_auth_logout_request_from_invalid_json():
-    with pytest.raises(ValidationError):
-        AuthLogoutRequest.from_json("{}")
+# def test_auth_logout_request_from_invalid_json():
+#     with pytest.raises(ValidationError):
+#         AuthLogoutRequest.from_json("{}")
 
 
 def test_auth_logout_request_from_valid_dict():
@@ -34,9 +33,9 @@ def test_auth_logout_request_from_valid_dict():
     assert_logout_request(req)
 
 
-def test_auth_logout_request_from_invalid_dict():
-    with pytest.raises(ValidationError):
-        AuthLogoutRequest.from_dict({})
+# def test_auth_logout_request_from_invalid_dict():
+#     with pytest.raises(ValidationError):
+#         AuthLogoutRequest.from_dict({})
 
 
 def test_auth_logout_request_to_json():

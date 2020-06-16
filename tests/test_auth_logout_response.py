@@ -1,6 +1,5 @@
 import pytest
 
-from mythx_models.exceptions import ValidationError
 from mythx_models.response import AuthLogoutResponse
 
 from .common import get_test_case
@@ -14,9 +13,9 @@ def test_auth_login_response_from_valid_json():
     assert type(resp) == AuthLogoutResponse
 
 
-def test_auth_login_response_from_invalid_json():
-    with pytest.raises(ValidationError):
-        AuthLogoutResponse.from_json('{"foo": "bar"}')
+# def test_auth_login_response_from_invalid_json():
+#     with pytest.raises(ValidationError):
+#         AuthLogoutResponse.from_json('{"foo": "bar"}')
 
 
 def test_auth_login_response_from_valid_dict():
@@ -24,9 +23,9 @@ def test_auth_login_response_from_valid_dict():
     assert type(resp) == AuthLogoutResponse
 
 
-def test_auth_login_response_from_invalid_dict():
-    with pytest.raises(ValidationError):
-        AuthLogoutResponse.from_dict({"foo": "bar"})
+# def test_auth_login_response_from_invalid_dict():
+#     with pytest.raises(ValidationError):
+#         AuthLogoutResponse.from_dict({"foo": "bar"})
 
 
 def test_auth_login_response_to_json():
