@@ -31,10 +31,10 @@ class GroupStatistics(BaseResponse):
         self.failed = failed
         self.finished = finished
 
-        if args or kwargs:
-            LOGGER.warning(
-                "Got unexpected arguments args={}, kwargs={}".format(args, kwargs)
-            )
+        # if args or kwargs:
+        #     LOGGER.warning(
+        #         "Got unexpected arguments args={}, kwargs={}".format(args, kwargs)
+        #     )
 
     @classmethod
     def from_dict(cls, d) -> "GroupStatistics":
@@ -89,10 +89,10 @@ class VulnerabilityStatistics(BaseResponse):
         self.low = low
         self.none = none
 
-        if args or kwargs:
-            LOGGER.warning(
-                "Got unexpected arguments args={}, kwargs={}".format(args, kwargs)
-            )
+        # if args or kwargs:
+        #     LOGGER.warning(
+        #         "Got unexpected arguments args={}, kwargs={}".format(args, kwargs)
+        #     )
 
     @classmethod
     def from_dict(cls, d) -> "VulnerabilityStatistics":
@@ -172,10 +172,10 @@ class Group(BaseResponse):
             vulnerability_statistics
         )
 
-        if args or kwargs:
-            LOGGER.warning(
-                "Got unexpected arguments args={}, kwargs={}".format(args, kwargs)
-            )
+        # if args or kwargs:
+        #     LOGGER.warning(
+        #         "Got unexpected arguments args={}, kwargs={}".format(args, kwargs)
+        #     )
 
     @classmethod
     def from_dict(cls, d) -> "Group":
