@@ -78,10 +78,11 @@ class BaseModel(JSONSerializable, abc.ABC):
         :param candidate: The candidate dict to check the schema against
         :return: None
         """
-        if cls.schema is None:
-            LOGGER.warning("Cannot validate {} without a schema".format(cls.__name__))
-            return
-        try:
-            jsonschema.validate(candidate, cls.schema)
-        except jsonschema.ValidationError as e:
-            raise ValidationError(e)
+        # if cls.schema is None:
+        #     LOGGER.warning("Cannot validate {} without a schema".format(cls.__name__))
+        #     return
+        # try:
+        #     jsonschema.validate(candidate, cls.schema)
+        # except jsonschema.ValidationError as e:
+        #     raise ValidationError(e)
+        pass
