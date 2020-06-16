@@ -4,7 +4,6 @@ from typing import Dict
 
 import pytest
 
-from mythx_models.exceptions import ValidationError
 from mythx_models.response import (
     DetectedIssuesResponse,
     Issue,
@@ -65,9 +64,9 @@ def test_detected_issues_from_list():
     assert_detected_issues(resp)
 
 
-def test_detected_issues_from_invalid_type():
-    with pytest.raises(ValidationError):
-        DetectedIssuesResponse.from_dict("foo")
+# def test_detected_issues_from_invalid_type():
+#     with pytest.raises(ValidationError):
+#         DetectedIssuesResponse.from_dict("foo")
 
 
 def test_detected_issues_from_empty_list():
@@ -75,9 +74,9 @@ def test_detected_issues_from_empty_list():
     assert resp.issue_reports == []
 
 
-def test_detected_issues_from_invalid_dict():
-    with pytest.raises(ValidationError):
-        DetectedIssuesResponse.from_dict({})
+# def test_detected_issues_from_invalid_dict():
+#     with pytest.raises(ValidationError):
+#         DetectedIssuesResponse.from_dict({})
 
 
 def test_detected_issues_to_json():

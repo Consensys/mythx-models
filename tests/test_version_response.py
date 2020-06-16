@@ -1,8 +1,5 @@
 import json
 
-import pytest
-
-from mythx_models.exceptions import ValidationError
 from mythx_models.response import VersionResponse
 
 from .common import get_test_case
@@ -29,14 +26,14 @@ def test_version_response_from_valid_dict():
     assert_version_response(resp)
 
 
-def test_version_response_from_invalid_dict():
-    with pytest.raises(ValidationError):
-        VersionResponse.from_dict({})
+# def test_version_response_from_invalid_dict():
+#     with pytest.raises(ValidationError):
+#         VersionResponse.from_dict({})
 
 
-def test_version_response_from_invalid_json():
-    with pytest.raises(ValidationError):
-        VersionResponse.from_json("{}")
+# def test_version_response_from_invalid_json():
+#     with pytest.raises(ValidationError):
+#         VersionResponse.from_json("{}")
 
 
 def test_version_response_to_json():

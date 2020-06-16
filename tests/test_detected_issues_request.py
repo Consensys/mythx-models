@@ -2,7 +2,6 @@ import json
 
 import pytest
 
-from mythx_models.exceptions import ValidationError
 from mythx_models.request import DetectedIssuesRequest
 
 from .common import get_test_case
@@ -20,9 +19,9 @@ def test_analysis_issues_request_from_valid_json():
     assert req.payload == {}
 
 
-def test_analysis_issues_request_from_invalid_json():
-    with pytest.raises(ValidationError):
-        DetectedIssuesRequest.from_json("{}")
+# def test_analysis_issues_request_from_invalid_json():
+#     with pytest.raises(ValidationError):
+#         DetectedIssuesRequest.from_json("{}")
 
 
 def test_analysis_issues_request_from_valid_dict():
@@ -30,9 +29,9 @@ def test_analysis_issues_request_from_valid_dict():
     assert req.uuid == OBJ_DATA.uuid
 
 
-def test_analysis_issues_request_from_invalid_dict():
-    with pytest.raises(ValidationError):
-        DetectedIssuesRequest.from_dict({})
+# def test_analysis_issues_request_from_invalid_dict():
+#     with pytest.raises(ValidationError):
+#         DetectedIssuesRequest.from_dict({})
 
 
 def test_analysis_issues_request_to_json():

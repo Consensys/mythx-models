@@ -1,9 +1,6 @@
 import json
 from datetime import datetime
 
-import pytest
-
-from mythx_models.exceptions import ValidationError
 from mythx_models.request import AnalysisListRequest
 
 from .common import get_test_case
