@@ -9,7 +9,6 @@ Welcome to the MythX Domain Model docs!
     installation
     modules
     contributing
-    history
     authors
 
 Indices and tables
