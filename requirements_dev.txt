@@ -1,7 +1,7 @@
 -r requirements.txt
 
 bumpversion==0.6.0
-wheel==0.36.0
+wheel==0.36.1
 Sphinx==3.3.1
 coverage==5.3
 twine==3.2.0
