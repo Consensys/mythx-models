@@ -5,7 +5,7 @@ bumpversion==0.6.0
 wheel==0.36.1
 Sphinx==3.3.1
 coverage==5.3
-setuptools
+setuptools==51.0.0
 twine==3.2.0
 
 pytest==6.1.2
