@@ -24,7 +24,7 @@ jobs:
             - name: Coveralls
               uses: AndreMiras/coveralls-python-action@develop
               with:
-                  github-token: ${{ github.token }}
+                  github-token: ${{ secrets.COVERALLS_TOKEN }}
 
     deploy:
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
