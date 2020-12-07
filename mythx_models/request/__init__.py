@@ -13,4 +13,9 @@ from mythx_models.request.group_list import GroupListRequest
 from mythx_models.request.group_operation import GroupOperationRequest
 from mythx_models.request.group_status import GroupStatusRequest
 from mythx_models.request.oas import OASRequest
+from mythx_models.request.project_creation import ProjectCreationRequest
+from mythx_models.request.project_deletion import ProjectDeleteRequest
+from mythx_models.request.project_list import ProjectListRequest
+from mythx_models.request.project_status import ProjectStatusRequest
+from mythx_models.request.project_update import ProjectUpdateRequest
 from mythx_models.request.version import VersionRequest

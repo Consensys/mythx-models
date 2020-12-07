@@ -29,4 +29,9 @@ from mythx_models.response.issue import (
     SourceType,
 )
 from mythx_models.response.oas import OASResponse
+from mythx_models.response.project_creation import ProjectCreationResponse
+from mythx_models.response.project_deletion import ProjectDeletionResponse
+from mythx_models.response.project_list import ProjectListResponse
+from mythx_models.response.project_status import ProjectStatusResponse
+from mythx_models.response.project_update import ProjectUpdateResponse
 from mythx_models.response.version import VersionResponse
