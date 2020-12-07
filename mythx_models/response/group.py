@@ -23,7 +23,7 @@ class GroupStatistics(BaseResponse):
         failed: int,
         finished: int,
         *args,
-        **kwargs
+        **kwargs,
     ):
         self.total = total
         self.queued = queued
@@ -82,7 +82,7 @@ class VulnerabilityStatistics(BaseResponse):
         low: int = None,
         none: int = None,
         *args,
-        **kwargs
+        **kwargs,
     ):
         self.high = high
         self.medium = medium
@@ -157,7 +157,7 @@ class Group(BaseResponse):
         analysis_statistics: Dict[str, int],
         vulnerability_statistics: Dict[str, int],
         *args,
-        **kwargs
+        **kwargs,
     ):
         self.identifier = identifier
         self.name = name

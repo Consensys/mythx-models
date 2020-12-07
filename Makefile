@@ -49,11 +49,12 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
-lint: ## check style with flake8
-	flake8 mythx_models tests
+format:
+	isort mythx_models tests
+	black -t py37 mythx_models tests
 
 test: ## run tests quickly with the default Python
-	py.test
+	pytest --cov-report html --cov-report term --cov mythx_models tests/
 
 coverage: ## check code coverage quickly with the default Python
 	coverage run --source mythx_models -m pytest

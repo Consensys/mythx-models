@@ -59,7 +59,7 @@ class Analysis(BaseResponse):
         upgraded: bool = None,
         property_checking: bool = None,
         *args,
-        **kwargs
+        **kwargs,
     ):
         if vulnerability_statistics is None:
             self.vulnerability_statistics = None
