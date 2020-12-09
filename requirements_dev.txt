@@ -6,4 +6,4 @@ coverage==5.3
 pytest==6.1.2
 pytest-cov==2.10.1
 coveralls==2.2.0
-hypothesis
+hypothesis==5.41.5
