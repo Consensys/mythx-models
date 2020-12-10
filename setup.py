@@ -39,6 +39,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/dmuhs/mythx-models",
-    version="1.9.1",
+    version="1.9.2",
     zip_safe=False,
 )
