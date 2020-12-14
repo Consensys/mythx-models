@@ -3,7 +3,10 @@
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from pydantic import BaseModel, Field
-from typing_extensions import Literal
+try:
+    from typing_extensions import Literal
+except ImportError:
+    from typing import Literal
 
 Severity = Union[
     Literal["Unknown"],
