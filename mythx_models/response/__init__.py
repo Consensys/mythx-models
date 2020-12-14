@@ -28,7 +28,6 @@ from mythx_models.response.issue import (
     SourceMap,
     SourceType,
 )
-from mythx_models.response.oas import OASResponse
 from mythx_models.response.project_creation import ProjectCreationResponse
 from mythx_models.response.project_deletion import ProjectDeletionResponse
 from mythx_models.response.project_list import ProjectListResponse

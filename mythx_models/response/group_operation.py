@@ -1,9 +1,9 @@
 """This module contains the GroupOperationResponse domain model."""
 
-from mythx_models.response.group_status import GroupStatusResponse
+from .group import Group
 
 
-class GroupOperationResponse(GroupStatusResponse):
+class GroupOperationResponse(Group):
     """The API response domain model for the status of a group after the
     operation."""
 

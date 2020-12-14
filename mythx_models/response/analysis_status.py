@@ -1,9 +1,9 @@
 """This module contains the AnalysisStatusResponse domain model."""
 
-from mythx_models.response.analysis_submission import AnalysisSubmissionResponse
+from .analysis import AnalysisShort
 
 
-class AnalysisStatusResponse(AnalysisSubmissionResponse):
+class AnalysisStatusResponse(AnalysisShort):
     """The API response domain model for the status of a single analysis."""
 
     pass

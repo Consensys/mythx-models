@@ -1,9 +1,10 @@
 """This module contains the GroupCreationResponse domain model."""
 
-from mythx_models.response.group_status import GroupStatusResponse
+
+from .group import Group
 
 
-class GroupCreationResponse(GroupStatusResponse):
+class GroupCreationResponse(Group):
     """The API response domain model for the status of a newly created
     group."""
 
