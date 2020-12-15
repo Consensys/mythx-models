@@ -16,7 +16,9 @@ class AuthLogoutRequest(BaseModel):
 
     @property
     def payload(self):
-        return {}
+        return {
+            "global": self.global_
+        }
 
     @property
     def headers(self):
