@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from typing import Optional
+
 from pydantic import BaseModel, Field
 
 
@@ -45,4 +46,3 @@ class AnalysisListRequest(BaseModel):
             "groupId": self.group_id,
             "mainSource": self.main_source,
         }
-

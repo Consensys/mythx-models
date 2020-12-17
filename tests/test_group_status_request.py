@@ -21,4 +21,3 @@ def test_attributes(request):
     assert parsed.method == "GET"
     assert parsed.endpoint == f"v1/analysis-groups/{parsed.group_id}"
     assert parsed.parameters == {}
-

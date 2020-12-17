@@ -21,9 +21,9 @@ def test_attributes(request):
     assert parsed.method == "GET"
     assert parsed.endpoint == f"v1/analysis-groups"
     assert parsed.parameters == {
-        'createdBy': parsed.created_by,
-        'dateFrom': parsed.date_from.isoformat(),
-        'dateTo': parsed.date_to.isoformat(),
-        'groupName': parsed.group_name,
-        'offset': parsed.offset
+        "createdBy": parsed.created_by,
+        "dateFrom": parsed.date_from.isoformat(),
+        "dateTo": parsed.date_to.isoformat(),
+        "groupName": parsed.group_name,
+        "offset": parsed.offset,
     }

@@ -1,7 +1,8 @@
 """This module contains the AuthLogoutRequest domain model."""
 
-from pydantic import BaseModel, Field
 from typing import Optional
+
+from pydantic import BaseModel, Field
 
 
 class GroupCreationRequest(BaseModel):

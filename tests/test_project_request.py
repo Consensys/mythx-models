@@ -97,9 +97,9 @@ def test_status(request):
 def test_update(request):
     parsed = ProjectUpdateRequest(**request)
     if "name" not in request:
-        request["name"] = ""
+        request["name"] = None
     if "description" not in request:
-        request["description"] = ""
+        request["description"] = None
 
     assert parsed.dict() == request
     assert parsed.headers == {}

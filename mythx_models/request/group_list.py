@@ -42,4 +42,3 @@ class GroupListRequest(BaseModel):
             "dateFrom": self.date_from.isoformat() if self.date_from else None,
             "dateTo": self.date_to.isoformat() if self.date_to else None,
         }
-

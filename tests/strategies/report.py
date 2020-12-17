@@ -7,7 +7,6 @@ from hypothesis.strategies import (
     composite,
     dictionaries,
     fixed_dictionaries,
-    tuples,
     integers,
     lists,
     none,
@@ -15,6 +14,7 @@ from hypothesis.strategies import (
     sampled_from,
     shared,
     text,
+    tuples,
     uuids,
 )
 
@@ -112,13 +112,11 @@ def test_case(draw):
 
 @composite
 def decoded_locations(draw):
-    return {
-        "startLine": draw(integers()),
-        "startColumn": draw(integers()),
-        "endLine": draw(integers()),
-        "endColumn": draw(integers()),
-        "hidden": draw(booleans()),
-    }
+    return [
+        {"line": draw(integers()), "column": draw(integers())},
+        {"line": draw(integers()), "column": draw(integers())},
+        draw(booleans()),
+    ]
 
 
 @composite
@@ -127,7 +125,7 @@ def issues(draw):
     swc_id = f"SWC-{swc_int}"
     locations = draw(lists(source_locations(), min_size=1, max_size=3))
 
-    decoded_loc = draw(lists(lists(decoded_locations())))
+    decoded_loc = draw(lists(decoded_locations()))
 
     extra = {
         "testCases": draw(one_of(none(), lists(test_case(), min_size=1, max_size=3))),

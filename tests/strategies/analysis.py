@@ -31,6 +31,11 @@ def analysis_status(draw):
         "submittedAt": draw(datetimes()).isoformat(),
         "submittedBy": draw(text(min_size=1)),
         "uuid": str(draw(uuids(version=4))),
+        "runTime": draw(integers()),
+        "clientToolName": draw(text()),
+        "groupId": draw(text()),
+        "groupName": draw(text()),
+        "analysisMode": draw(sampled_from(["full", "quick", "standard"])),
     }
 
 

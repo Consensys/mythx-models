@@ -23,7 +23,9 @@ def test_attributes(request):
         "refreshToken": request["refreshToken"],
     }
     assert parsed.headers == {}
-    assert parsed.payload == {'jwtTokens': {'access': parsed.access_token, 'refresh': parsed.refresh_token}}
+    assert parsed.payload == {
+        "jwtTokens": {"access": parsed.access_token, "refresh": parsed.refresh_token}
+    }
     assert parsed.method == "POST"
     assert parsed.endpoint == f"v1/auth/refresh"
     assert parsed.parameters == {}

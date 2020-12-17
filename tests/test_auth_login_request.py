@@ -17,7 +17,7 @@ def test_serde(response):
 @given(auth_login_request())
 def test_attributes(request):
     parsed = AuthLoginRequest(**request)
-    reduced_payload = {'password': request["password"], 'username': request["username"]}
+    reduced_payload = {"password": request["password"], "username": request["username"]}
 
     assert parsed.dict(by_alias=True) == reduced_payload
     assert parsed.headers == {}
