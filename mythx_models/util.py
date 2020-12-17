@@ -1,7 +1,6 @@
 """This module contains various utility functions for MythX domain models."""
 
 from datetime import datetime
-from os import path
 from typing import Dict, Union
 
 import dateutil.parser
@@ -41,14 +40,3 @@ def dict_delete_none_fields(d: Dict) -> Dict:
         elif isinstance(v, dict):
             dict_delete_none_fields(v)
     return d
-
-
-def resolve_schema(module_path: str, filename: str) -> str:
-    """Return a path leading to the internal JSON schema files used for
-    validation.
-
-    :param module_path: The calling module's path (used as base path)
-    :param filename: The JSON schema file's name
-    :return: The complete path leading to the schema file (e.g. to be consumed by :code:`open()`)
-    """
-    return path.join(path.dirname(module_path), "schema", filename)

@@ -1,16 +1,21 @@
 """This module contains the GroupListRequest domain model."""
 
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
 
 class GroupListRequest(BaseModel):
-    offset: int
-    created_by: str = Field(alias="createdBy")
-    group_name: str = Field(alias="groupName")
-    date_from: datetime = Field(alias="dateFrom")
-    date_to: datetime = Field(alias="dateTo")
+    offset: Optional[int]
+    created_by: Optional[str] = Field(alias="createdBy")
+    group_name: Optional[str] = Field(alias="groupName")
+    date_from: Optional[datetime] = Field(alias="dateFrom")
+    date_to: Optional[datetime] = Field(alias="dateTo")
+
+    class Config:
+        allow_population_by_field_name = True
+        use_enum_values = True
 
     @property
     def endpoint(self):

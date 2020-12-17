@@ -20,7 +20,6 @@ from mythx_models.response.group_list import GroupListResponse
 from mythx_models.response.group_operation import GroupOperationResponse
 from mythx_models.response.group_status import GroupStatusResponse
 from mythx_models.response.issue import (
-    DecodedLocation,
     Issue,
     Severity,
     SourceFormat,

@@ -26,9 +26,18 @@ class AnalysisShort(BaseModel):
     maru_version: str = Field(alias="maruVersion")
     mythril_version: str = Field(alias="mythrilVersion")
     queue_time: int = Field(alias="queueTime")
+    run_time: int = Field(alias="runTime")
     status: str = Field(alias="status")
     submitted_at: str = Field(alias="submittedAt")
     submitted_by: str = Field(alias="submittedBy")
+    client_tool_name: str = Field(alias="clientToolName")
+    group_id: str = Field(alias="groupId")
+    group_name: str = Field(alias="groupName")
+    analysis_mode: str = Field(alias="analysisMode")
+
+    class Config:
+        allow_population_by_field_name = True
+        use_enum_values = True
 
 
 class Analysis(BaseModel):
@@ -56,3 +65,7 @@ class Analysis(BaseModel):
 
     error: str = None
     info: str = None
+
+    class Config:
+        allow_population_by_field_name = True
+        use_enum_values = True

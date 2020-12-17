@@ -16,8 +16,12 @@ class AnalysisSubmissionRequest(BaseModel):
     main_source: str = Field(alias="mainSource")
     sources: Dict[str, Dict[str, Any]]
     source_list: Optional[List[str]] = Field(alias="sourceList")
-    solc_version: Optional[str] = Field(alias="solcVersion")
+    solc_version: Optional[str] = Field(alias="version")
     analysis_mode: Optional[str] = Field(alias="analysisMode")
+
+    class Config:
+        allow_population_by_field_name = True
+        use_enum_values = True
 
     @property
     def endpoint(self):

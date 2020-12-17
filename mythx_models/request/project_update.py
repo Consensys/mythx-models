@@ -1,10 +1,11 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class ProjectUpdateRequest(BaseModel):
     project_id: str
-    name: str = ""
-    description: str = ""
+    name: Optional[str]
+    description: Optional[str]
 
     @property
     def endpoint(self):

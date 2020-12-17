@@ -2,7 +2,7 @@
 
 import logging
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -52,5 +52,8 @@ class Group(BaseModel):
     vulnerability_statistics: VulnerabilityStatistics = Field(
         alias="numVulnerabilities"
     )
-    project_id: str = Field(alias="projectId")
+    project_id: Optional[str] = Field(alias="projectId")
 
+    class Config:
+        allow_population_by_field_name = True
+        use_enum_values = True

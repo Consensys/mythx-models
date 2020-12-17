@@ -7,6 +7,7 @@ from hypothesis.strategies import (
     composite,
     dictionaries,
     fixed_dictionaries,
+    tuples,
     integers,
     lists,
     none,

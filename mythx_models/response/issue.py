@@ -83,12 +83,9 @@ class SourceMap(BaseModel):
         ]
 
 
-class DecodedLocation(BaseModel):
-    start_line: int = Field(alias="startLine")
-    start_column: int = Field(alias="startColumn")
-    end_line: int = Field(alias="endLine")
-    end_column: int = Field(alias="endColumn")
-    hidden: bool
+class LineLocation(BaseModel):
+    line: int
+    column: int
 
 
 class SourceLocation(BaseModel):
@@ -96,6 +93,9 @@ class SourceLocation(BaseModel):
     source_type: str = Field(alias="sourceType")
     source_format: str = Field(alias="sourceFormat")
     source_list: List[str] = Field(alias="sourceList")
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class IssueDescription(BaseModel):
@@ -110,6 +110,10 @@ class Issue(BaseModel):
     severity: Severity
     locations: List[SourceLocation]
     extra: Dict[str, Any]
-    decoded_locations: Optional[List[List[DecodedLocation]]] = Field(
+    decoded_locations: Optional[List[Tuple[LineLocation, LineLocation, bool]]] = Field(
         alias="decodedLocations"
     )
+
+    class Config:
+        allow_population_by_field_name = True
+        use_enum_values = True

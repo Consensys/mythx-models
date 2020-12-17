@@ -1,18 +1,22 @@
 """This module contains the AnalysisListRequest domain model."""
 
 from datetime import datetime
-
+from typing import Optional
 from pydantic import BaseModel, Field
 
 
 class AnalysisListRequest(BaseModel):
-    offset: int
-    date_from: datetime = Field(alias="dateFrom")
-    date_to: datetime = Field(alias="dateTo")
-    created_by: str = Field(alias="createdBy")
-    group_name: str = Field(alias="groupName")
-    group_id: str = Field(alias="groupId")
-    main_source: str = Field(alias="mainSource")
+    offset: Optional[int]
+    date_from: Optional[datetime] = Field(alias="dateFrom")
+    date_to: Optional[datetime] = Field(alias="dateTo")
+    created_by: Optional[str] = Field(alias="createdBy")
+    group_name: Optional[str] = Field(alias="groupName")
+    group_id: Optional[str] = Field(alias="groupId")
+    main_source: Optional[str] = Field(alias="mainSource")
+
+    class Config:
+        allow_population_by_field_name = True
+        use_enum_values = True
 
     @property
     def endpoint(self):
