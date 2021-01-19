@@ -1,5 +1,5 @@
 from hypothesis import given
-from hypothesis.strategies import composite, datetimes, lists, text, uuids
+from hypothesis.strategies import composite, datetimes, lists, text, uuids, integers
 
 from mythx_models.response import (
     ProjectCreationResponse,
@@ -22,9 +22,20 @@ def project_dict_response(draw):
 
 
 @composite
+def short_project_dict_response(draw):
+    return {
+        "id": str(draw(uuids(version=4))),
+        "name": draw(text()),
+        "group_count": draw((integers(min_value=0))),
+        "created": draw(datetimes()),
+        "modified": draw(datetimes()),
+    }
+
+
+@composite
 def project_list_response(draw, min_size, max_size):
     projects = draw(
-        lists(project_dict_response(), min_size=min_size, max_size=max_size)
+        lists(short_project_dict_response(), min_size=min_size, max_size=max_size)
     )
     return {"projects": projects, "total": len(projects)}
 
