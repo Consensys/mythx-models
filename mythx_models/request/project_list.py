@@ -4,8 +4,8 @@ from pydantic import BaseModel
 
 
 class ProjectListRequest(BaseModel):
-    offset: int = 0
-    limit: int = 0
+    offset: Optional[int] = 0
+    limit: Optional[int] = 0
     name: Optional[str] = None
 
     @property

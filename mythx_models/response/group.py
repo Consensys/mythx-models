@@ -30,7 +30,6 @@ class GroupState(str, Enum):
     OPENED = "opened"
     SEALED = "sealed"
 
-
 class Group(BaseModel):
     """An object describing an analysis group.
 
@@ -44,7 +43,7 @@ class Group(BaseModel):
     name: str
     created_at: str = Field(alias="createdAt")
     created_by: str = Field(alias="createdBy")
-    completed_at: str = Field(alias="completedAt")
+    completed_at: Optional[str] = Field(alias="completedAt")
     progress: int
     status: GroupState
     main_source_files: List[str] = Field(alias="mainSourceFiles")

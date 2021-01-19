@@ -91,9 +91,9 @@ class LineLocation(BaseModel):
 
 class SourceLocation(BaseModel):
     source_map: str = Field(alias="sourceMap")
-    source_type: str = Field(alias="sourceType")
-    source_format: str = Field(alias="sourceFormat")
-    source_list: List[str] = Field(alias="sourceList")
+    source_type: Optional[str] = Field(alias="sourceType")
+    source_format: Optional[str] = Field(alias="sourceFormat")
+    source_list: Optional[List[str]] = Field(alias="sourceList")
 
     class Config:
         allow_population_by_field_name = True
@@ -111,7 +111,7 @@ class Issue(BaseModel):
     severity: Severity
     locations: List[SourceLocation]
     extra: Dict[str, Any]
-    decoded_locations: Optional[List[Tuple[LineLocation, LineLocation, bool]]] = Field(
+    decoded_locations: Optional[List[Union[Tuple[LineLocation, LineLocation, bool], List]]] = Field(
         alias="decodedLocations"
     )
 

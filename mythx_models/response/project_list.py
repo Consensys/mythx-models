@@ -2,9 +2,9 @@ from typing import List
 
 from pydantic import BaseModel
 
-from .project import Project
+from .project import ShortProject
 
 
 class ProjectListResponse(BaseModel):
-    projects: List[Project]
+    projects: List[ShortProject]
     total: int
