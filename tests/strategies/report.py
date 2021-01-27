@@ -135,6 +135,7 @@ def issues(draw):
         del extra["testCases"]
 
     return {
+        "uuid": None,
         "swcID": swc_id,
         "swcTitle": draw(text()),
         "description": {"head": draw(text()), "tail": draw(text())},
