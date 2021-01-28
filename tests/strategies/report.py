@@ -135,7 +135,7 @@ def issues(draw):
         del extra["testCases"]
 
     return {
-        "uuid": None,
+        "uuid": draw(sampled_from([None, str(uuids(version=5))])),
         "swcID": swc_id,
         "swcTitle": draw(text()),
         "description": {"head": draw(text()), "tail": draw(text())},
