@@ -105,6 +105,7 @@ class IssueDescription(BaseModel):
 
 
 class Issue(BaseModel):
+    uuid: Optional[str]
     swc_id: str = Field(alias="swcID")
     swc_title: str = Field(alias="swcTitle")
     description: IssueDescription
