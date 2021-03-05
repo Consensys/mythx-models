@@ -23,7 +23,7 @@ class GroupOperationRequest(BaseModel):
     @property
     def payload(self):
         payload = {"type": self.type_}
-        if self.type_ == "add_to_project"
+        if self.type_ == "add_to_project":
             payload["project_id"] = self.project_id
         return payload
 
