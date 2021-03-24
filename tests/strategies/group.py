@@ -54,12 +54,20 @@ def group_operation_response(draw):
 
 @composite
 def group_operation_request(draw):
-    return {
-        "groupId": str(draw(uuids())),
-        "type": draw(
-            sampled_from(["seal_group", "add_to_project", "remove_from_project"])
-        ),
-    }
+    return draw(sampled_from([
+        {
+            "groupId": str(draw(uuids())),
+            "type": draw(
+                sampled_from(["seal_group", "remove_from_project"])
+            ),
+            "projectId": None
+        },
+        {
+            "groupId": str(draw(uuids())),
+            "type": "add_to_project",
+            "projectId":  str(draw(uuids())),
+        },
+    ]))
 
 
 @composite
