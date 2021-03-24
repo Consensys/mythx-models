@@ -14,10 +14,12 @@ def test_serde(response):
 @given(group_operation_request())
 def test_attributes(request):
     parsed = GroupOperationRequest(**request)
-
     assert parsed.dict(by_alias=True) == request
     assert parsed.headers == {}
-    assert parsed.payload == {"type": parsed.type_}
+    if parsed.type_ in ("seal_group", "remove_from_project"):
+        assert parsed.payload == {"type": parsed.type_}
+    else:
+        assert parsed.payload == {"type": parsed.type_, "projectId": parsed.project_id}
     assert parsed.method == "POST"
     assert parsed.endpoint == f"v1/analysis-groups/{parsed.group_id}"
     assert parsed.parameters == {}
