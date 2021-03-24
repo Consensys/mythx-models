@@ -6,7 +6,7 @@ from typing import Optional
 class GroupOperationRequest(BaseModel):
     group_id: str = Field(alias="groupId")
     type_: str = Field(alias="type")
-    project_id: Optional[str] = Field(None, alias="project_id")
+    project_id: Optional[str] = Field(alias="projectId")
 
     class Config:
         allow_population_by_field_name = True
@@ -24,7 +24,7 @@ class GroupOperationRequest(BaseModel):
     def payload(self):
         payload = {"type": self.type_}
         if self.type_ == "add_to_project":
-            payload["project_id"] = self.project_id
+            payload["projectId"] = self.project_id
         return payload
 
     @property
