@@ -27,6 +27,7 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
     ],
+    python_requires=">=3.5,<4",
     description="Python domain model classes for the MythX platform",
     install_requires=requirements,
     license="MIT license",
