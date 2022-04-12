@@ -17,6 +17,17 @@ Severity = Union[
     Literal["High"],
 ]
 
+
+class SEVERITY(str, Enum):
+    """An Enum holding the possible severities an issue can have."""
+
+    UNKNOWN = "Unknown"
+    NONE = "None"
+    LOW = "Low"
+    MEDIUM = "Medium"
+    HIGH = "High"
+
+
 SourceType = Union[
     Literal["raw-bytecode"],
     Literal["ethereum-address"],
