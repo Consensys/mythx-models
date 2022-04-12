@@ -1,6 +1,7 @@
 """This module contains domain models regrading found issues."""
 
 from typing import Any, Dict, List, Optional, Tuple, Union
+from enum import Enum
 
 from pydantic import BaseModel, Field
 
