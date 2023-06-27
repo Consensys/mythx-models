@@ -81,11 +81,21 @@ jobs:
           republish: "true" # needed ONLY if version is not changing
           file: dist/*.whl
       - name: Send slack Notification
-        uses: Consensys/dili-slack-notification-action@v1.0.0
+        uses: slackapi/slack-github-action@v1.23.0
         with:
-          env: "dev"
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-
+          payload: |
+            {
+              "project": "${{ github.repository }}",
+              "env": "dev",
+              "version": "",
+              "actor": "${{ github.triggering_actor }}",
+              "commit_sha": "${{ github.sha }}",
+              "commit_message": "${{ steps.non_merge_commit_message.outputs.commit_message }}",
+              "commit_link": "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}",
+              "message": ""
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.slack_webhook_url }}
   cloudsmith_publish:
     name: cloudsmith_publish
     runs-on: ubuntu-latest
@@ -118,7 +128,18 @@ jobs:
           republish: "true" # needed ONLY if version is not changing
           file: dist/*.whl
       - name: Send slack Notification
-        uses: Consensys/dili-slack-notification-action@v1.0.0
+        uses: slackapi/slack-github-action@v1.23.0
         with:
-          env: "master"
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          payload: |
+            {
+              "project": "${{ github.repository }}",
+              "env": "master",
+              "version": "",
+              "actor": "${{ github.triggering_actor }}",
+              "commit_sha": "${{ github.sha }}",
+              "commit_message": "${{ steps.non_merge_commit_message.outputs.commit_message }}",
+              "commit_link": "${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}",
+              "message": ""
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.slack_webhook_url }}
