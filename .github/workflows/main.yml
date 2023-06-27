@@ -7,7 +7,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                python-version: [3.6, 3.7, 3.8, pypy3]
+                python-version: [3.7, 3.8, pypy3]
 
         steps:
             - uses: actions/checkout@v2
@@ -82,7 +82,7 @@ jobs:
             -   name: Send slack Notification
                 uses: Consensys/dili-slack-notification-action@v1.0.0
                 with:
-                    env: "master"
+                    env: "dev"
                     slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
 
     cloudsmith_publish:
