@@ -53,7 +53,7 @@ jobs:
     name: cloudsmith_publish_dev
     runs-on: ubuntu-latest
     needs: test
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/upload-to-cloudsmith'
     concurrency: dev
     steps:
       - name: Checkout
@@ -90,7 +90,7 @@ jobs:
     name: cloudsmith_publish
     runs-on: ubuntu-latest
     needs: test
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/upload-to-cloudsmith'
     concurrency: master
     steps:
       - name: Checkout
