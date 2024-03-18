@@ -1,16 +1,14 @@
 """This module contains the GroupOperation domain model."""
 
-from pydantic import BaseModel, Field
+from pydantic import ConfigDict, BaseModel, Field
 from typing import Optional
+
 
 class GroupOperationRequest(BaseModel):
     group_id: str = Field(alias="groupId")
     type_: str = Field(alias="type")
-    project_id: Optional[str] = Field(alias="projectId")
-
-    class Config:
-        allow_population_by_field_name = True
-        use_enum_values = True
+    project_id: Optional[str] = Field(None, alias="projectId")
+    model_config = ConfigDict(populate_by_name=True, use_enum_values=True)
 
     @property
     def endpoint(self):

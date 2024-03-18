@@ -3,19 +3,16 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import ConfigDict, BaseModel, Field
 
 
 class GroupListRequest(BaseModel):
-    offset: Optional[int]
-    created_by: Optional[str] = Field(alias="createdBy")
-    group_name: Optional[str] = Field(alias="groupName")
-    date_from: Optional[datetime] = Field(alias="dateFrom")
-    date_to: Optional[datetime] = Field(alias="dateTo")
-
-    class Config:
-        allow_population_by_field_name = True
-        use_enum_values = True
+    offset: Optional[int] = None
+    created_by: Optional[str] = Field(None, alias="createdBy")
+    group_name: Optional[str] = Field(None, alias="groupName")
+    date_from: Optional[datetime] = Field(None, alias="dateFrom")
+    date_to: Optional[datetime] = Field(None, alias="dateTo")
+    model_config = ConfigDict(populate_by_name=True, use_enum_values=True)
 
     @property
     def endpoint(self):

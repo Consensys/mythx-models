@@ -4,7 +4,7 @@ import logging
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import ConfigDict, BaseModel, Field
 
 LOGGER = logging.getLogger(__name__)
 
@@ -30,6 +30,7 @@ class GroupState(str, Enum):
     OPENED = "opened"
     SEALED = "sealed"
 
+
 class Group(BaseModel):
     """An object describing an analysis group.
 
@@ -43,7 +44,7 @@ class Group(BaseModel):
     name: str
     created_at: str = Field(alias="createdAt")
     created_by: str = Field(alias="createdBy")
-    completed_at: Optional[str] = Field(alias="completedAt")
+    completed_at: Optional[str] = Field(None, alias="completedAt")
     progress: int
     status: GroupState
     main_source_files: List[str] = Field(alias="mainSourceFiles")
@@ -51,8 +52,5 @@ class Group(BaseModel):
     vulnerability_statistics: VulnerabilityStatistics = Field(
         alias="numVulnerabilities"
     )
-    project_id: Optional[str] = Field(alias="projectId")
-
-    class Config:
-        allow_population_by_field_name = True
-        use_enum_values = True
+    project_id: Optional[str] = Field(None, alias="projectId")
+    model_config = ConfigDict(populate_by_name=True, use_enum_values=True)

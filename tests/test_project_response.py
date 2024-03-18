@@ -43,27 +43,27 @@ def project_list_response(draw, min_size, max_size):
 @given(project_list_response(min_size=0, max_size=10))
 def test_list_serde(response):
     parsed = ProjectListResponse(**response)
-    assert parsed.dict() == response
+    assert parsed.model_dump() == response
 
 
 @given(project_dict_response())
 def test_status_serde(response):
     parsed = ProjectStatusResponse(**response)
-    assert parsed.dict() == response
+    assert parsed.model_dump() == response
 
 
 @given(project_dict_response())
 def test_creation_serde(response):
     parsed = ProjectCreationResponse(**response)
-    assert parsed.dict() == response
+    assert parsed.model_dump() == response
 
 
 @given(project_dict_response())
-def test_creation_serde(response):
+def test_update_serde(response):
     parsed = ProjectUpdateResponse(**response)
-    assert parsed.dict() == response
+    assert parsed.model_dump() == response
 
 
 def test_deletion_serde():
     parsed = ProjectDeletionResponse()
-    assert parsed.dict() == {}
+    assert parsed.model_dump() == {}

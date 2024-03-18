@@ -12,9 +12,7 @@ from hypothesis.strategies import (
     none,
     one_of,
     sampled_from,
-    shared,
     text,
-    tuples,
     uuids,
 )
 

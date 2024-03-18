@@ -8,13 +8,13 @@ from .strategies.group import group_operation_request
 @given(group_operation_request())
 def test_serde(response):
     obj = GroupOperationRequest(**response)
-    assert obj.dict(by_alias=True) == response
+    assert obj.model_dump(by_alias=True) == response
 
 
 @given(group_operation_request())
 def test_attributes(request):
     parsed = GroupOperationRequest(**request)
-    assert parsed.dict(by_alias=True) == request
+    assert parsed.model_dump(by_alias=True) == request
     assert parsed.headers == {}
     if parsed.type_ in ("seal_group", "remove_from_project"):
         assert parsed.payload == {"type": parsed.type_}

@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "mythx-models"
+version = "3.0.0"
+description = "Python domain model classes for the MythX platform"
+authors = ["Dominik Muhs <dominik.muhs@consensys.net>"]
+license = "MIT"
+readme = "README.rst"
+homepage = "https://github.com/Consensys/mythx-models"
+packages = [{include = "mythx_models"}]
+maintainers = ["Nuradil Alymkulov <nuradil.alymkulov-ext@consensys.net>"]
+
+[tool.poetry.dependencies]
+python = ">=3.8, <4"
+python-dateutil = "==2.*"
+pydantic = ">=2.6.3"
+
+[tool.poetry.group.dev.dependencies]
+Sphinx = "7.1.2"
+coverage = "7.4.3"
+pytest = "8.1.1"
+pytest-cov = "4.1.0"
+hypothesis = "6.99.4"
+twine = "5.0.0"
+ruff = "0.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -5,8 +5,8 @@ from pydantic import BaseModel
 
 class ProjectUpdateRequest(BaseModel):
     project_id: str
-    name: Optional[str]
-    description: Optional[str]
+    name: Optional[str] = None
+    description: Optional[str] = None
 
     @property
     def endpoint(self):

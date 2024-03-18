@@ -3,7 +3,7 @@ from mythx_models.request import VersionRequest
 
 def test_serde():
     resp = VersionRequest()
-    assert resp.dict() == {}
+    assert resp.model_dump() == {}
 
 
 def test_attributes():
@@ -12,5 +12,5 @@ def test_attributes():
     assert parsed.headers == {}
     assert parsed.payload == {}
     assert parsed.method == "GET"
-    assert parsed.endpoint == f"v1/version"
+    assert parsed.endpoint == "v1/version"
     assert parsed.parameters == {}

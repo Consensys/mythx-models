@@ -1,6 +1,5 @@
 """This module contains the GroupCreationResponse domain model."""
 
-
 from .group import Group
 
 
