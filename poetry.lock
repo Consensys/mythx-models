@@ -1124,13 +1124,13 @@ files = [
 
 [[package]]
 name = "sphinx"
-version = "7.1.2"
+version = "7.1.0"
 description = "Python documentation generator"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "sphinx-7.1.2-py3-none-any.whl", hash = "sha256:d170a81825b2fcacb6dfd5a0d7f578a053e45d3f2b153fecc948c37344eb4cbe"},
-    {file = "sphinx-7.1.2.tar.gz", hash = "sha256:780f4d32f1d7d1126576e0e5ecc19dc32ab76cd24e950228dcf7b1f6d3d9e22f"},
+    {file = "sphinx-7.1.0-py3-none-any.whl", hash = "sha256:9bdfb5a2b28351d4fdf40a63cd006dbad727f793b243e669fc950d7116c634af"},
+    {file = "sphinx-7.1.0.tar.gz", hash = "sha256:8f336d0221c3beb23006b3164ed1d46db9cebcce9cb41cdb9c5ecd4bcc509be0"},
 ]
 
 [package.dependencies]
@@ -1325,4 +1325,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8, <4"
-content-hash = "1f3cc093bcdf88530cfdaf1993e1b31ce934fcd5f7fe75096befbbd262756bdf"
+content-hash = "2f4777f1daef963ece55957a13bf75e5fbcf9df399803f71702eee03bd5f11eb"
