@@ -3,7 +3,7 @@
 import logging
 from enum import Enum
 
-from pydantic import BaseModel, Field
+from pydantic import ConfigDict, BaseModel, Field
 
 from mythx_models.response.group import VulnerabilityStatistics
 
@@ -34,10 +34,7 @@ class AnalysisShort(BaseModel):
     group_id: str = Field(alias="groupId")
     group_name: str = Field(alias="groupName")
     analysis_mode: str = Field(alias="analysisMode")
-
-    class Config:
-        allow_population_by_field_name = True
-        use_enum_values = True
+    model_config = ConfigDict(populate_by_name=True, use_enum_values=True)
 
 
 class Analysis(BaseModel):
@@ -65,7 +62,4 @@ class Analysis(BaseModel):
 
     error: str = None
     info: str = None
-
-    class Config:
-        allow_population_by_field_name = True
-        use_enum_values = True
+    model_config = ConfigDict(populate_by_name=True, use_enum_values=True)

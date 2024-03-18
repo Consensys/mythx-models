@@ -3,7 +3,7 @@
 from typing import Any, Dict, List, Optional, Tuple, Union
 from enum import Enum
 
-from pydantic import BaseModel, Field
+from pydantic import ConfigDict, BaseModel, Field
 
 try:
     from typing_extensions import Literal
@@ -103,12 +103,10 @@ class LineLocation(BaseModel):
 
 class SourceLocation(BaseModel):
     source_map: str = Field(alias="sourceMap")
-    source_type: Optional[str] = Field(alias="sourceType")
-    source_format: Optional[str] = Field(alias="sourceFormat")
-    source_list: Optional[List[str]] = Field(alias="sourceList")
-
-    class Config:
-        allow_population_by_field_name = True
+    source_type: Optional[str] = Field(None, alias="sourceType")
+    source_format: Optional[str] = Field(None, alias="sourceFormat")
+    source_list: Optional[List[str]] = Field(None, alias="sourceList")
+    model_config = ConfigDict(populate_by_name=True)
 
 
 class IssueDescription(BaseModel):
@@ -117,17 +115,14 @@ class IssueDescription(BaseModel):
 
 
 class Issue(BaseModel):
-    uuid: Optional[str]
+    uuid: Optional[str] = None
     swc_id: str = Field(alias="swcID")
     swc_title: str = Field(alias="swcTitle")
     description: IssueDescription
     severity: Severity
     locations: List[SourceLocation]
     extra: Dict[str, Any]
-    decoded_locations: Optional[List[Union[Tuple[LineLocation, LineLocation, bool], List]]] = Field(
-        alias="decodedLocations"
-    )
-
-    class Config:
-        allow_population_by_field_name = True
-        use_enum_values = True
+    decoded_locations: Optional[
+        List[Union[Tuple[LineLocation, LineLocation, bool], List]]
+    ] = Field(None, alias="decodedLocations")
+    model_config = ConfigDict(populate_by_name=True, use_enum_values=True)

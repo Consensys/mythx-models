@@ -8,14 +8,14 @@ from .strategies.group import group_status_request
 @given(group_status_request())
 def test_serde(response):
     obj = GroupStatusRequest(**response)
-    assert obj.dict(by_alias=True) == response
+    assert obj.model_dump(by_alias=True) == response
 
 
 @given(group_status_request())
 def test_attributes(request):
     parsed = GroupStatusRequest(**request)
 
-    assert parsed.dict(by_alias=True) == request
+    assert parsed.model_dump(by_alias=True) == request
     assert parsed.headers == {}
     assert parsed.payload == {}
     assert parsed.method == "GET"

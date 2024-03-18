@@ -1,22 +1,14 @@
 from hypothesis.strategies import (
-    binary,
-    booleans,
-    characters,
     composite,
     datetimes,
-    dictionaries,
-    fixed_dictionaries,
     integers,
     lists,
-    none,
-    one_of,
     sampled_from,
-    shared,
     text,
     uuids,
 )
 
-from .report import bytecodes, source_maps
+from .report import bytecodes
 
 
 @composite

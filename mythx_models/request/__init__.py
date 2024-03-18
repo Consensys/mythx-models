@@ -18,3 +18,24 @@ from mythx_models.request.project_list import ProjectListRequest
 from mythx_models.request.project_status import ProjectStatusRequest
 from mythx_models.request.project_update import ProjectUpdateRequest
 from mythx_models.request.version import VersionRequest
+
+__all__ = [
+    "AnalysisInputRequest",
+    "AnalysisListRequest",
+    "AnalysisStatusRequest",
+    "AnalysisSubmissionRequest",
+    "AuthLoginRequest",
+    "AuthLogoutRequest",
+    "AuthRefreshRequest",
+    "DetectedIssuesRequest",
+    "GroupCreationRequest",
+    "GroupListRequest",
+    "GroupOperationRequest",
+    "GroupStatusRequest",
+    "ProjectCreationRequest",
+    "ProjectDeleteRequest",
+    "ProjectListRequest",
+    "ProjectStatusRequest",
+    "ProjectUpdateRequest",
+    "VersionRequest",
+]

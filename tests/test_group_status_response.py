@@ -8,4 +8,4 @@ from .strategies.group import group_status_response
 @given(group_status_response())
 def test_serde(response):
     obj = GroupStatusResponse(**response)
-    assert obj.dict(by_alias=True) == response
+    assert obj.model_dump(by_alias=True) == response

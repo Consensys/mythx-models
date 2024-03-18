@@ -50,9 +50,9 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"MythX Domain Models"
-copyright = u"2019-present, Dominik Muhs"
-author = u"Dominik Muhs"
+project = "MythX Domain Models"
+copyright = "2019-present, Dominik Muhs"
+author = "Dominik Muhs"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -132,8 +132,8 @@ latex_documents = [
     (
         master_doc,
         "mythx-domain.tex",
-        u"MythX Domain Model Documentation",
-        u"Dominik Muhs",
+        "MythX Domain Model Documentation",
+        "Dominik Muhs",
         "manual",
     )
 ]
@@ -144,7 +144,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, "mythx-domain", u"MythX Domain Model Documentation", [author], 1)
+    (master_doc, "mythx-domain", "MythX Domain Model Documentation", [author], 1)
 ]
 
 
@@ -157,7 +157,7 @@ texinfo_documents = [
     (
         master_doc,
         "mythx-domain",
-        u"MythX Domain Model Documentation",
+        "MythX Domain Model Documentation",
         author,
         "mythx",
         "Domain models for the MythX smart contract security analysis platform.",

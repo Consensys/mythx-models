@@ -8,4 +8,4 @@ from .strategies.analysis import analysis_status
 @given(analysis_status())
 def test_serde(response):
     resp = AnalysisSubmissionResponse(**response)
-    assert resp.dict(by_alias=True) == response
+    assert resp.model_dump(by_alias=True) == response

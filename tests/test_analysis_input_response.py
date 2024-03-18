@@ -9,5 +9,5 @@ from .strategies.analysis import analysis_submission
 def test_serde(request):
     parsed = AnalysisInputResponse(**request)
     assert {
-        k: v for k, v in parsed.dict(by_alias=True).items() if v is not None
+        k: v for k, v in parsed.model_dump(by_alias=True).items() if v is not None
     } == request

@@ -9,7 +9,7 @@ from .strategies.analysis import analysis_submission
 def test_serde(request):
     parsed = AnalysisSubmissionRequest(**request)
     assert {
-        k: v for k, v in parsed.dict(by_alias=True).items() if v is not None
+        k: v for k, v in parsed.model_dump(by_alias=True).items() if v is not None
     } == request
 
 
@@ -18,10 +18,10 @@ def test_attributes(request):
     parsed = AnalysisSubmissionRequest(**request)
 
     assert {
-        k: v for k, v in parsed.dict(by_alias=True).items() if v is not None
+        k: v for k, v in parsed.model_dump(by_alias=True).items() if v is not None
     } == request
     assert parsed.headers == {}
     assert parsed.payload == {"data": request}
     assert parsed.method == "POST"
-    assert parsed.endpoint == f"v1/analyses"
+    assert parsed.endpoint == "v1/analyses"
     assert parsed.parameters == {}

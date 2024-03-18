@@ -50,8 +50,8 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 format:
-	isort mythx_models tests
-	black -t py37 mythx_models tests
+	ruff check --fix
+	ruff format
 
 test: ## run tests quickly with the default Python
 	pytest --cov-report html --cov-report term --cov mythx_models tests/
@@ -77,8 +77,7 @@ release: dist ## package and upload a release
 	twine upload dist/*
 
 dist: clean ## builds source and wheel package
-	python3 setup.py sdist
-	python3 setup.py bdist_wheel
+	poetry build
 	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages

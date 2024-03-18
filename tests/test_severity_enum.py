@@ -6,7 +6,13 @@ except ImportError:
 
 def test_severity_enum():
     assert SEVERITY is not None
-    SEVERITY_ORDER = [SEVERITY.HIGH, SEVERITY.MEDIUM, SEVERITY.LOW, SEVERITY.NONE, SEVERITY.UNKNOWN]
+    SEVERITY_ORDER = [
+        SEVERITY.HIGH,
+        SEVERITY.MEDIUM,
+        SEVERITY.LOW,
+        SEVERITY.NONE,
+        SEVERITY.UNKNOWN,
+    ]
     assert SEVERITY_ORDER.index("High") == 0
     assert SEVERITY_ORDER.index("Medium") == 1
     assert SEVERITY_ORDER.index("Low") == 2

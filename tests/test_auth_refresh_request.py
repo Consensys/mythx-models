@@ -8,7 +8,7 @@ from .strategies.auth import auth_refresh_request
 @given(auth_refresh_request())
 def test_serde(response):
     obj = AuthRefreshRequest(**response)
-    assert obj.dict(by_alias=True) == {
+    assert obj.model_dump(by_alias=True) == {
         "accessToken": response["accessToken"],
         "refreshToken": response["refreshToken"],
     }
@@ -18,7 +18,7 @@ def test_serde(response):
 def test_attributes(request):
     parsed = AuthRefreshRequest(**request)
 
-    assert parsed.dict(by_alias=True) == {
+    assert parsed.model_dump(by_alias=True) == {
         "accessToken": request["accessToken"],
         "refreshToken": request["refreshToken"],
     }
@@ -27,5 +27,5 @@ def test_attributes(request):
         "jwtTokens": {"access": parsed.access_token, "refresh": parsed.refresh_token}
     }
     assert parsed.method == "POST"
-    assert parsed.endpoint == f"v1/auth/refresh"
+    assert parsed.endpoint == "v1/auth/refresh"
     assert parsed.parameters == {}

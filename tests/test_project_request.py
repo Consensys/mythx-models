@@ -69,7 +69,7 @@ def project_deletion_request(draw):
 def test_list(request):
     parsed = ProjectListRequest(**request)
 
-    assert parsed.dict() == request
+    assert parsed.model_dump() == request
     assert parsed.headers == {}
     assert parsed.payload == {}
     assert parsed.method == "GET"
@@ -85,7 +85,7 @@ def test_list(request):
 def test_status(request):
     parsed = ProjectStatusRequest(**request)
 
-    assert parsed.dict() == request
+    assert parsed.model_dump() == request
     assert parsed.headers == {}
     assert parsed.payload == {}
     assert parsed.method == "GET"
@@ -101,7 +101,7 @@ def test_update(request):
     if "description" not in request:
         request["description"] = None
 
-    assert parsed.dict() == request
+    assert parsed.model_dump() == request
     assert parsed.headers == {}
     assert parsed.payload == {"name": parsed.name, "description": parsed.description}
     assert parsed.method == "POST"
@@ -115,7 +115,7 @@ def test_creation(request):
     if "groups" not in request:
         request["groups"] = []
 
-    assert parsed.dict() == request
+    assert parsed.model_dump() == request
     assert parsed.headers == {}
     assert parsed.payload == {
         "name": parsed.name,
@@ -131,7 +131,7 @@ def test_creation(request):
 def test_delete(request):
     parsed = ProjectDeleteRequest(**request)
 
-    assert parsed.dict() == request
+    assert parsed.model_dump() == request
     assert parsed.headers == {}
     assert parsed.payload == {}
     assert parsed.method == "DELETE"

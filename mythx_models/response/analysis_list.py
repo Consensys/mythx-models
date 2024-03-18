@@ -1,6 +1,5 @@
 """This module contains the AnalysisListResponse domain model."""
 
-
 from typing import List
 
 from pydantic import BaseModel
