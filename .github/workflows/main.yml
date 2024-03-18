@@ -29,7 +29,7 @@ jobs:
                   key: venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
             - name: Install dependencies
               if: steps.cached-venv.outputs.cache-hit != 'true'
-              run: poetry install --no-interaction --no-root
+              run: poetry install --no-interaction --no-root --with dev
             - name: Install library
               run: poetry install --no-interaction
             - name: Test with pytest
@@ -59,7 +59,7 @@ jobs:
                   key: venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
             - name: Install dependencies
               if: steps.cached-venv.outputs.cache-hit != 'true'
-              run: poetry install --no-interaction --no-root
+              run: poetry install --no-interaction --no-root --with dev
             - name: Install library
               run: poetry install --no-interaction
             - name: Build and publish
